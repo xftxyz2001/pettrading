@@ -21,6 +21,6 @@ public class WebMvcConfig implements WebMvcConfigurer {
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/avatar/**")
-                .addResourceLocations("file:" + "E:\\educationProject\\宠物系统\\pettrading-main\\pet-trading\\src\\main\\resources\\resources\\avatar\\");
+                .addResourceLocations("classpath:/resources/avatar/");
     }
 }
