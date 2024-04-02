@@ -66,11 +66,10 @@
 | maven | 3.6+ |
 | JDK   | 1.8  |
 | Mysql | 5.7+ |
+| node  | 14.0+|
 
 
 ## 项目结构
-- pet-trading文件夹：后端代码
-
-- pettrading文件夹：前端代码
-
-- pettrading.sql：数据库文件
+- 后端代码 [pet-trading](./pet-trading/)
+- 前端代码 [pettrading](./pettrading/)
+- 数据库文件 [pet.sql](./pet.sql)
