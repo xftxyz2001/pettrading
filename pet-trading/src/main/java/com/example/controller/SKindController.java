@@ -20,39 +20,39 @@ public class SKindController {
     private SKindService sKindService;
 
     @PostMapping("/addskind")
-    public Map addSKind(SKind skind){
+    public Map addSKind(SKind skind) {
         sKindService.addSKind(skind);
         Map map = new HashMap();
-        map.put("skid",skind.getSkid());
-        map.put("msg","种类添加成功");
+        map.put("skid", skind.getSkid());
+        map.put("msg", "种类添加成功");
         return map;
     }
 
     @GetMapping("/deleteskind")
-    public String deleteSKind(Long skid){
+    public String deleteSKind(Long skid) {
         Map map = new HashMap();
-        map.put("skid",skid);
+        map.put("skid", skid);
         sKindService.deleteSKind(map);
         return "品种删除成功";
     }
 
     @PostMapping("/updateskind")
-    public String updateSKind(SKind skind){
+    public String updateSKind(SKind skind) {
         sKindService.updateSKind(skind);
         return "种类修改成功";
     }
 
     @GetMapping("/queryallskind")
-    public List<SKind> queryAllSKind(SKind sKind){
+    public List<SKind> queryAllSKind(SKind sKind) {
         Map map = new HashMap();
-        if(sKind.getBkid() != null){
-            map.put("bkid",sKind.getBkid());
+        if (sKind.getBkid() != null) {
+            map.put("bkid", sKind.getBkid());
         }
-        if(sKind.getSkid() != null) {
-            map.put("skid",sKind.getSkid());
+        if (sKind.getSkid() != null) {
+            map.put("skid", sKind.getSkid());
         }
-        if(sKind.getSkindname() != null && sKind.getSkindname() != "") {
-            map.put("skindname",sKind.getSkindname());
+        if (sKind.getSkindname() != null && sKind.getSkindname() != "") {
+            map.put("skindname", sKind.getSkindname());
         }
         return sKindService.queryAllSKind(map);
     }

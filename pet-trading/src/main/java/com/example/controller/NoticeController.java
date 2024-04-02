@@ -18,17 +18,17 @@ public class NoticeController {
     private NoticeService noticeService;
 
     @GetMapping("/querynotice")
-    public List<Notice> querynotice(Long fromuid,Long touid) {
+    public List<Notice> querynotice(Long fromuid, Long touid) {
         Map map = new HashMap();
-        map.put("fromuid",fromuid);
-        map.put("touid",touid);
+        map.put("fromuid", fromuid);
+        map.put("touid", touid);
         return noticeService.querynotice(map);
     }
 
     @GetMapping("/queryusernotice")
     public List<Notice> queryusernotice(Long uid) {
         Map map = new HashMap();
-        map.put("uid",uid);
+        map.put("uid", uid);
         return noticeService.queryusernotice(map);
     }
 }

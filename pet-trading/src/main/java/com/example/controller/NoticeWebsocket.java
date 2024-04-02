@@ -28,8 +28,9 @@ public class NoticeWebsocket {
     private static PetService petService;
     private static NoticeService noticeService;
     private static ContactService contactService;
+
     @Autowired
-    public void setPetService(PetService petService){
+    public void setPetService(PetService petService) {
         NoticeWebsocket.petService = petService;
     }
 
@@ -55,18 +56,18 @@ public class NoticeWebsocket {
      */
     @OnOpen
     public void onOpen(Session session, @PathParam("fromuid") Long fromuid) {
-        Map<String,Object> message=new HashMap<String, Object>();
+        Map<String, Object> message = new HashMap<String, Object>();
         this.session = session;
         this.fromuid = fromuid;
         map.put(fromuid, session);
         noticeSet.add(this);//加入set中
-        System.out.println("用户（"+ fromuid + ")" + "加入,当前在线人数为" + noticeSet.size());
+        System.out.println("用户（" + fromuid + ")" + "加入,当前在线人数为" + noticeSet.size());
         Map qumap = new HashMap();
-        qumap.put("fromuid",fromuid);
+        qumap.put("fromuid", fromuid);
         int noread = contactService.querynoread(qumap);
         qumap.remove("fromuid");
-        qumap.put("type",-1);
-        qumap.put("noread",noread);
+        qumap.put("type", -1);
+        qumap.put("noread", noread);
         this.session.getAsyncRemote().sendText(new Gson().toJson(qumap));
     }
 
@@ -81,16 +82,17 @@ public class NoticeWebsocket {
 
     /**
      * 收到客户端消息后调用的方法
+     *
      * @param message 客户端发送过来的消息
      */
     @OnMessage
     public void onMessage(String message, Session session, @PathParam("fromuid") Long fromuid) {
         //从客户端传过来的数据是json数据，所以这里使用jackson进行转换为SocketMsg对象，
         // 然后通过socketMsg的type进行判断信息类型:
-        if(message.equals("heartCheck")){
+        if (message.equals("heartCheck")) {
             Session fromSession = map.get(fromuid);
             fromSession.getAsyncRemote().sendText("heartCheck");
-        }else {
+        } else {
             Notice notice = new Gson().fromJson(message, Notice.class);
             notice.setFromuid(fromuid);
             Date date = new Date();

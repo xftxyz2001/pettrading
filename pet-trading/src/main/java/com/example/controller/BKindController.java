@@ -26,50 +26,50 @@ public class BKindController {
     private SKindService sKindService;
 
     @PostMapping("/addBKind")
-    public Map addBKind(BKind bkind){
+    public Map addBKind(BKind bkind) {
         BKindService.addBKind(bkind);
         Map map = new HashMap();
-        map.put("bkid",bkind.getBkid());
-        map.put("msg","类型添加成功");
+        map.put("bkid", bkind.getBkid());
+        map.put("msg", "类型添加成功");
         return map;
     }
 
     @GetMapping("/deleteBKind")
-    public String deleteBKind(Long bkid){
+    public String deleteBKind(Long bkid) {
         Map map = new HashMap();
         petService.setPetbkidNULL(bkid);
-        map.put("bkid",bkid);
+        map.put("bkid", bkid);
         sKindService.deleteSKind(map);
         BKindService.deleteBKind(bkid);
         return "类型删除成功";
     }
 
     @GetMapping("/updateBKind")
-    public String updateBKind(BKind kind){
+    public String updateBKind(BKind kind) {
         BKindService.updateBKind(kind);
         return "类型修改成功";
     }
 
     @GetMapping("/queryBKind")
-    public List<BKind> queryBKind(){
+    public List<BKind> queryBKind() {
         List<BKind> kind = BKindService.queryBKind();
         return kind;
     }
 
     @GetMapping("/queryBKindname")
-    public List<Map> queryBKindname(){
+    public List<Map> queryBKindname() {
         List<Map> map = BKindService.queryBKindname();
         return map;
     }
 
     @GetMapping("/queryBKindandSKind")
-    public List<BKind> queryBKindandSKind(BKind bkind){
+    public List<BKind> queryBKindandSKind(BKind bkind) {
         Map map = new HashMap();
-        if(bkind.getBkid() != null) {
-            map.put("bkid",bkind.getBkid());
+        if (bkind.getBkid() != null) {
+            map.put("bkid", bkind.getBkid());
         }
-        if(bkind.getBkindname() != null && bkind.getBkindname() != "") {
-            map.put("bkindname",bkind.getBkindname());
+        if (bkind.getBkindname() != null && bkind.getBkindname() != "") {
+            map.put("bkindname", bkind.getBkindname());
         }
         return BKindService.queryBKindandSKind(map);
     }

@@ -18,21 +18,21 @@ public class ContactController {
     private ContactService contactService;
 
     @PostMapping("/updatecontact")
-    public String updatecontact(Contact contact){
+    public String updatecontact(Contact contact) {
         contactService.updateContact(contact);
         return "更改成功";
     }
 
     @PostMapping("/addContact")
-    public Long addContact(Contact contact){
+    public Long addContact(Contact contact) {
         Map map = new HashMap();
-        map.put("fromuid",contact.getFromuid());
-        map.put("touid",contact.getTouid());
+        map.put("fromuid", contact.getFromuid());
+        map.put("touid", contact.getTouid());
         List<Contact> contacts = contactService.queryContact(map);
-        if (contacts.size() == 0){
+        if (contacts.size() == 0) {
             contactService.addContact(contact);
             return contact.getCid();
-        }else {
+        } else {
             return contacts.get(0).getCid();
         }
     }
