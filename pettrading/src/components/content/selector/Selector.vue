@@ -101,7 +101,7 @@
       requestqueryallskind().then(res => {
           this.skind = res;
           if(this.$route.query.bkid){
-            this.form.bkid = this.$route.query.bkid;
+            this.form.bkid = +this.$route.query.bkid;
             this.fskind = this.skind.filter(n => {
               return n.bkid === this.form.bkid
             })
