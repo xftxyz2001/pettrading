@@ -1,6 +1,6 @@
 # pettrading
 
-## Project setup
+## Project setup（Node14）
 ```
 npm install
 ```

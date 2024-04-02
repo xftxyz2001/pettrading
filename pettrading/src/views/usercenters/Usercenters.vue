@@ -1,11 +1,15 @@
 <!---->
 <template>
-  <div class='usercenters'>
-    <breadcrumb>{{$route.meta.title}}</breadcrumb>
+  <div class="usercenters">
+    <breadcrumb>{{ $route.meta.title }}</breadcrumb>
     <div class="navmeun container">
-      <div :class="{active: isactive('/usercenters/user/')}" @click="toactive('/usercenters')">个人中心</div>
-      <div :class="{active: this.$route.path === '/usercenters/petorder'}" @click="toactive('/usercenters/petorder')">我的订单</div>
-      <div :class="{active: this.$route.path === '/usercenters/pet'}" @click="toactive('/usercenters/pet')">我的宠物</div>
+      <div :class="{ active: isactive('/usercenters/user/') }" @click="toactive('/usercenters')">个人中心</div>
+      <div :class="{ active: this.$route.path === '/usercenters/petorder' }" @click="toactive('/usercenters/petorder')">
+        我的订单
+      </div>
+      <div :class="{ active: this.$route.path === '/usercenters/pet' }" @click="toactive('/usercenters/pet')">
+        我的宠物
+      </div>
     </div>
     <div>
       <router-view></router-view>
@@ -14,31 +18,30 @@
 </template>
 
 <script>
+import Breadcrumb from "components/common/breadcrumb/Breadcrumb.vue";
 
-  import Breadcrumb from 'components/common/breadcrumb/Breadcrumb.vue'
-
-  export default {
-    name: 'Usercenters',
-    components: {
-      Breadcrumb
+export default {
+  name: "Usercenters",
+  components: {
+    Breadcrumb
+  },
+  data() {
+    return {};
+  },
+  methods: {
+    toactive(url) {
+      this.$router.push(url);
     },
-    data () {
-      return {}
-    },
-    methods: {
-      toactive(url) {
-        this.$router.push(url)
-      },
-      isactive(url) {
-        let index = this.$route.path.indexOf(url)
-        if(index === -1) {
-          return false
-        }else {
-          return true
-        }
+    isactive(url) {
+      let index = this.$route.path.indexOf(url);
+      if (index === -1) {
+        return false;
+      } else {
+        return true;
       }
     }
   }
+};
 </script>
 <style scoped>
 @import "~assets/css/mediacss.css";
@@ -72,5 +75,4 @@
   /* border: 1px solid rgb(64, 158, 255); */
   background: rgb(64, 158, 255);
 }
-
 </style>

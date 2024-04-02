@@ -15,13 +15,7 @@
         <div class="upload">
           <img src="~assets/img/user/upload.png" alt />
         </div>
-        <input
-          id="uimg"
-          type="file"
-          accept="image/*"
-          @change="changephoto"
-          :style="{display: 'none'}"
-        />
+        <input id="uimg" type="file" accept="image/*" @change="changephoto" :style="{ display: 'none' }" />
       </div>
       <!-- 个人信息 -->
       <div class="changeform">
@@ -54,7 +48,7 @@
 </template>
 
 <script>
-import {requestqueryuser,requestupdateuser} from 'network/requestuser.js'
+import { requestqueryuser, requestupdateuser } from "network/requestuser.js";
 
 export default {
   name: "UserChangeMes",
@@ -62,23 +56,23 @@ export default {
     //验证用户名
     var checkusername = (rule, value, callback) => {
       if (!value) {
-        return callback(new Error('用户名不能为空'));
-      }else if (/^[A-Za-z0-9_\u4e00-\u9fa5]{3,16}$/.test(value)) {
+        return callback(new Error("用户名不能为空"));
+      } else if (/^[A-Za-z0-9_\u4e00-\u9fa5]{3,16}$/.test(value)) {
         callback();
-      }else {
-        return callback(new Error('用户名只能是3到16位的字母,数字和中文'))
+      } else {
+        return callback(new Error("用户名只能是3到16位的字母,数字和中文"));
       }
     };
     //验证手机号
     var checktelphone = (rule, value, callback) => {
-      if (value === ''){
-        return callback(new Error('手机号不能为空'));
-      }else if (/^1\d{10}$/.test(value)){
-        callback()
-      }else {
-        return callback(new Error('请输入11位手机号码，1xx xxxx xxxx'))
+      if (value === "") {
+        return callback(new Error("手机号不能为空"));
+      } else if (/^1\d{10}$/.test(value)) {
+        callback();
+      } else {
+        return callback(new Error("请输入11位手机号码，1xx xxxx xxxx"));
       }
-    }
+    };
     return {
       userimg: "",
       form: {
@@ -94,33 +88,31 @@ export default {
         avatar: false
       },
       rules: {
-        username: [
-          {validator: checkusername, trigger: 'blur'}
-        ],
-        telphone: [
-          {validator: checktelphone, trigger: 'blur'}
-        ]
+        username: [{ validator: checkusername, trigger: "blur" }],
+        telphone: [{ validator: checktelphone, trigger: "blur" }]
       }
     };
   },
   created() {
     requestqueryuser({
-        uid: this.$store.state.uid
-      }).then(res => {
+      uid: this.$store.state.uid
+    })
+      .then(res => {
         this.userimg = this.$store.state.avatar;
         this.form.username = res.username;
         this.form.realname = res.realname;
         this.form.idcard = res.idcard;
         this.form.sex = res.sex;
         this.form.telphone = res.telphone;
-        if(res.address === null){
+        if (res.address === null) {
           this.form.address = "";
-        }else {
+        } else {
           this.form.address = res.address;
         }
-      }).catch(err =>{
-        console.log(err);
       })
+      .catch(err => {
+        console.log(err);
+      });
   },
   methods: {
     show() {
@@ -134,63 +126,62 @@ export default {
       let reader = new FileReader();
       reader.readAsDataURL(this.form.avatar);
       var that = this;
-      reader.onload = function(e) {
+      reader.onload = function (e) {
         that.userimg = e.target.result;
       };
     },
     request(formName) {
-      this.$refs[formName].validate((valid) => {
-          if (valid) {
-            // console.log(this.form.avatar);
-            let formData = new FormData();
-            formData.append('file', this.form.avatar);
-            formData.append('uid',this.$store.state.uid);
-            formData.append('username',this.form.username);
-            formData.append('sex',this.form.sex);
-            // formData.append('telphone',this.form.telphone);
-            // formData.append('address',this.form.address);
-            requestupdateuser(
-              formData
-            ).then(res => {
-              if(res.flag === 1) {
-                if(res.avatar != null){
-                  this.$store.commit('setavatar', "http://localhost:8081/" + res.avatar);
+      this.$refs[formName].validate(valid => {
+        if (valid) {
+          // console.log(this.form.avatar);
+          let formData = new FormData();
+          formData.append("file", this.form.avatar);
+          formData.append("uid", this.$store.state.uid);
+          formData.append("username", this.form.username);
+          formData.append("sex", this.form.sex);
+          // formData.append('telphone',this.form.telphone);
+          // formData.append('address',this.form.address);
+          requestupdateuser(formData)
+            .then(res => {
+              if (res.flag === 1) {
+                if (res.avatar != null) {
+                  this.$store.commit("setavatar", "http://localhost:8081/" + res.avatar);
                 }
                 this.$message({
                   message: res.msg,
-                  type: 'success',
+                  type: "success",
                   center: true,
-                  showClose: true,
-                })
-              }else {
+                  showClose: true
+                });
+              } else {
                 this.$message({
                   message: res.msg,
-                  type: 'error',
+                  type: "error",
                   center: true,
-                  showClose: true,
-                })
+                  showClose: true
+                });
               }
-            }).catch(err => {
-              console.log(err);
             })
-          } else {
-            return false;
-          }
-        });
-      },
+            .catch(err => {
+              console.log(err);
+            });
+        } else {
+          return false;
+        }
+      });
     }
   }
+};
 </script>
 <style scoped>
-
 .userchangemes {
   display: flex;
   flex-wrap: wrap;
-  justify-content:center;
+  justify-content: center;
 }
 
 .main {
-  display: flex,
+  display: flex;
 }
 
 .changeform {

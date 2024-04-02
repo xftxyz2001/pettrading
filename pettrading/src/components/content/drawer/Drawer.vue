@@ -1,6 +1,6 @@
 <!---->
 <template>
-  <div class='drawer' v-if="$store.state.show">
+  <div class="drawer" v-if="$store.state.show">
     <!-- <el-drawer
       :visible.sync="show"
       direction="btt"
@@ -21,12 +21,12 @@
     <div class="drawerborder" v-if="$store.state.show">
       <div class="mainbar">
         <div v-if="$store.state.logshow">
-        <!-- <login @toregister="toregister"></login> -->
+          <!-- <login @toregister="toregister"></login> -->
           <!-- <div>前往登录页面</div> -->
           <login></login>
         </div>
         <div v-if="$store.state.regshow">
-        <!-- <register @tologin="tologin"></register> -->
+          <!-- <register @tologin="tologin"></register> -->
           <register></register>
         </div>
       </div>
@@ -35,41 +35,40 @@
 </template>
 
 <script>
-  import Login from "views/login/Login.vue"
-  import Register from "views/register/Register.vue"
+import Login from "views/login/Login.vue";
+import Register from "views/register/Register.vue";
 
-  export default {
-    name: 'Drawer',
-    // props: ['show','login','register'],
-    components: {
-      Login,
-      Register
-    },
-    data () {
-      return {
-      }
-    },
-    methods: {
-      close() {
-        this.$store.state.show = false;
-        this.$store.state.logshow = false;
-        this.$store.state.regshow = false;
-      }
-      // close() {
-      //   this.$emit('update:show',false);
-      //   this.$emit('update:login',false);
-      //   this.$emit('update:register',false);
-      // },
-      // toregister() {
-      //   this.$store.state.logshow = false;
-      //   this.$store.state.regshow = false;
-      // },
-      // tologin() {
-      //   this.$emit('update:login',true);
-      //   this.$emit('update:register',false);
-      // }
-    },
+export default {
+  name: "Drawer",
+  // props: ['show','login','register'],
+  components: {
+    Login,
+    Register
+  },
+  data() {
+    return {};
+  },
+  methods: {
+    close() {
+      this.$store.state.show = false;
+      this.$store.state.logshow = false;
+      this.$store.state.regshow = false;
+    }
+    // close() {
+    //   this.$emit('update:show',false);
+    //   this.$emit('update:login',false);
+    //   this.$emit('update:register',false);
+    // },
+    // toregister() {
+    //   this.$store.state.logshow = false;
+    //   this.$store.state.regshow = false;
+    // },
+    // tologin() {
+    //   this.$emit('update:login',true);
+    //   this.$emit('update:register',false);
+    // }
   }
+};
 </script>
 <style scoped>
 .drawer {

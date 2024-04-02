@@ -1,6 +1,6 @@
 <!--后台个人管理-->
 <template>
-  <div class='mymanage'>
+  <div class="mymanage">
     <div class="main">
       <!-- 头像 -->
       <div class="userimgbar">
@@ -15,13 +15,7 @@
         <div class="upload">
           <img src="~assets/img/user/upload.png" alt />
         </div>
-        <input
-          id="uimg"
-          type="file"
-          accept="image/*"
-          @change="changephoto"
-          :style="{display: 'none'}"
-        />
+        <input id="uimg" type="file" accept="image/*" @change="changephoto" :style="{ display: 'none' }" />
       </div>
       <!-- 个人信息 -->
       <div class="changeform">
@@ -40,114 +34,113 @@
 </template>
 
 <script>
-import {requestqueryuser,requestupdateuser} from 'network/requestuser.js'
+import { requestqueryuser, requestupdateuser } from "network/requestuser.js";
 
-  export default {
-    name: 'mymanage',
-    data () {
-      //验证用户名
-      var checkusername = (rule, value, callback) => {
-         if (!value) {
-           return callback(new Error('用户名不能为空'));
-         }else if (/^[A-Za-z0-9_\u4e00-\u9fa5]{3,16}$/.test(value)) {
-           callback();
-         }else {
-           return callback(new Error('用户名只能是3到16位的字母,数字和中文'))
-         }
-      };
-      return {
-        userimg: "",
-        form: {
-          username: '',
-          password: ""
-        },
-        flag: {
-          avatar: false
-        },
-        rules: {
-          username: [
-            {validator: checkusername, trigger: 'blur'}
-          ]
-        }
+export default {
+  name: "mymanage",
+  data() {
+    //验证用户名
+    var checkusername = (rule, value, callback) => {
+      if (!value) {
+        return callback(new Error("用户名不能为空"));
+      } else if (/^[A-Za-z0-9_\u4e00-\u9fa5]{3,16}$/.test(value)) {
+        callback();
+      } else {
+        return callback(new Error("用户名只能是3到16位的字母,数字和中文"));
       }
-    },
-    created() {
-        requestqueryuser({
-            uid: this.$store.state.uid
-        }).then(res => {
-            this.userimg = this.$store.state.avatar;
-            this.form.username = res.username;
-            this.form.password = res.password
-        }).catch(err =>{
-            console.log(err);
-        })
-    },
-    methods: {
-      show() {
-        this.flag.avatar = true;
+    };
+    return {
+      userimg: "",
+      form: {
+        username: "",
+        password: ""
       },
-      noshow() {
-        this.flag.avatar = false;
+      flag: {
+        avatar: false
       },
-      changephoto(event) {
-        this.form.avatar = event.target.files[0];
-        let reader = new FileReader();
-        reader.readAsDataURL(this.form.avatar);
-        var that = this;
-        reader.onload = function(e) {
-            that.userimg = e.target.result;
-        };
-     },
-     request(formName) {
-      this.$refs[formName].validate((valid) => {
-          if (valid) {
-            let formData = new FormData();
-            formData.append('file', this.form.avatar);
-            formData.append('uid',this.$store.state.uid);
-            formData.append('username',this.form.username);
-            formData.append('password',this.form.password);
-            requestupdateuser(
-              formData
-            ).then(res => {
-              if(res.flag === 1) {
-                if(res.avatar != null){
-                  this.$store.commit('setavatar', "http://localhost:8081/" + res.avatar);
+      rules: {
+        username: [{ validator: checkusername, trigger: "blur" }]
+      }
+    };
+  },
+  created() {
+    requestqueryuser({
+      uid: this.$store.state.uid
+    })
+      .then(res => {
+        this.userimg = this.$store.state.avatar;
+        this.form.username = res.username;
+        this.form.password = res.password;
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  },
+  methods: {
+    show() {
+      this.flag.avatar = true;
+    },
+    noshow() {
+      this.flag.avatar = false;
+    },
+    changephoto(event) {
+      this.form.avatar = event.target.files[0];
+      let reader = new FileReader();
+      reader.readAsDataURL(this.form.avatar);
+      var that = this;
+      reader.onload = function (e) {
+        that.userimg = e.target.result;
+      };
+    },
+    request(formName) {
+      this.$refs[formName].validate(valid => {
+        if (valid) {
+          let formData = new FormData();
+          formData.append("file", this.form.avatar);
+          formData.append("uid", this.$store.state.uid);
+          formData.append("username", this.form.username);
+          formData.append("password", this.form.password);
+          requestupdateuser(formData)
+            .then(res => {
+              if (res.flag === 1) {
+                if (res.avatar != null) {
+                  this.$store.commit("setavatar", "http://localhost:8081/" + res.avatar);
                 }
                 this.$notify({
                   title: "修改成功",
                   message: res.msg,
-                  type: 'success',
+                  type: "success",
                   offset: 100
-                })
-              }else {
+                });
+              } else {
                 this.$notify({
                   title: "修改失败",
                   message: res.msg,
-                  type: 'error',
+                  type: "error",
                   offset: 100
-                })
+                });
               }
-            }).catch(err => {
-              console.log(err);
             })
-          } else {
-            return false;
-          }
-        });
-      },
-     }
+            .catch(err => {
+              console.log(err);
+            });
+        } else {
+          return false;
+        }
+      });
+    }
   }
+};
 </script>
 <style scoped>
-
 .mymanage {
   display: flex;
   flex-wrap: wrap;
-  justify-content:center;
+  justify-content: center;
 }
 
 .main {
-  display: flex,
+  display: flex;
 }
 
 .changeform {

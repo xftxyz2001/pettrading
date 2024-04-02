@@ -1,6 +1,6 @@
 <!---->
 <template>
-  <div class='registerusermes'>
+  <div class="registerusermes">
     <div>
       <!-- 真实姓名 -->
       <div class="inp">
@@ -9,10 +9,10 @@
           type="text"
           placeholder="真实姓名"
           v-model="form.realname"
-          @blur="checkrealname" 
+          @blur="checkrealname"
           :class="{ redborder: check.realname.flag }"
         />
-        <p v-show="check.realname.flag">{{check.realname.val}}</p>
+        <p v-show="check.realname.flag">{{ check.realname.val }}</p>
       </div>
       <!-- 身份证号 -->
       <div class="inp">
@@ -21,10 +21,10 @@
           type="text"
           placeholder="身份证号"
           v-model="form.idcard"
-          @blur="checkidcard" 
+          @blur="checkidcard"
           :class="{ redborder: check.idcard.flag }"
         />
-        <p v-show="check.idcard.flag">{{check.idcard.val}}</p>
+        <p v-show="check.idcard.flag">{{ check.idcard.val }}</p>
       </div>
       <div class="but">
         <el-button round type="primary" @click="previous">上一步</el-button>
@@ -35,82 +35,81 @@
 </template>
 
 <script>
-  import {requestcheckuser} from "network/LRF.js";
+import { requestcheckuser } from "network/LRF.js";
 
-  export default {
-    name: 'RegisterUserMes',
-    props: ['form'],
-    data () {
-      return {
-        check: {
-          realname: {
-            flag: false,
-            val: ''
-          },
-          idcard: {
-            flag: false,
-            val: ''
-          }
+export default {
+  name: "RegisterUserMes",
+  props: ["form"],
+  data() {
+    return {
+      check: {
+        realname: {
+          flag: false,
+          val: ""
+        },
+        idcard: {
+          flag: false,
+          val: ""
         }
       }
+    };
+  },
+  methods: {
+    //检验真实姓名
+    checkrealname() {
+      if (this.form.realname === "") {
+        this.check.realname.val = "*真实姓名不能为空";
+        this.check.realname.flag = true;
+      } else {
+        this.check.realname.flag = false;
+      }
     },
-    methods: {
-      //检验真实姓名
-      checkrealname() {
-        if (this.form.realname === "") {
-          this.check.realname.val = "*真实姓名不能为空";
-          this.check.realname.flag = true;
-        } else {
-          this.check.realname.flag = false;
-        }
-      },
-      //检验身份证号
-      checkidcard() {
-        if (this.form.idcard === "") {
+    //检验身份证号
+    checkidcard() {
+      if (this.form.idcard === "") {
         this.check.idcard.val = "*身份证号不能为空";
         this.check.idcard.flag = true;
-        } else if (
-            /^[1-9]\d{5}(18|19|20)\d{2}((0[1-9])|(1[0-2]))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/.test(
-            this.form.idcard
-            )
-        ) {
-            this.check.idcard.flag = false;
-        } else {
-            this.check.idcard.val = "*请正确输入18位身份证号";
-            this.check.idcard.flag = true;
-        }
-      },
-      previous() {
-        this.$emit('previous');
-      },
-      next() {
-        if(this.check.realname.flag != true && this.check.idcard.flag != true){
-          requestcheckuser({
-            realname: this.form.realname,
-            idcard: this.form.idcard
-          }).then(res => {
-            if(res.flag === 0){
+      } else if (
+        /^[1-9]\d{5}(18|19|20)\d{2}((0[1-9])|(1[0-2]))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/.test(this.form.idcard)
+      ) {
+        this.check.idcard.flag = false;
+      } else {
+        this.check.idcard.val = "*请正确输入18位身份证号";
+        this.check.idcard.flag = true;
+      }
+    },
+    previous() {
+      this.$emit("previous");
+    },
+    next() {
+      if (this.check.realname.flag != true && this.check.idcard.flag != true) {
+        requestcheckuser({
+          realname: this.form.realname,
+          idcard: this.form.idcard
+        })
+          .then(res => {
+            if (res.flag === 0) {
               this.$message({
                 showClose: true,
                 message: res.msg,
-                type: 'error',
+                type: "error",
                 center: true
-              })
-              this.$emit('next', 0)
-            }else {
-              this.$emit('next', 1);
-              this.$emit('register');
+              });
+              this.$emit("next", 0);
+            } else {
+              this.$emit("next", 1);
+              this.$emit("register");
             }
-          }).catch(err => {
-            console.log(err);
           })
-        }
+          .catch(err => {
+            console.log(err);
+          });
       }
-    },
+    }
   }
+};
 </script>
 <style scoped>
-
 .inp {
   position: relative;
   width: 270px;
@@ -160,6 +159,6 @@ input {
 
 .but {
   display: flex;
-  justify-content:space-around;
+  justify-content: space-around;
 }
 </style>

@@ -1,40 +1,48 @@
 <!---->
 <template>
-  <div class='chat'>
+  <div class="chat">
     <div class="chatbar">
       <div class="chattop">
         <div>聊天室</div>
-        <div>{{activeuser.username}}</div>
+        <div>{{ activeuser.username }}</div>
         <div class="close" @click="$store.state.showchat = false">退出</div>
       </div>
       <div class="userlists">
-        <div :class="{activeuser: active === index}" class="chatuser" v-for="(item,index) in chatuser" :key="index" @click="toactive(index,item)">
-            <el-badge :value="item.noread" :hidden="active == index || item.noread == 0">
-              <div class="useravatar">
-                <img :src="'/api/' + item.avatar" alt="">
-              </div>
-            </el-badge>
-            <div class="username">{{item.username}}</div>
+        <div
+          :class="{ activeuser: active === index }"
+          class="chatuser"
+          v-for="(item, index) in chatuser"
+          :key="index"
+          @click="toactive(index, item)"
+        >
+          <el-badge :value="item.noread" :hidden="active == index || item.noread == 0">
+            <div class="useravatar">
+              <img :src="'/api/' + item.avatar" alt="" />
+            </div>
+          </el-badge>
+          <div class="username">{{ item.username }}</div>
         </div>
       </div>
       <div class="chatmessagebar" v-if="show == false">
-        <div class="tip">
-          选择联系人开始聊天
-        </div>
+        <div class="tip">选择联系人开始聊天</div>
       </div>
       <div class="chatmessagebar" v-if="show == true">
         <div class="allmessage" id="allmessage">
-          <div v-for="(item,index) in messagelist" :key="index">
+          <div v-for="(item, index) in messagelist" :key="index">
             <div class="chatmessageleft" v-if="item.fromuid == activeuser.uid && item.touid == $store.state.uid">
-                <div class="useravatar">
-                  <img :src="'/api/' + item.fromavatar" alt="">
-                </div>
-                <div @click="todetail(item)" :class="{chatmessage: true,link: item.type != 0}" v-html="item.msg">{{item.msg}}</div>
+              <div class="useravatar">
+                <img :src="'/api/' + item.fromavatar" alt="" />
+              </div>
+              <div @click="todetail(item)" :class="{ chatmessage: true, link: item.type != 0 }" v-html="item.msg">
+                {{ item.msg }}
+              </div>
             </div>
             <div class="chatmessageright" v-if="item.fromuid == $store.state.uid && item.touid == activeuser.uid">
-              <div @click="todetail(item)" :class="{mychatmessage: true,link: item.type != 0}" v-html="item.msg">{{item.msg}}</div>
+              <div @click="todetail(item)" :class="{ mychatmessage: true, link: item.type != 0 }" v-html="item.msg">
+                {{ item.msg }}
+              </div>
               <div class="useravatar">
-                <img :src="'/api/' + item.fromavatar" alt="">
+                <img :src="'/api/' + item.fromavatar" alt="" />
               </div>
             </div>
           </div>
@@ -49,99 +57,100 @@
 </template>
 
 <script>
-  import {requestupdatecontact} from 'network/requestContact.js'
+import { requestupdatecontact } from "network/requestContact.js";
 
-  export default {
-    name: 'Chat',
-    props: ['chatuser','messagelist','active','activeuser'],
-    inject: ['reload'],
-    data () {
-      return {
-        show: false,
-        form: {
-          type: 0,
-          message: '',
-          touid: ''
-        },
+export default {
+  name: "Chat",
+  props: ["chatuser", "messagelist", "active", "activeuser"],
+  inject: ["reload"],
+  data() {
+    return {
+      show: false,
+      form: {
+        type: 0,
+        message: "",
+        touid: ""
+      }
+    };
+  },
+  mounted() {
+    // 聊天定位到底部
+    if (this.show == false && this.active != null) {
+      this.show = true;
+    }
+  },
+  updated() {
+    // 聊天定位到底部
+    if (this.show == true) {
+      this.tobottom();
+    }
+  },
+  methods: {
+    tobottom() {
+      let ele = document.getElementById("allmessage");
+      ele.scrollTop = ele.scrollHeight;
+    },
+    send() {
+      if (this.form.message == "") {
+        this.$message({
+          message: "信息不能为空",
+          type: "error",
+          center: true,
+          showClose: true
+        });
+      } else {
+        this.form.touid = this.activeuser.uid;
+        this.$emit("send", this.form);
+        this.form.message = "";
+        this.form.touid = "";
       }
     },
-    mounted() {
-      // 聊天定位到底部
-      if(this.show == false && this.active != null) {
-        this.show = true
-      }
-    },
-    updated() {
-      // 聊天定位到底部
-      if(this.show == true) {
-        this.tobottom()
-      }
-    },
-    methods: {
-      tobottom() {
-        let ele = document.getElementById('allmessage')
-        ele.scrollTop = ele.scrollHeight;
-      },
-      send() {
-        if(this.form.message == ""){
-          this.$message({
-            message: "信息不能为空",
-            type: "error",
-            center: true,
-            showClose:true
+    toactive(index, item) {
+      this.$emit("update:active", index);
+      this.$emit("update:activeuser", item);
+      this.show = true;
+      if (item.noread != 0) {
+        requestupdatecontact({
+          cid: item.cid,
+          noread: 0
+        })
+          .then(res => {
+            this.$emit("clearnoread", index);
           })
-        }else {
-          this.form.touid = this.activeuser.uid
-          this.$emit("send", this.form)
-          this.form.message = ""
-          this.form.touid = ""
-        }
-      },
-      toactive(index,item) {
-        this.$emit("update:active",index)
-        this.$emit("update:activeuser",item)
-        this.show = true
-        if(item.noread != 0){
-          requestupdatecontact({
-            cid: item.cid,
-            noread: 0
-          }).then(res => {
-            this.$emit("clearnoread",index)
-          }).catch(err => {
-            console.log(err)
-          })
-        }
-      },
-      todetail(item) {
-        if(item.type != 0) {
-          this.$store.state.showchat = false
-          if(this.$route.path != "/detail") {
+          .catch(err => {
+            console.log(err);
+          });
+      }
+    },
+    todetail(item) {
+      if (item.type != 0) {
+        this.$store.state.showchat = false;
+        if (this.$route.path != "/detail") {
+          this.$router.push({
+            path: "/detail",
+            query: {
+              pid: item.pid
+            }
+          });
+        } else {
+          if (this.$route.query.pid != item.pid) {
             this.$router.push({
-              path: '/detail',
+              path: "/detail",
               query: {
                 pid: item.pid
               }
-            })
+            });
+            this.reload();
           } else {
-            if(this.$route.query.pid != item.pid) {
-              this.$router.push({
-                path: '/detail',
-                query: {
-                  pid: item.pid
-                }
-              })
-              this.reload()
-            }else {
-              this.reload()
-            }
+            this.reload();
           }
         }
       }
     }
   }
+};
 </script>
 <style scoped>
-
 .chatbar {
   position: fixed;
   top: 19vh;

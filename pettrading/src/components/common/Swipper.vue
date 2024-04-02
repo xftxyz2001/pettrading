@@ -5,13 +5,19 @@
       <div class="search">
         <div class="inp">
           <el-tooltip class="item" effect="dark" :content="content" placement="top-start">
-            <div :class="{left: true, leftturn: turnback}" @click="turn">
-              <img class="leftimg" src="~assets/img/search/turn.png" alt="">
+            <div :class="{ left: true, leftturn: turnback }" @click="turn">
+              <img class="leftimg" src="~assets/img/search/turn.png" alt="" />
             </div>
           </el-tooltip>
-          <input @keyup.enter="request" v-model="petname" :placeholder="placeholder" :class="{elinp: true,elinpturn: turnback}" type="text">
-          <div :class="{right: true, rightturn: turnback}" @click="request">
-            <img class="rightimg" src="~assets/img/search/search.png" alt="">
+          <input
+            @keyup.enter="request"
+            v-model="petname"
+            :placeholder="placeholder"
+            :class="{ elinp: true, elinpturn: turnback }"
+            type="text"
+          />
+          <div :class="{ right: true, rightturn: turnback }" @click="request">
+            <img class="rightimg" src="~assets/img/search/search.png" alt="" />
           </div>
         </div>
       </div>
@@ -23,8 +29,7 @@
           v-show="index === show"
           @mouseover="stopslider"
           @mouseleave="runslider"
-        >
-        </span>
+        ></span>
       </transition-group>
     </div>
   </div>
@@ -36,9 +41,9 @@ export default {
   data() {
     return {
       petname: "",
-      content: '切换到查询求购',
+      content: "切换到查询求购",
       turnback: false,
-      placeholder: '请输入要购买的宠物名称',
+      placeholder: "请输入要购买的宠物名称",
       pk: 0,
       sliders: [
         {
@@ -53,25 +58,25 @@ export default {
     };
   },
   methods: {
-    request(){
-      if(this.petname === ""){
-        return
+    request() {
+      if (this.petname === "") {
+        return;
       }
-      if(this.pk === 0) {
+      if (this.pk === 0) {
         this.$router.push({
-          path: '/presell',
+          path: "/presell",
           query: {
             petname: this.petname
           }
-        })
-      };
-      if(this.pk === 1) {
+        });
+      }
+      if (this.pk === 1) {
         this.$router.push({
-          path: '/buying',
+          path: "/buying",
           query: {
             petname: this.petname
           }
-        })
+        });
       }
     },
     getbackground(index) {
@@ -87,7 +92,7 @@ export default {
       // this.timer = null;
     },
     runslider() {
-      if(this.timer === null){
+      if (this.timer === null) {
         this.timer = setInterval(() => {
           if (this.show === this.sliders.length - 1) {
             this.show = 0;
@@ -101,13 +106,13 @@ export default {
     //切换查询模式
     turn() {
       this.turnback = !this.turnback;
-      if(this.turnback === true){
-        this.content = '切换到查询出售';
-        this.placeholder = '请输入想查询的求购区的宠物名称';
+      if (this.turnback === true) {
+        this.content = "切换到查询出售";
+        this.placeholder = "请输入想查询的求购区的宠物名称";
         this.pk = 1;
-      }else {
-        this.content = '切换到查询求购';
-        this.placeholder = '请输入要购买的宠物名称';
+      } else {
+        this.content = "切换到查询求购";
+        this.placeholder = "请输入要购买的宠物名称";
         this.pk = 0;
       }
     }
@@ -118,7 +123,6 @@ export default {
 };
 </script>
 <style scoped>
-
 .window {
   position: relative;
   width: 100%;
@@ -151,9 +155,9 @@ export default {
   border-radius: 1.8em 0 0 1.8em;
   background: rgb(64, 158, 255);
   transition: background 1s;
-  -moz-transition: background 1s;	/* Firefox 4 */
-  -webkit-transition: background 1s;	/* Safari 和 Chrome */
-  -o-transition: background 1s;	/* Opera */
+  -moz-transition: background 1s; /* Firefox 4 */
+  -webkit-transition: background 1s; /* Safari 和 Chrome */
+  -o-transition: background 1s; /* Opera */
   cursor: pointer;
 }
 
@@ -173,9 +177,9 @@ export default {
   border-radius: 0 1.8em 1.8em 0;
   background: rgb(64, 158, 255);
   transition: background 1s;
-  -moz-transition: background 1s;	/* Firefox 4 */
-  -webkit-transition: background 1s;	/* Safari 和 Chrome */
-  -o-transition: background 1s;	/* Opera */
+  -moz-transition: background 1s; /* Firefox 4 */
+  -webkit-transition: background 1s; /* Safari 和 Chrome */
+  -o-transition: background 1s; /* Opera */
   cursor: pointer;
 }
 
@@ -196,9 +200,9 @@ export default {
   font-size: 1.5em;
   border: 2px solid rgb(64, 158, 255);
   transition: border 1s;
-  -moz-transition: border 1s;	/* Firefox 4 */
-  -webkit-transition: border 1s;	/* Safari 和 Chrome */
-  -o-transition: border 1s;	/* Opera */
+  -moz-transition: border 1s; /* Firefox 4 */
+  -webkit-transition: border 1s; /* Safari 和 Chrome */
+  -o-transition: border 1s; /* Opera */
 }
 
 .elinpturn {
@@ -218,15 +222,18 @@ export default {
   cursor: default;
 }
 
-.slider-enter-active, .slider-leave-active {
+.slider-enter-active,
+.slider-leave-active {
   transition: opacity 2s;
 }
 
-.slider-enter, .slider-leave-to {
+.slider-enter,
+.slider-leave-to {
   opacity: 0;
 }
 
-.slider-enter-to, .slider-leave {
+.slider-enter-to,
+.slider-leave {
   opacity: 1;
 }
 

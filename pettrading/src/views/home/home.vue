@@ -2,16 +2,8 @@
 <template>
   <div class="home">
     <swipper></swipper>
-    <category
-      v-for="(item, index) in bkind"
-      :key="index"
-      :bkind="item"
-    ></category>
-    <category
-      v-for="(item, index) in other"
-      :key="'other' + index"
-      :bkind="item"
-    ></category>
+    <category v-for="(item, index) in bkind" :key="index" :bkind="item"></category>
+    <category v-for="(item, index) in other" :key="'other' + index" :bkind="item"></category>
     <sidebar></sidebar>
   </div>
 </template>

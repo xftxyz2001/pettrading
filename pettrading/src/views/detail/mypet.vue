@@ -4,11 +4,7 @@
     <div class="title">请选择符合条件的宠物</div>
     <div class="petlist">
       <div v-for="(item, index) in petlists" :key="index">
-        <el-popconfirm
-          placement="top-start"
-          title="将该宠物信息发送给该用户？"
-          @confirm="select(index, item)"
-        >
+        <el-popconfirm placement="top-start" title="将该宠物信息发送给该用户？" @confirm="select(index, item)">
           <div slot="reference">
             <petcard :item="item" :statu="item.pk"></petcard>
           </div>
@@ -29,22 +25,22 @@ export default {
   name: "mypet",
   props: ["touid"],
   components: {
-    Petcard,
+    Petcard
   },
   data() {
     return {
-      petlists: [],
+      petlists: []
     };
   },
   created() {
     requestqueryAllPet({
       uid: this.$store.state.uid,
-      pk: 0,
+      pk: 0
     })
-      .then((res) => {
+      .then(res => {
         this.petlists = res;
       })
-      .catch((err) => {
+      .catch(err => {
         console.log(err);
       });
   },
@@ -54,7 +50,7 @@ export default {
         title: "发送成功",
         message: "该宠物已推荐给对方",
         type: "success",
-        offset: 100,
+        offset: 100
       });
       let message = {};
       message.type = 7;
@@ -62,8 +58,8 @@ export default {
       message.touid = this.touid;
       message.pid = item.pid;
       bus.$emit("purchase", message);
-    },
-  },
+    }
+  }
 };
 </script>
 <style scoped>

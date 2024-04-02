@@ -4,55 +4,28 @@
     <div class="selectbar">
       <el-form :inline="true" :model="form">
         <el-form-item label="用户id">
-          <el-input
-            clearable
-            v-model="form.uid"
-            placeholder="用户id"
-          ></el-input>
+          <el-input clearable v-model="form.uid" placeholder="用户id"></el-input>
         </el-form-item>
         <el-form-item label="用户名">
-          <el-input
-            clearable
-            v-model="form.username"
-            placeholder="用户名"
-          ></el-input>
+          <el-input clearable v-model="form.username" placeholder="用户名"></el-input>
         </el-form-item>
         <el-form-item label="真实姓名">
-          <el-input
-            clearable
-            v-model="form.realname"
-            placeholder="真实姓名"
-          ></el-input>
+          <el-input clearable v-model="form.realname" placeholder="真实姓名"></el-input>
         </el-form-item>
         <el-form-item label="身份证">
-          <el-input
-            clearable
-            v-model="form.idcard"
-            placeholder="身份证"
-          ></el-input>
+          <el-input clearable v-model="form.idcard" placeholder="身份证"></el-input>
         </el-form-item>
         <el-form-item label="联系电话">
-          <el-input
-            clearable
-            v-model="form.phone"
-            placeholder="联系电话"
-          ></el-input>
+          <el-input clearable v-model="form.phone" placeholder="联系电话"></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button
-            clearable
-            icon="el-icon-search"
-            type="primary"
-            circle
-            @click="request"
-          ></el-button>
+          <el-button clearable icon="el-icon-search" type="primary" circle @click="request"></el-button>
         </el-form-item>
       </el-form>
     </div>
     <div>
       <el-table :data="user" style="width: 100%">
-        <el-table-column prop="uid" label="id" sortable width="100">
-        </el-table-column>
+        <el-table-column prop="uid" label="id" sortable width="100"></el-table-column>
         <el-table-column label="用户头像" width="180">
           <template slot-scope="scope">
             <div class="avatar">
@@ -60,22 +33,15 @@
             </div>
           </template>
         </el-table-column>
-        <el-table-column prop="username" label="用户名" width="180">
-        </el-table-column>
-        <el-table-column prop="password" label="登录密码" width="150">
-        </el-table-column>
-        <el-table-column prop="sex" label="性别" width="100"> </el-table-column>
-        <el-table-column prop="realname" label="真实姓名" width="180">
-        </el-table-column>
-        <el-table-column prop="idcard" width="200" label="身份证号">
-        </el-table-column>
-        <el-table-column prop="telphone" label="手机号" width="180">
-        </el-table-column>
+        <el-table-column prop="username" label="用户名" width="180"></el-table-column>
+        <el-table-column prop="password" label="登录密码" width="150"></el-table-column>
+        <el-table-column prop="sex" label="性别" width="100"></el-table-column>
+        <el-table-column prop="realname" label="真实姓名" width="180"></el-table-column>
+        <el-table-column prop="idcard" width="200" label="身份证号"></el-table-column>
+        <el-table-column prop="telphone" label="手机号" width="180"></el-table-column>
         <el-table-column label="操作" width="180">
           <template slot-scope="scope">
-            <el-button size="mini" @click="handleEdit(scope.$index, scope.row)"
-              >编辑</el-button
-            >
+            <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
             <el-popconfirm
               confirmButtonText="确定"
               cancelButtonText="取消"
@@ -85,13 +51,7 @@
               title="确定删除该用户吗？"
               @confirm="handleDelete(scope.$index, scope.row)"
             >
-              <el-button
-                style="margin-left: 10px"
-                size="mini"
-                type="danger"
-                slot="reference"
-                >删除</el-button
-              >
+              <el-button style="margin-left: 10px" size="mini" type="danger" slot="reference">删除</el-button>
             </el-popconfirm>
           </template>
         </el-table-column>
@@ -106,25 +66,16 @@
         :current-page.sync="currentpage"
         layout="total, prev, pager, next, jumper"
         :total="total"
-      >
-      </el-pagination>
+      ></el-pagination>
     </div>
     <el-drawer :visible.sync="drawer" direction="rtl" size="50%">
       <div class="updatebar">
         <el-form :model="updateform" label-width="80px">
           <el-form-item label="用户名">
-            <el-input
-              v-model="updateform.username"
-              placeholder="用户名"
-              clearable
-            ></el-input>
+            <el-input v-model="updateform.username" placeholder="用户名" clearable></el-input>
           </el-form-item>
           <el-form-item label="登录密码">
-            <el-input
-              v-model="updateform.password"
-              placeholder="登录密码"
-              clearable
-            ></el-input>
+            <el-input v-model="updateform.password" placeholder="登录密码" clearable></el-input>
           </el-form-item>
           <el-form-item label="性别">
             <el-radio-group v-model="updateform.sex">
@@ -134,25 +85,13 @@
             </el-radio-group>
           </el-form-item>
           <el-form-item label="真实姓名">
-            <el-input
-              v-model="updateform.realname"
-              placeholder="真实姓名"
-              clearable
-            ></el-input>
+            <el-input v-model="updateform.realname" placeholder="真实姓名" clearable></el-input>
           </el-form-item>
           <el-form-item label="身份证号">
-            <el-input
-              v-model="updateform.idcard"
-              placeholder="身份证号"
-              clearable
-            ></el-input>
+            <el-input v-model="updateform.idcard" placeholder="身份证号" clearable></el-input>
           </el-form-item>
           <el-form-item label="手机号">
-            <el-input
-              v-model="updateform.telphone"
-              placeholder="手机号"
-              clearable
-            ></el-input>
+            <el-input v-model="updateform.telphone" placeholder="手机号" clearable></el-input>
           </el-form-item>
           <el-form-item>
             <div class="but">
@@ -173,7 +112,7 @@ import {
   requestqueryuser,
   requestqueryuserby,
   requestdeleteUser,
-  requestupdateuser,
+  requestupdateuser
 } from "network/requestuser.js";
 
 export default {
@@ -190,11 +129,11 @@ export default {
         username: "",
         realname: "",
         idcard: "",
-        phone: "",
+        phone: ""
       },
       editform: {},
       updateform: {},
-      user: [],
+      user: []
     };
   },
   created() {
@@ -203,32 +142,32 @@ export default {
   methods: {
     firstenter() {
       requestcountuser()
-        .then((res) => {
+        .then(res => {
           this.total = res;
         })
-        .catch((err) => {
+        .catch(err => {
           console.log(err);
         });
       requestqueryAllUser({
         page: this.currentpage,
-        count: this.total,
+        count: this.total
       })
-        .then((res) => {
+        .then(res => {
           this.user = res;
         })
-        .catch((err) => {
+        .catch(err => {
           console.log(err);
         });
     },
     handleCurrentChange() {
       requestqueryAllUser({
         page: this.currentpage,
-        count: this.pagesize,
+        count: this.pagesize
       })
-        .then((res) => {
+        .then(res => {
           this.user = res;
         })
-        .catch((err) => {
+        .catch(err => {
           console.log(err);
         });
     },
@@ -238,13 +177,13 @@ export default {
         username: this.form.username,
         realname: this.form.realname,
         idcard: this.form.idcard,
-        telphone: this.form.phone,
+        telphone: this.form.phone
       })
-        .then((res) => {
+        .then(res => {
           this.user = res.user;
           this.total = res.total;
         })
-        .catch((err) => {
+        .catch(err => {
           console.log(err);
         });
     },
@@ -256,18 +195,18 @@ export default {
     },
     handleDelete(index, row) {
       requestdeleteUser({
-        uid: row.uid,
+        uid: row.uid
       })
-        .then((res) => {
+        .then(res => {
           this.$notify({
             title: "删除成功",
             message: res,
             offset: 100,
-            type: "success",
+            type: "success"
           });
           this.firstenter();
         })
-        .catch((err) => {
+        .catch(err => {
           console.log(err);
         });
     },
@@ -281,20 +220,20 @@ export default {
       formData.append("idcard", this.updateform.idcard);
       formData.append("telphone", this.updateform.telphone);
       requestupdateuser(formData)
-        .then((res) => {
+        .then(res => {
           if (res.flag == 0) {
             this.$notify({
               title: "失败",
               message: res.msg,
               type: "error",
-              offset: 100,
+              offset: 100
             });
           } else {
             this.$notify({
               title: "成功",
               message: res.msg,
               type: "success",
-              offset: 100,
+              offset: 100
             });
             this.editform.username = this.updateform.username;
             this.editform.password = this.updateform.password;
@@ -305,11 +244,11 @@ export default {
             this.drawer = false;
           }
         })
-        .catch((err) => {
+        .catch(err => {
           console.log(err);
         });
-    },
-  },
+    }
+  }
 };
 </script>
 <style scoped>

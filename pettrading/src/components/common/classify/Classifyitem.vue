@@ -1,25 +1,24 @@
 <!--搜索规则的每一行-->
 <template>
-  <div class='classifyitem'>
-    <div v-for="(item,index) in kind" :key="index">
-      <div class="kindname">{{item.name}}</div>
+  <div class="classifyitem">
+    <div v-for="(item, index) in kind" :key="index">
+      <div class="kindname">{{ item.name }}</div>
     </div>
   </div>
 </template>
 
 <script>
-  export default {
-    name: 'Classifyitem',
-    props: {
-      kind: Array
-    },
-    data () {
-      return {}
-    }
+export default {
+  name: "Classifyitem",
+  props: {
+    kind: Array
+  },
+  data() {
+    return {};
   }
+};
 </script>
 <style scoped>
-
 .classifyitem {
   display: flex;
   line-height: 2em;

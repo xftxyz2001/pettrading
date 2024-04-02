@@ -1,9 +1,10 @@
 <!---->
 <template>
-  <div class='breadcrumb'>
+  <div class="breadcrumb">
     <div class="mainbar container">
       <div class="left">
-        <span class="tohome" @click="tohome()">首页</span> >
+        <span class="tohome" @click="tohome()">首页</span>
+        >
         <span class="second">
           <slot name="second"></slot>
         </span>
@@ -17,17 +18,17 @@
 </template>
 
 <script>
-  export default {
-    name: 'Breadcrumb',
-    data () {
-      return {}
-    },
-    methods: {
-      tohome() {
-        this.$router.push('/home');
-      }
-    },
+export default {
+  name: "Breadcrumb",
+  data() {
+    return {};
+  },
+  methods: {
+    tohome() {
+      this.$router.push("/home");
+    }
   }
+};
 </script>
 <style scoped>
 @import "~assets/css/mediacss.css";

@@ -1,6 +1,6 @@
 <!---->
 <template>
-  <div class='usersafety'>
+  <div class="usersafety">
     <el-collapse accordion>
       <el-collapse-item>
         <template slot="title">
@@ -12,7 +12,7 @@
         <template slot="title">
           <div class="collapsetitle">
             实名认证
-            <span class="done"> (已认证)</span>
+            <span class="done">(已认证)</span>
           </div>
         </template>
         <verifyrealname></verifyrealname>
@@ -36,21 +36,21 @@
 </template>
 
 <script>
-  import Changepwd from "views/user/childcomps/usersafty/Changepwd.vue"
-  import Verifyrealname from "views/user/childcomps/usersafty/Verifyrealname.vue"
-  import ChangePhone from "views/user/childcomps/usersafty/ChangePhone.vue"
+import Changepwd from "views/user/childcomps/usersafty/Changepwd.vue";
+import Verifyrealname from "views/user/childcomps/usersafty/Verifyrealname.vue";
+import ChangePhone from "views/user/childcomps/usersafty/ChangePhone.vue";
 
-  export default {
-    name: 'UserSafety',
-    data () {
-      return {}
-    },
-    components: {
-      Changepwd,
-      Verifyrealname,
-      ChangePhone
-    }
+export default {
+  name: "UserSafety",
+  data() {
+    return {};
+  },
+  components: {
+    Changepwd,
+    Verifyrealname,
+    ChangePhone
   }
+};
 </script>
 <style scoped>
 .usersafety {

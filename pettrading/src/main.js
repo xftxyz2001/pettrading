@@ -1,9 +1,46 @@
-import Vue from 'vue'
-import App from './App.vue'
-import router from './router'
-import store from './store'
-import { Carousel,CarouselItem,Pagination,Button,Message,Drawer,Backtop,Tooltip,Form,FormItem,Radio,RadioGroup,Input,Select,Option,Upload,Slider,InputNumber,Dialog,Steps,Step,Menu,Submenu,MenuItem,MenuItemGroup,Collapse,CollapseItem,MessageBox,Notification,Table,TableColumn,Popconfirm,Popover,Badge,DatePicker,Divider } from 'element-ui';
-import 'element-ui/lib/theme-chalk/index.css';
+import Vue from "vue";
+import App from "./App.vue";
+import router from "./router";
+import store from "./store";
+import {
+  Carousel,
+  CarouselItem,
+  Pagination,
+  Button,
+  Message,
+  Drawer,
+  Backtop,
+  Tooltip,
+  Form,
+  FormItem,
+  Radio,
+  RadioGroup,
+  Input,
+  Select,
+  Option,
+  Upload,
+  Slider,
+  InputNumber,
+  Dialog,
+  Steps,
+  Step,
+  Menu,
+  Submenu,
+  MenuItem,
+  MenuItemGroup,
+  Collapse,
+  CollapseItem,
+  MessageBox,
+  Notification,
+  Table,
+  TableColumn,
+  Popconfirm,
+  Popover,
+  Badge,
+  DatePicker,
+  Divider
+} from "element-ui";
+import "element-ui/lib/theme-chalk/index.css";
 
 Vue.use(Carousel);
 Vue.use(CarouselItem);
@@ -46,10 +83,10 @@ Vue.prototype.$confirm = MessageBox.confirm;
 Vue.prototype.$prompt = MessageBox.prompt;
 Vue.prototype.$notify = Notification;
 
-Vue.config.productionTip = false
+Vue.config.productionTip = false;
 
 new Vue({
   router,
   store,
   render: h => h(App)
-}).$mount('#app')
+}).$mount("#app");

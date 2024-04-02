@@ -1,8 +1,8 @@
 <!---->
 <template>
-  <div class='usermessage'>
+  <div class="usermessage">
     <div class="user-img">
-      <img :src="$store.state.avatar" alt="">
+      <img :src="$store.state.avatar" alt="" />
     </div>
     <div class="mescontent">
       <ul>
@@ -16,50 +16,34 @@
         </li>
         <!-- 真实姓名 -->
         <li>
-          <p class="type">真实姓名 </p>
+          <p class="type">真实姓名</p>
           <div class="inp">
-          <img src="~assets/img/user/user.png" alt class="img-bg" />
-          <input
-            readonly="true"
-            type="text"
-            v-model="realname"
-          />
-        </div>
-        <!-- 身份证号 -->
+            <img src="~assets/img/user/user.png" alt class="img-bg" />
+            <input readonly="true" type="text" v-model="realname" />
+          </div>
+          <!-- 身份证号 -->
         </li>
         <li>
-          <p class="type">身份证号 </p>
+          <p class="type">身份证号</p>
           <div class="inp">
             <img src="~assets/img/user/idcard.png" alt class="img-bg" />
-            <input
-              readonly="true"
-              type="text"
-              v-model="idcard"
-            />
+            <input readonly="true" type="text" v-model="idcard" />
           </div>
         </li>
         <!-- 性别 -->
         <li>
-          <p class="type">性别 </p>
+          <p class="type">性别</p>
           <div class="inp">
             <img src="~assets/img/user/sex.png" alt class="img-bg" />
-            <input
-              readonly="true"
-              type="text"
-              v-model="sex"
-            />
+            <input readonly="true" type="text" v-model="sex" />
           </div>
         </li>
         <!-- 手机号 -->
         <li>
-          <p class="type">手机号 </p>
+          <p class="type">手机号</p>
           <div class="inp">
             <img src="~assets/img/user/phone.png" alt class="img-bg" />
-            <input
-              readonly="true"
-              type="text"
-              v-model="tel"
-            />
+            <input readonly="true" type="text" v-model="tel" />
           </div>
         </li>
       </ul>
@@ -68,39 +52,40 @@
 </template>
 
 <script>
-  import {requestqueryuser} from 'network/requestuser.js'
+import { requestqueryuser } from "network/requestuser.js";
 
-  export default {
-    name: 'UserMessage',
-    data () {
-      return {
-        userimg: '',
-        username: '',
-        realname: '',
-        idcard: '',
-        sex: '',
-        tel: '',
-      }
-    },
-    created() {
-      requestqueryuser({
-        uid: this.$store.state.uid
-      }).then(res => {
+export default {
+  name: "UserMessage",
+  data() {
+    return {
+      userimg: "",
+      username: "",
+      realname: "",
+      idcard: "",
+      sex: "",
+      tel: ""
+    };
+  },
+  created() {
+    requestqueryuser({
+      uid: this.$store.state.uid
+    })
+      .then(res => {
         this.userimg = res.avatar;
         this.username = res.username;
         this.realname = res.realname;
         this.idcard = res.idcard;
         this.sex = res.sex;
         this.tel = res.telphone;
-      }).catch(err =>{
-        console.log(err);
       })
-    }
+      .catch(err => {
+        console.log(err);
+      });
   }
+};
 </script>
 <style scoped>
-
-.user-img{
+.user-img {
   margin: 0 auto;
   width: 104px;
   height: 104px;
@@ -110,22 +95,23 @@
   overflow: hidden;
 }
 
-.user-img img{
+.user-img img {
   width: 100%;
   height: 100%;
 }
 
-.mescontent{
+.mescontent {
   width: 800px;
   margin: 20px auto;
 }
 
-.mescontent ul li{
+.mescontent ul li {
   margin-top: 10px;
   float: left;
 }
 
-input,button{
+input,
+button {
   border: 0;
   outline: none;
 }

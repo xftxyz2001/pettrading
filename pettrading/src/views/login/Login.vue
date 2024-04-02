@@ -1,6 +1,6 @@
 <!---->
 <template>
-  <div class='login'>
+  <div class="login">
     <div class="loginhead">登录</div>
     <div>
       <!-- 用户名 -->
@@ -15,22 +15,22 @@
           required="required"
           v-model="form.username"
         />
-        <p v-show="check.username.flag">{{check.username.val}}</p>
+        <p v-show="check.username.flag">{{ check.username.val }}</p>
       </div>
       <!-- 密码 -->
       <div class="inp">
         <img src="~assets/img/password/password.png" alt class="img-bg" />
-        <input 
-          @blur="checkPassword" 
-          :class="{ redborder: check.password.flag }" 
-          :type="types.type" 
-          placeholder="密码" 
-          required="required" 
+        <input
+          @blur="checkPassword"
+          :class="{ redborder: check.password.flag }"
+          :type="types.type"
+          placeholder="密码"
+          required="required"
           v-model="form.password"
           @keyup.enter="request"
         />
         <img v-if="form.password != ''" @click="changetype" :src="types.img" alt class="img-bg-right" />
-        <p v-show="check.password.flag">{{check.password.val}}</p>
+        <p v-show="check.password.flag">{{ check.password.val }}</p>
       </div>
       <div class="but">
         <el-button type="primary" round @click="request">登录</el-button>
@@ -43,119 +43,120 @@
 </template>
 
 <script>
-  import { requestLogin } from "network/LRF.js";
+import { requestLogin } from "network/LRF.js";
 
-  export default {
-    name: 'Loginitem',
-    data () {
-      return {
-        //验证信息
-        check: {
-          username: {
-            flag: false,
-            val: ''
-          },
-          password: {
-            flag: false,
-            val: ''
-          }
+export default {
+  name: "Loginitem",
+  data() {
+    return {
+      //验证信息
+      check: {
+        username: {
+          flag: false,
+          val: ""
         },
-        // 密码输入框类型，改变眼睛开闭
-        types: {
-          type: 'password',
-          img: require('assets/img/password/close.png')
-        },
-        // 表单数据
-        form: {
-          username: '',
-          password: ''
-        } 
+        password: {
+          flag: false,
+          val: ""
+        }
+      },
+      // 密码输入框类型，改变眼睛开闭
+      types: {
+        type: "password",
+        img: require("assets/img/password/close.png")
+      },
+      // 表单数据
+      form: {
+        username: "",
+        password: ""
+      }
+    };
+  },
+  methods: {
+    changetype() {
+      if (this.types.type === "text") {
+        this.types.img = require("assets/img/password/close.png");
+        this.types.type = "password";
+      } else {
+        this.types.img = require("assets/img/password/open.png");
+        this.types.type = "text";
       }
     },
-    methods: {
-      changetype () {
-        if (this.types.type === "text") {
-          this.types.img = require('assets/img/password/close.png')
-          this.types.type = "password"
-        } else {
-          this.types.img = require('assets/img/password/open.png')
-          this.types.type = 'text'
-        }
-      },
-      //验证用户名
-      checkUsername() {
-        if(this.form.username === ''){
-          this.check.username.flag = true;
-          this.check.username.val = '*不能为空';
-        }else {
-          this.check.username.flag = false;
-        }
-      },
-      //验证密码
-      checkPassword() {
-        if(this.form.password === ''){
-          this.check.password.flag = true;
-          this.check.password.val = '*密码不能为空';
-        }else {
-          this.check.password.flag = false;
-        }
-      },
-      //登录
-      request() {
-        this.checkUsername();
-        this.checkPassword();
-        if(this.check.username.flag === false && this.check.password.flag === false){
-          requestLogin({
-            username: this.form.username,
-            password: this.form.password
-          }).then(res => {
+    //验证用户名
+    checkUsername() {
+      if (this.form.username === "") {
+        this.check.username.flag = true;
+        this.check.username.val = "*不能为空";
+      } else {
+        this.check.username.flag = false;
+      }
+    },
+    //验证密码
+    checkPassword() {
+      if (this.form.password === "") {
+        this.check.password.flag = true;
+        this.check.password.val = "*密码不能为空";
+      } else {
+        this.check.password.flag = false;
+      }
+    },
+    //登录
+    request() {
+      this.checkUsername();
+      this.checkPassword();
+      if (this.check.username.flag === false && this.check.password.flag === false) {
+        requestLogin({
+          username: this.form.username,
+          password: this.form.password
+        })
+          .then(res => {
             // console.log(res);
-            if(res.flag === 1){
-              this.$store.commit('setuid', res.uid);
-              this.$store.commit('setavatar', '/api/'+res.avatar);
-              if(res.type === 1) {
-                if(this.$route.path == '/login') {
-                  this.$router.push('/home');
+            if (res.flag === 1) {
+              this.$store.commit("setuid", res.uid);
+              this.$store.commit("setavatar", "/api/" + res.avatar);
+              if (res.type === 1) {
+                if (this.$route.path == "/login") {
+                  this.$router.push("/home");
                 }
                 this.$message({
                   message: res.msg,
-                  type: 'success',
+                  type: "success",
                   center: true,
-                  showClose: true,
-                })
+                  showClose: true
+                });
                 this.$store.state.show = false;
                 this.$store.state.logshow = false;
-              }else if(res.type === 0) {
+              } else if (res.type === 0) {
                 this.$router.push("/backstage");
                 this.$store.state.show = false;
                 this.$store.state.logshow = false;
               }
-            }else {
+            } else {
               this.$message({
                 message: res.msg,
-                type: 'error',
+                type: "error",
                 center: true,
-                showClose: true,
+                showClose: true
               });
             }
-          }).catch(err => {
-            console.log(err);
           })
-        }
-      },
-      toregister() {
-        if(this.$store.state.show === true){
-          this.$store.state.logshow = false;
-          this.$store.state.regshow = true;
-        }else{
-          this.$router.push('/register');
-        }
+          .catch(err => {
+            console.log(err);
+          });
       }
     },
+    toregister() {
+      if (this.$store.state.show === true) {
+        this.$store.state.logshow = false;
+        this.$store.state.regshow = true;
+      } else {
+        this.$router.push("/register");
+      }
+    }
   }
+};
 </script>
 <style scoped>
-
 .login {
   width: 25em;
   text-align: center;
@@ -221,6 +222,6 @@ input {
 
 .but {
   display: flex;
-  justify-content:space-around;
+  justify-content: space-around;
 }
 </style>

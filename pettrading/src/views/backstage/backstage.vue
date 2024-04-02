@@ -1,6 +1,6 @@
 <!--后台界面-->
 <template>
-  <div class='backstage'>
+  <div class="backstage">
     <div class="menu">
       <el-menu
         style="height: 100%"
@@ -12,7 +12,8 @@
         text-color="#fff"
         :collapse="isCollapse"
         router
-        active-text-color="#ffd04b">
+        active-text-color="#ffd04b"
+      >
         <el-submenu index="4">
           <template slot="title">
             <i class="el-icon-s-custom"></i>
@@ -60,14 +61,14 @@
       <div class="topbar">
         <div class="titlebar">
           <div class="meunCollapse" @click="changeCollapse">
-            <img :src="menuimg" alt="">
+            <img :src="menuimg" alt="" />
           </div>
           <div class="title">
-            {{$route.meta.title}}
+            {{ $route.meta.title }}
           </div>
         </div>
         <div class="logoutbut" @click="tologout">
-          <i class="el-icon-switch-button" style="color: red;font-size: 3.5em;width: 100%;margin-top: 0.4em"></i>
+          <i class="el-icon-switch-button" style="color: red; font-size: 3.5em; width: 100%; margin-top: 0.4em"></i>
           <div class="clicklogout">退出登录</div>
         </div>
       </div>
@@ -79,60 +80,64 @@
 </template>
 
 <script>
-  export default {
-    name: 'backstage',
-    data () {
-      return {
-        isCollapse: false,
-        menuimg: require('assets/img/menu/close.png'),
-        activepath: ''
+export default {
+  name: "backstage",
+  data() {
+    return {
+      isCollapse: false,
+      menuimg: require("assets/img/menu/close.png"),
+      activepath: ""
+    };
+  },
+  methods: {
+    handleOpen(key, keyPath) {
+      console.log(key, keyPath);
+    },
+    handleClose(key, keyPath) {
+      console.log(key, keyPath);
+    },
+    changewidth() {
+      if (this.isCollapse == false) {
+        return "width: calc(100% - 25em)";
+      } else {
+        return "width: calc(100% - 5.5em)";
       }
     },
-    methods: {
-      handleOpen(key, keyPath) {
-        console.log(key, keyPath);
-      },
-      handleClose(key, keyPath) {
-        console.log(key, keyPath);
-      },
-      changewidth() {
-        if(this.isCollapse == false) {
-          return "width: calc(100% - 25em)"
-        }else {
-          return "width: calc(100% - 5.5em)"
-        }
-      },
-      changeCollapse() {
-        if(this.isCollapse == false) {
-          this.isCollapse = true
-          this.menuimg = require('assets/img/menu/open.png')
-        }else {
-          this.isCollapse = false
-          this.menuimg = require('assets/img/menu/close.png')
-        }
-      },
-      tologout() {
-        this.$confirm('确定要退出登录？', '注销', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          type: 'warning',
-          center: true
-        }).then(() => {
-          if(this.$route.path.indexOf("/home") == -1 || this.$route.path.indexOf("/presell") == -1 || this.$route.path.indexOf("/buying") == -1){
-            this.$router.push('/home');
-          }
-          this.$store.commit('setuid',null);
-          window.sessionStorage.removeItem("uid");
-          this.$store.commit('setavatar',null);
-          window.sessionStorage.removeItem("avatar");
-        }).catch(() => {
-        });
-      },
+    changeCollapse() {
+      if (this.isCollapse == false) {
+        this.isCollapse = true;
+        this.menuimg = require("assets/img/menu/open.png");
+      } else {
+        this.isCollapse = false;
+        this.menuimg = require("assets/img/menu/close.png");
+      }
     },
+    tologout() {
+      this.$confirm("确定要退出登录？", "注销", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning",
+        center: true
+      })
+        .then(() => {
+          if (
+            this.$route.path.indexOf("/home") == -1 ||
+            this.$route.path.indexOf("/presell") == -1 ||
+            this.$route.path.indexOf("/buying") == -1
+          ) {
+            this.$router.push("/home");
+          }
+          this.$store.commit("setuid", null);
+          window.sessionStorage.removeItem("uid");
+          this.$store.commit("setavatar", null);
+          window.sessionStorage.removeItem("avatar");
+        })
+        .catch(() => {});
+    }
   }
+};
 </script>
 <style scoped>
-
 .backstage {
   display: flex;
 }
@@ -141,8 +146,7 @@
   width: 25em;
 }
 
-
-.el-menu{
+.el-menu {
   border-right-width: 0;
 }
 
@@ -166,7 +170,7 @@
 }
 
 .meunCollapse {
-  margin-top:1em;
+  margin-top: 1em;
   width: 4em;
   height: 2em;
   cursor: pointer;
@@ -202,5 +206,4 @@
   height: 85vh;
   overflow-y: auto;
 }
-
 </style>

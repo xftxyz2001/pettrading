@@ -1,6 +1,6 @@
 <!---->
 <template>
-  <div class='tail'>
+  <div class="tail">
     <div class="mainbar container">
       <div>联系电话：1xxxxxxxxxx</div>
       <div>联系邮箱： xxxxxxxxxx.qq.com</div>
@@ -9,12 +9,12 @@
 </template>
 
 <script>
-  export default {
-    name: 'Tail',
-    data () {
-      return {}
-    }
+export default {
+  name: "Tail",
+  data() {
+    return {};
   }
+};
 </script>
 <style scoped>
 @import "~assets/css/mediacss.css";

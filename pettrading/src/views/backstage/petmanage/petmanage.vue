@@ -4,42 +4,18 @@
     <div class="selectbar">
       <el-form :inline="true" :model="form">
         <el-form-item label="宠物id">
-          <el-input
-            clearable
-            v-model="form.pid"
-            placeholder="宠物id"
-          ></el-input>
+          <el-input clearable v-model="form.pid" placeholder="宠物id"></el-input>
         </el-form-item>
         <el-form-item label="用户id">
-          <el-input
-            clearable
-            v-model="form.uid"
-            placeholder="用户id"
-          ></el-input>
+          <el-input clearable v-model="form.uid" placeholder="用户id"></el-input>
         </el-form-item>
         <el-form-item label="宠物状态">
-          <el-select
-            style="width: 100%"
-            v-model="form.pk"
-            clearable
-            filterable
-            placeholder="宠物状态"
-          >
-            <el-option
-              v-for="item in pk"
-              :key="item.pkid"
-              :label="item.pkname"
-              :value="item.pkid"
-            >
-            </el-option>
+          <el-select style="width: 100%" v-model="form.pk" clearable filterable placeholder="宠物状态">
+            <el-option v-for="item in pk" :key="item.pkid" :label="item.pkname" :value="item.pkid"></el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="宠物名称">
-          <el-input
-            clearable
-            v-model="form.petname"
-            placeholder="宠物名称"
-          ></el-input>
+          <el-input clearable v-model="form.petname" placeholder="宠物名称"></el-input>
         </el-form-item>
         <el-form-item label="宠物类型">
           <el-select
@@ -50,13 +26,7 @@
             filterable
             placeholder="宠物类型"
           >
-            <el-option
-              v-for="item in bkind"
-              :key="item.bkid"
-              :label="item.bkindname"
-              :value="item.bkid"
-            >
-            </el-option>
+            <el-option v-for="item in bkind" :key="item.bkid" :label="item.bkindname" :value="item.bkid"></el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="宠物品种">
@@ -68,28 +38,14 @@
             filterable
             placeholder="宠物品种"
           >
-            <el-option
-              v-for="item in fskind"
-              :key="item.skid"
-              :label="item.skindname"
-              :value="item.skid"
-            >
-            </el-option>
+            <el-option v-for="item in fskind" :key="item.skid" :label="item.skindname" :value="item.skid"></el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="宠物年龄">
-          <el-input
-            clearable
-            v-model="form.age"
-            placeholder="宠物年龄"
-          ></el-input>
+          <el-input clearable v-model="form.age" placeholder="宠物年龄"></el-input>
         </el-form-item>
         <el-form-item label="宠物价格">
-          <el-input
-            clearable
-            v-model="form.price"
-            placeholder="宠物价格"
-          ></el-input>
+          <el-input clearable v-model="form.price" placeholder="宠物价格"></el-input>
         </el-form-item>
         <el-form-item label="发布时间">
           <el-date-picker
@@ -101,21 +57,14 @@
           ></el-date-picker>
         </el-form-item>
         <el-form-item>
-          <el-button
-            icon="el-icon-search"
-            type="primary"
-            circle
-            @click="request"
-          ></el-button>
+          <el-button icon="el-icon-search" type="primary" circle @click="request"></el-button>
         </el-form-item>
       </el-form>
     </div>
     <div>
       <el-table :data="pet" style="width: 100%">
-        <el-table-column prop="pid" sortable label="宠物id" width="86">
-        </el-table-column>
-        <el-table-column label="用户id" prop="uid" width="86">
-        </el-table-column>
+        <el-table-column prop="pid" sortable label="宠物id" width="86"></el-table-column>
+        <el-table-column label="用户id" prop="uid" width="86"></el-table-column>
         <el-table-column label="宠物主图" width="100">
           <template slot-scope="scope">
             <div class="photo">
@@ -123,13 +72,10 @@
             </div>
           </template>
         </el-table-column>
-        <el-table-column prop="petname" label="宠物名称" width="180">
-        </el-table-column>
-        <el-table-column prop="bkind.bkindname" label="类型" width="100">
-        </el-table-column>
-        <el-table-column prop="skind.skindname" label="品种" width="100">
-        </el-table-column>
-        <el-table-column prop="sex" label="性别" width="80"> </el-table-column>
+        <el-table-column prop="petname" label="宠物名称" width="180"></el-table-column>
+        <el-table-column prop="bkind.bkindname" label="类型" width="100"></el-table-column>
+        <el-table-column prop="skind.skindname" label="品种" width="100"></el-table-column>
+        <el-table-column prop="sex" label="性别" width="80"></el-table-column>
         <el-table-column width="100" label="年龄">
           <template slot-scope="scope">
             <span v-if="scope.row.age != -1">{{ scope.row.age }}个月</span>
@@ -142,28 +88,19 @@
             <span v-if="scope.row.price == -1">不限</span>
           </template>
         </el-table-column>
-        <el-table-column prop="description" label="发布说明"> </el-table-column>
+        <el-table-column prop="description" label="发布说明"></el-table-column>
         <el-table-column width="100" label="状态">
           <template slot-scope="scope">
-            <span style="color: rgb(255, 194, 8)" v-if="scope.row.pk == 0"
-              >出售中</span
-            >
-            <span style="color: rgb(102, 177, 255)" v-if="scope.row.pk == 1"
-              >已出售</span
-            >
-            <span style="color: rgb(33, 213, 168)" v-if="scope.row.pk == 2"
-              >已完成</span
-            >
+            <span style="color: rgb(255, 194, 8)" v-if="scope.row.pk == 0">出售中</span>
+            <span style="color: rgb(102, 177, 255)" v-if="scope.row.pk == 1">已出售</span>
+            <span style="color: rgb(33, 213, 168)" v-if="scope.row.pk == 2">已完成</span>
             <span style="color: pink" v-if="scope.row.pk == 3">求购中</span>
           </template>
         </el-table-column>
-        <el-table-column prop="date" width="180" sortable label="发布时间">
-        </el-table-column>
+        <el-table-column prop="date" width="180" sortable label="发布时间"></el-table-column>
         <el-table-column label="操作" width="150">
           <template slot-scope="scope">
-            <el-button size="mini" @click="handleEdit(scope.$index, scope.row)"
-              >编辑</el-button
-            >
+            <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
             <el-popconfirm
               confirmButtonText="确定"
               cancelButtonText="取消"
@@ -173,13 +110,7 @@
               title="确定删除该用户吗？"
               @confirm="handleDelete(scope.$index, scope.row)"
             >
-              <el-button
-                style="margin-left: 10px"
-                size="mini"
-                type="danger"
-                slot="reference"
-                >删除</el-button
-              >
+              <el-button style="margin-left: 10px" size="mini" type="danger" slot="reference">删除</el-button>
             </el-popconfirm>
           </template>
         </el-table-column>
@@ -194,18 +125,13 @@
         :current-page.sync="currentpage"
         layout="total, prev, pager, next, jumper"
         :total="total"
-      >
-      </el-pagination>
+      ></el-pagination>
     </div>
     <el-drawer :visible.sync="drawer" direction="rtl" size="50%">
       <div class="updatebar">
         <el-form :model="updateform" label-width="80px">
           <el-form-item label="宠物名称">
-            <el-input
-              v-model="updateform.petname"
-              placeholder="宠物名称"
-              clearable
-            ></el-input>
+            <el-input v-model="updateform.petname" placeholder="宠物名称" clearable></el-input>
           </el-form-item>
           <el-form-item label="宠物类型">
             <el-select
@@ -216,13 +142,7 @@
               filterable
               placeholder="宠物类型"
             >
-              <el-option
-                v-for="item in bkind"
-                :key="item.bkid"
-                :label="item.bkindname"
-                :value="item.bkid"
-              >
-              </el-option>
+              <el-option v-for="item in bkind" :key="item.bkid" :label="item.bkindname" :value="item.bkid"></el-option>
             </el-select>
           </el-form-item>
           <el-form-item label="宠物品种">
@@ -234,13 +154,7 @@
               filterable
               placeholder="宠物品种"
             >
-              <el-option
-                v-for="item in fskind"
-                :key="item.skid"
-                :label="item.skindname"
-                :value="item.skid"
-              >
-              </el-option>
+              <el-option v-for="item in fskind" :key="item.skid" :label="item.skindname" :value="item.skid"></el-option>
             </el-select>
           </el-form-item>
           <el-form-item label="性别">
@@ -251,34 +165,14 @@
             </el-radio-group>
           </el-form-item>
           <el-form-item label="年龄">
-            <el-input
-              v-model="updateform.age"
-              placeholder="年龄"
-              clearable
-            ></el-input>
+            <el-input v-model="updateform.age" placeholder="年龄" clearable></el-input>
           </el-form-item>
           <el-form-item label="价格">
-            <el-input
-              v-model="updateform.price"
-              placeholder="价格"
-              clearable
-            ></el-input>
+            <el-input v-model="updateform.price" placeholder="价格" clearable></el-input>
           </el-form-item>
           <el-form-item label="宠物状态">
-            <el-select
-              style="width: 100%"
-              v-model="updateform.pk"
-              clearable
-              filterable
-              placeholder="宠物状态"
-            >
-              <el-option
-                v-for="item in pk"
-                :key="item.pkid"
-                :label="item.pkname"
-                :value="item.pkid"
-              >
-              </el-option>
+            <el-select style="width: 100%" v-model="updateform.pk" clearable filterable placeholder="宠物状态">
+              <el-option v-for="item in pk" :key="item.pkid" :label="item.pkname" :value="item.pkid"></el-option>
             </el-select>
           </el-form-item>
           <el-form-item label="发布说明">
@@ -307,12 +201,7 @@
 <script>
 import { requestqueryBKindandSKind } from "network/requestbkind.js";
 import { requestqueryallskind } from "network/requestskind.js";
-import {
-  requestquerypetpage,
-  requestdeletePet,
-  requestupdatePet,
-  requestquerypetcount,
-} from "network/requestpet.js";
+import { requestquerypetpage, requestdeletePet, requestupdatePet, requestquerypetcount } from "network/requestpet.js";
 
 export default {
   name: "petmanage",
@@ -324,7 +213,7 @@ export default {
       currentpage: 1,
       form: {
         bkid: "",
-        skid: "",
+        skid: ""
       },
       pet: [],
       bkind: [],
@@ -333,64 +222,64 @@ export default {
       editform: {},
       updateform: {
         bkid: "",
-        skid: "",
+        skid: ""
       },
       pk: [
         {
           pkid: 0,
-          pkname: "出售中",
+          pkname: "出售中"
         },
         {
           pkid: 1,
-          pkname: "已出售",
+          pkname: "已出售"
         },
         {
           pkid: 2,
-          pkname: "已完成",
+          pkname: "已完成"
         },
         {
           pkid: 3,
-          pkname: "求购中",
-        },
+          pkname: "求购中"
+        }
       ],
-      drawer: false,
+      drawer: false
     };
   },
   created() {
     requestquerypetcount()
-      .then((res) => {
+      .then(res => {
         this.total = res;
       })
-      .catch((err) => {
+      .catch(err => {
         console.log(err);
       });
     requestquerypetpage({
       page: this.currentpage,
-      count: this.pagesize,
+      count: this.pagesize
     })
-      .then((res) => {
+      .then(res => {
         this.pet = res;
       })
-      .catch((err) => {
+      .catch(err => {
         console.log(err);
       });
     //查询所有宠物类型及对应品种
     requestqueryBKindandSKind()
-      .then((res) => {
+      .then(res => {
         this.bkind = res;
       })
-      .catch((err) => {
+      .catch(err => {
         console.log(err);
       });
     //查询所有宠物品种
     requestqueryallskind()
-      .then((res) => {
+      .then(res => {
         this.skind = res;
-        this.fskind = this.skind.filter((n) => {
+        this.fskind = this.skind.filter(n => {
           return n.skindname != "其他";
         });
       })
-      .catch((err) => {
+      .catch(err => {
         console.log(err);
       });
   },
@@ -407,12 +296,12 @@ export default {
         skid: this.form.skid,
         age: this.form.age,
         price: this.form.price,
-        date: this.form.date,
+        date: this.form.date
       })
-        .then((res) => {
+        .then(res => {
           this.pet = res;
         })
-        .catch((err) => {
+        .catch(err => {
           console.log(err);
         });
     },
@@ -424,14 +313,14 @@ export default {
     },
     handleDelete(index, row) {
       requestdeletePet({
-        pid: row.pid,
+        pid: row.pid
       })
-        .then((res) => {
+        .then(res => {
           this.$notify({
             title: "删除成功",
             message: res,
             offset: 100,
-            type: "success",
+            type: "success"
           });
           this.total--;
           requestquerypetpage({
@@ -446,30 +335,30 @@ export default {
             skid: this.form.skid,
             age: this.form.age,
             price: this.form.price,
-            date: this.form.date,
+            date: this.form.date
           })
-            .then((res) => {
+            .then(res => {
               this.pet = res;
             })
-            .catch((err) => {
+            .catch(err => {
               console.log(err);
             });
         })
-        .catch((err) => {
+        .catch(err => {
           console.log(err);
         });
     },
     //选中类型时，筛选出对应品种
     bkindchange() {
       if (this.form.bkid === "") {
-        this.fskind = this.skind.filter((n) => {
+        this.fskind = this.skind.filter(n => {
           return n.skindname != "其他";
         });
       } else {
-        this.fskind = this.skind.filter((n) => {
+        this.fskind = this.skind.filter(n => {
           return n.bkid === this.form.bkid;
         });
-        let bsk = this.fskind.filter((n) => {
+        let bsk = this.fskind.filter(n => {
           return n.skid === this.form.skid;
         });
         if (bsk.length === 0) {
@@ -480,7 +369,7 @@ export default {
     //选中品种时，选中对应类型
     skindchange() {
       if (this.form.skid != "") {
-        let sbk = this.fskind.find((n) => {
+        let sbk = this.fskind.find(n => {
           return n.skid === this.form.skid;
         });
         this.form.bkid = sbk.bkid;
@@ -488,14 +377,14 @@ export default {
     },
     updatebkindchange() {
       if (this.updateform.bkid === "") {
-        this.fskind = this.skind.filter((n) => {
+        this.fskind = this.skind.filter(n => {
           return n.skindname != "其他";
         });
       } else {
-        this.fskind = this.skind.filter((n) => {
+        this.fskind = this.skind.filter(n => {
           return n.bkid === this.updateform.bkid;
         });
-        let bsk = this.fskind.filter((n) => {
+        let bsk = this.fskind.filter(n => {
           return n.skid === this.updateform.skid;
         });
         if (bsk.length === 0) {
@@ -506,7 +395,7 @@ export default {
     //选中品种时，选中对应类型
     updateskindchange() {
       if (this.updateform.skid != "") {
-        let sbk = this.fskind.find((n) => {
+        let sbk = this.fskind.find(n => {
           return n.skid === this.updateform.skid;
         });
         this.updateform.bkid = sbk.bkid;
@@ -523,12 +412,12 @@ export default {
         skid: this.form.skid,
         age: this.form.age,
         price: this.form.price,
-        date: this.form.date,
+        date: this.form.date
       })
-        .then((res) => {
+        .then(res => {
           this.total = res;
         })
-        .catch((err) => {
+        .catch(err => {
           console.log(err);
         });
       requestquerypetpage({
@@ -542,12 +431,12 @@ export default {
         skid: this.form.skid,
         age: this.form.age,
         price: this.form.price,
-        date: this.form.date,
+        date: this.form.date
       })
-        .then((res) => {
+        .then(res => {
           this.pet = res;
         })
-        .catch((err) => {
+        .catch(err => {
           console.log(err);
         });
     },
@@ -563,22 +452,22 @@ export default {
       formData.append("pk", this.updateform.pk);
       formData.append("description", this.updateform.description);
       requestupdatePet(formData)
-        .then((res) => {
+        .then(res => {
           this.$notify({
             title: "修改成功",
             message: "该宠物信息修改成功",
             type: "success",
-            offset: 100,
+            offset: 100
           });
           this.editform.petname = this.updateform.petname;
           this.editform.bkid = this.updateform.bkid;
           this.editform.skid = this.updateform.skid;
-          this.bkind.forEach((value) => {
+          this.bkind.forEach(value => {
             if (value.bkid == this.updateform.bkid) {
               this.editform.bkind = value;
             }
           });
-          this.skind.forEach((value) => {
+          this.skind.forEach(value => {
             if (value.skid == this.updateform.skid) {
               this.editform.skind = value;
             }
@@ -590,9 +479,9 @@ export default {
           this.editform.description = this.updateform.description;
           this.drawer = false;
         })
-        .catch((err) => {});
-    },
-  },
+        .catch(err => {});
+    }
+  }
 };
 </script>
 <style scoped>

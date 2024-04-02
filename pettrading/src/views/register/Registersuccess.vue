@@ -1,11 +1,11 @@
 <!---->
 <template>
-  <div class='registersuccess'>
+  <div class="registersuccess">
     <div class="hook">
       <transition name="shiledhook">
         <div class="shield" v-if="show"></div>
       </transition>
-      <img src="~assets/img/success/hook.png" alt="">
+      <img src="~assets/img/success/hook.png" alt="" />
     </div>
     <div class="but">
       <el-button type="primary" @click="finish">去登录</el-button>
@@ -14,33 +14,32 @@
 </template>
 
 <script>
-  export default {
-    name: 'Registersuccess',
-    data () {
-      return {
-        show: true
-      }
+export default {
+  name: "Registersuccess",
+  data() {
+    return {
+      show: true
+    };
+  },
+  mounted() {
+    setTimeout(this.changeshow, 1000);
+  },
+  methods: {
+    changeshow() {
+      this.show = false;
     },
-    mounted() {
-      setTimeout(this.changeshow,1000)
-    },
-    methods: {
-      changeshow() {
-        this.show = false
-      },
-      finish() {
-        if(this.$route.path === '/register') {
-          this.$router.push('/login')
-        } else {
-          this.$store.state.regshow = false
-          this.$store.state.logshow = true
-        }
+    finish() {
+      if (this.$route.path === "/register") {
+        this.$router.push("/login");
+      } else {
+        this.$store.state.regshow = false;
+        this.$store.state.logshow = true;
       }
     }
   }
+};
 </script>
 <style scoped>
-
 .hook {
   position: relative;
   width: 10em;

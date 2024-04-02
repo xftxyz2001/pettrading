@@ -19,31 +19,20 @@
           <el-input v-model="form.phone" placeholder="联系电话"></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button
-            @click="queryaddress"
-            icon="el-icon-search"
-            type="primary"
-            circle
-          ></el-button>
+          <el-button @click="queryaddress" icon="el-icon-search" type="primary" circle></el-button>
         </el-form-item>
       </el-form>
     </div>
     <div>
       <el-table :data="address" style="width: 100%">
-        <el-table-column prop="aid" sortable label="地址id" width="180">
-        </el-table-column>
-        <el-table-column label="所属用户id" prop="uid" width="180">
-        </el-table-column>
-        <el-table-column prop="username" label="收件人" width="200">
-        </el-table-column>
-        <el-table-column prop="address" label="地址"> </el-table-column>
-        <el-table-column prop="phone" width="200" label="联系电话">
-        </el-table-column>
+        <el-table-column prop="aid" sortable label="地址id" width="180"></el-table-column>
+        <el-table-column label="所属用户id" prop="uid" width="180"></el-table-column>
+        <el-table-column prop="username" label="收件人" width="200"></el-table-column>
+        <el-table-column prop="address" label="地址"></el-table-column>
+        <el-table-column prop="phone" width="200" label="联系电话"></el-table-column>
         <el-table-column label="操作" width="180">
           <template slot-scope="scope">
-            <el-button size="mini" @click="handleEdit(scope.$index, scope.row)"
-              >编辑</el-button
-            >
+            <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
             <el-popconfirm
               confirmButtonText="确定"
               cancelButtonText="取消"
@@ -53,13 +42,7 @@
               title="确定删除该用户吗？"
               @confirm="handleDelete(scope.$index, scope.row)"
             >
-              <el-button
-                style="margin-left: 10px"
-                size="mini"
-                type="danger"
-                slot="reference"
-                >删除</el-button
-              >
+              <el-button style="margin-left: 10px" size="mini" type="danger" slot="reference">删除</el-button>
             </el-popconfirm>
           </template>
         </el-table-column>
@@ -74,32 +57,19 @@
         :current-page.sync="currentpage"
         layout="total, prev, pager, next, jumper"
         :total="total"
-      >
-      </el-pagination>
+      ></el-pagination>
     </div>
     <el-drawer :visible.sync="drawer" direction="rtl" size="50%">
       <div class="updatebar">
         <el-form :model="updateaddress" label-width="80px">
           <el-form-item label="收件人">
-            <el-input
-              v-model="updateaddress.username"
-              placeholder="收件人"
-              clearable
-            ></el-input>
+            <el-input v-model="updateaddress.username" placeholder="收件人" clearable></el-input>
           </el-form-item>
           <el-form-item label="地址">
-            <el-input
-              v-model="updateaddress.address"
-              placeholder="地址"
-              clearable
-            ></el-input>
+            <el-input v-model="updateaddress.address" placeholder="地址" clearable></el-input>
           </el-form-item>
           <el-form-item label="联系电话">
-            <el-input
-              v-model="updateaddress.phone"
-              placeholder="联系电话"
-              clearable
-            ></el-input>
+            <el-input v-model="updateaddress.phone" placeholder="联系电话" clearable></el-input>
           </el-form-item>
           <el-form-item>
             <div class="but">
@@ -114,11 +84,7 @@
 </template>
 
 <script>
-import {
-  requestqueryaddress,
-  requestdeleteAddress,
-  requestupdateAddress,
-} from "network/requestaddress.js";
+import { requestqueryaddress, requestdeleteAddress, requestupdateAddress } from "network/requestaddress.js";
 
 export default {
   name: "addressmanage",
@@ -137,19 +103,19 @@ export default {
         // phone: "",
         // address: '',
         // username: ''
-      },
+      }
     };
   },
   created() {
     requestqueryaddress({
       page: this.currentpage,
-      count: this.pagesize,
+      count: this.pagesize
     })
-      .then((res) => {
+      .then(res => {
         this.address = res.address;
         this.total = res.total;
       })
-      .catch((err) => {
+      .catch(err => {
         console.log(err);
       });
   },
@@ -162,13 +128,13 @@ export default {
         address: this.form.address,
         phone: this.form.phone,
         page: this.currentpage,
-        count: this.pagesize,
+        count: this.pagesize
       })
-        .then((res) => {
+        .then(res => {
           this.address = res.address;
           this.total = res.total;
         })
-        .catch((err) => {
+        .catch(err => {
           console.log(err);
         });
     },
@@ -181,13 +147,13 @@ export default {
         address: this.form.address,
         phone: this.form.phone,
         page: this.currentpage,
-        count: this.pagesize,
+        count: this.pagesize
       })
-        .then((res) => {
+        .then(res => {
           this.address = res.address;
           this.total = res.total;
         })
-        .catch((err) => {
+        .catch(err => {
           console.log(err);
         });
     },
@@ -199,14 +165,14 @@ export default {
     },
     handleDelete(index, row) {
       requestdeleteAddress({
-        aid: row.aid,
+        aid: row.aid
       })
-        .then((res) => {
+        .then(res => {
           this.$notify({
             title: "删除成功",
             message: res,
             offset: 100,
-            type: "success",
+            type: "success"
           });
           requestqueryaddress({
             uid: this.form.uid,
@@ -215,17 +181,17 @@ export default {
             address: this.form.address,
             phone: this.form.phone,
             page: this.currentpage,
-            count: this.pagesize,
+            count: this.pagesize
           })
-            .then((res) => {
+            .then(res => {
               this.address = res.address;
               this.total = res.total;
             })
-            .catch((err) => {
+            .catch(err => {
               console.log(err);
             });
         })
-        .catch((err) => {
+        .catch(err => {
           console.log(err);
         });
     },
@@ -234,25 +200,25 @@ export default {
         aid: this.updateaddress.aid,
         username: this.updateaddress.username,
         address: this.updateaddress.address,
-        phone: this.updateaddress.phone,
+        phone: this.updateaddress.phone
       })
-        .then((res) => {
+        .then(res => {
           this.$notify({
             title: "修改成功",
             message: res,
             type: "success",
-            offset: 100,
+            offset: 100
           });
           this.editaddress.username = this.updateaddress.username;
           this.editaddress.address = this.updateaddress.address;
           this.editaddress.phone = this.updateaddress.phone;
           this.drawer = false;
         })
-        .catch((err) => {
+        .catch(err => {
           console.log(err);
         });
-    },
-  },
+    }
+  }
 };
 </script>
 <style scoped>

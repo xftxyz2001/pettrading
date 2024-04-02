@@ -18,36 +18,36 @@
 </template>
 
 <script>
-  import HeadTab from "components/common/head/HeadTab.vue"
-  import Tail from "components/common/tail/Tail.vue"
-  import Drawer from "components/content/drawer/Drawer.vue"
+import HeadTab from "components/common/head/HeadTab.vue";
+import Tail from "components/common/tail/Tail.vue";
+import Drawer from "components/content/drawer/Drawer.vue";
 
-  export default {
-    name: 'app',
-    provide() {
-      return {
-        reload: this.reload
-      }
-    },
-    data() {
-      return {
-        isRouterAlive: true
-      }
-    },
-    components: {
-      HeadTab,
-      Tail,
-      Drawer
-    },
-    methods: {
-      reload () {
-        this.isRouterAlive = false;
-        this.$nextTick(function(){
-          this.isRouterAlive = true
-        })
-      }
-    },
+export default {
+  name: "app",
+  provide() {
+    return {
+      reload: this.reload
+    };
+  },
+  data() {
+    return {
+      isRouterAlive: true
+    };
+  },
+  components: {
+    HeadTab,
+    Tail,
+    Drawer
+  },
+  methods: {
+    reload() {
+      this.isRouterAlive = false;
+      this.$nextTick(function () {
+        this.isRouterAlive = true;
+      });
+    }
   }
+};
 </script>
 
 <style>

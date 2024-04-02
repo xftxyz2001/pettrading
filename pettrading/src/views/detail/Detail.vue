@@ -79,17 +79,11 @@
               @mouseleave="overimg = false"
             >
               <!-- 禁止图片 -->
-              <div
-                class="banimg"
-                v-if="$store.state.uid == user.uid && overimg == true"
-              >
+              <div class="banimg" v-if="$store.state.uid == user.uid && overimg == true">
                 <img src="~assets/img/chat/ban.png" alt="" />
               </div>
               <!-- 绿色聊天图片 -->
-              <div
-                class="banimg"
-                v-if="$store.state.uid != user.uid && overimg == true"
-              >
+              <div class="banimg" v-if="$store.state.uid != user.uid && overimg == true">
                 <img src="~assets/img/chat/chathover.png" alt="" />
               </div>
               <!-- 蓝色聊天图片 -->
@@ -101,72 +95,37 @@
               <el-button type="primary" @click="topurchase">立即购买</el-button>
             </div>
             <div v-if="user.uid != $store.state.uid && pet.pk == 3">
-              <el-button type="primary" @click="selectmypet"
-                >我这里有</el-button
-              >
+              <el-button type="primary" @click="selectmypet">我这里有</el-button>
             </div>
-            <div
-              v-if="
-                user.uid == $store.state.uid && (pet.pk == 0 || pet.pk == 3)
-              "
-            >
-              <el-button type="primary" @click="updatepet"
-                >修改宠物信息</el-button
-              >
+            <div v-if="user.uid == $store.state.uid && (pet.pk == 0 || pet.pk == 3)">
+              <el-button type="primary" @click="updatepet">修改宠物信息</el-button>
             </div>
             <div v-if="user.uid == $store.state.uid && pet.pk != 1">
               <el-popover placement="top" width="160" v-model="visible">
                 <p>删除后将无法恢复，确定删除吗？</p>
                 <div style="text-align: right; margin: 0">
-                  <el-button size="mini" type="text" @click="visible = false"
-                    >取消</el-button
-                  >
-                  <el-button type="primary" size="mini" @click="deletepet"
-                    >确定</el-button
-                  >
+                  <el-button size="mini" type="text" @click="visible = false">取消</el-button>
+                  <el-button type="primary" size="mini" @click="deletepet">确定</el-button>
                 </div>
                 <el-button type="danger" slot="reference">删除该宠物</el-button>
               </el-popover>
             </div>
             <div>
               <div
-                v-if="
-                  petorder.uid != $store.state.uid &&
-                  user.uid != $store.state.uid &&
-                  pet.pk != 0 &&
-                  pet.pk != 3
-                "
+                v-if="petorder.uid != $store.state.uid && user.uid != $store.state.uid && pet.pk != 0 && pet.pk != 3"
               >
                 <div class="done">已出售</div>
               </div>
               <div v-if="user.uid == $store.state.uid && pet.pk == 0">
                 <div class="doing">出售中</div>
               </div>
-              <div
-                v-if="
-                  (petorder.uid == $store.state.uid ||
-                    user.uid == $store.state.uid) &&
-                  pet.pk == 1
-                "
-              >
+              <div v-if="(petorder.uid == $store.state.uid || user.uid == $store.state.uid) && pet.pk == 1">
                 <div class="done">已出售</div>
               </div>
-              <div
-                v-if="
-                  (petorder.uid == $store.state.uid ||
-                    user.uid == $store.state.uid) &&
-                  pet.pk == 2
-                "
-              >
+              <div v-if="(petorder.uid == $store.state.uid || user.uid == $store.state.uid) && pet.pk == 2">
                 <div class="success">已完成</div>
               </div>
-              <div
-                v-if="
-                  (petorder.uid == $store.state.uid ||
-                    user.uid == $store.state.uid) &&
-                  pet.pk == 3
-                "
-              >
+              <div v-if="(petorder.uid == $store.state.uid || user.uid == $store.state.uid) && pet.pk == 3">
                 <div class="wantbuy">求购中</div>
               </div>
             </div>
@@ -225,7 +184,7 @@ export default {
       time: "",
       petorder: {},
       showmypet: false,
-      nopet: false,
+      nopet: false
     };
   },
   components: {
@@ -233,7 +192,7 @@ export default {
     Sidebar,
     mypetdetail,
     mypet,
-    Pet,
+    Pet
   },
   methods: {
     background(index) {
@@ -241,7 +200,7 @@ export default {
         backgroundImage: "url(" + "/api/" + this.photo[this.active].url + ")",
         backgroundSize: "cover",
         backgroundRepeat: "no-repeat",
-        backgroundPosition: "center",
+        backgroundPosition: "center"
       };
     },
     changeactive(index) {
@@ -251,7 +210,7 @@ export default {
     shoppingcard() {
       this.$message({
         message: "已加入购物车",
-        type: "success",
+        type: "success"
       });
     },
     //购买
@@ -265,8 +224,8 @@ export default {
           query: {
             pid: this.$route.query.pid,
             uid: this.user.uid,
-            price: this.pet.price,
-          },
+            price: this.pet.price
+          }
         });
         // let purchase = this.$router.resolve({
         //   path: '/purchase',
@@ -287,9 +246,9 @@ export default {
           requestaddContact({
             fromuid: this.$store.state.uid,
             touid: this.user.uid,
-            noread: 0,
+            noread: 0
           })
-            .then((res) => {
+            .then(res => {
               let contactuser = {};
               // contactuser.cid = null
               contactuser.cid = res;
@@ -300,7 +259,7 @@ export default {
               bus.$emit("detail-chat", contactuser);
               this.$store.state.showchat = true;
             })
-            .catch((err) => {
+            .catch(err => {
               console.log(err);
             });
         }
@@ -322,32 +281,32 @@ export default {
         this.$router.push({
           path: "/wantsell",
           query: {
-            form: JSON.stringify(form),
-          },
+            form: JSON.stringify(form)
+          }
         });
       } else {
         this.$router.push({
           path: "/wantbuy",
           query: {
-            form: JSON.stringify(form),
-          },
+            form: JSON.stringify(form)
+          }
         });
       }
     },
     deletepet() {
       requestdeletePet({
-        pid: this.pet.pid,
+        pid: this.pet.pid
       })
-        .then((res) => {
+        .then(res => {
           this.$router.go(-1);
           this.$notify({
             title: "成功",
             message: res,
             type: "success",
-            offset: 100,
+            offset: 100
           });
         })
-        .catch((err) => {
+        .catch(err => {
           console.log(err);
         });
     },
@@ -361,13 +320,13 @@ export default {
       } else {
         this.showmypet = true;
       }
-    },
+    }
   },
   created() {
     requestquerypetbyid({
-      pid: this.$route.query.pid,
+      pid: this.$route.query.pid
     })
-      .then((res) => {
+      .then(res => {
         if (res == "") {
           this.nopet = true;
         } else {
@@ -378,15 +337,15 @@ export default {
           this.photo = res.photo;
           if (this.pet.pk != 0 && this.pet.pk != 3) {
             requestquerypetorder({
-              pid: this.$route.query.pid,
+              pid: this.$route.query.pid
             })
-              .then((res) => {
+              .then(res => {
                 this.petorder = res[0];
                 if (this.petorder.uid == this.$store.state.uid) {
                   this.showchatimg = true;
                 }
               })
-              .catch((err) => {
+              .catch(err => {
                 console.log(err);
               });
           } else {
@@ -396,10 +355,10 @@ export default {
           }
         }
       })
-      .catch((err) => {
+      .catch(err => {
         console.log(err);
       });
-  },
+  }
 };
 </script>
 <style scoped>

@@ -6,12 +6,7 @@
       <el-table-column label="手机号" width="200">
         <template slot-scope="scope">
           <span v-if="show != scope.$index">{{ scope.row.phone }}</span>
-          <el-input
-            v-model="form.phone"
-            clearable
-            v-if="show === scope.$index"
-            placeholder="请输入手机号"
-          ></el-input>
+          <el-input v-model="form.phone" clearable v-if="show === scope.$index" placeholder="请输入手机号"></el-input>
         </template>
       </el-table-column>
       <!-- 收件人 -->
@@ -30,51 +25,33 @@
       <el-table-column label="地址">
         <template slot-scope="scope">
           <span v-if="show != scope.$index">{{ scope.row.address }}</span>
-          <el-input
-            v-model="form.address"
-            clearable
-            v-if="show === scope.$index"
-            placeholder="请输入地址"
-          ></el-input>
+          <el-input v-model="form.address" clearable v-if="show === scope.$index" placeholder="请输入地址"></el-input>
         </template>
       </el-table-column>
       <!-- 操作 -->
       <el-table-column fixed="right" label="操作" width="100">
         <template slot-scope="scope">
-          <el-button
-            v-if="show != scope.$index"
-            type="text"
-            @click="change(scope.$index, scope.row)"
-            >修改</el-button
-          >
+          <el-button v-if="show != scope.$index" type="text" @click="change(scope.$index, scope.row)">修改</el-button>
           <span v-if="show != scope.$index">
-            <el-popconfirm
-              title="确定删除该地址吗？"
-              @confirm="deleteaddress(scope.$index, scope.row)"
-            >
-              <el-button class="deletebut" slot="reference" type="text"
-                >删除</el-button
-              >
+            <el-popconfirm title="确定删除该地址吗？" @confirm="deleteaddress(scope.$index, scope.row)">
+              <el-button class="deletebut" slot="reference" type="text">删除</el-button>
             </el-popconfirm>
           </span>
           <el-button
             v-if="show === scope.$index && show != length"
             type="text"
             @click="update(scope.$index, scope.row)"
-            >确认</el-button
           >
+            确认
+          </el-button>
           <el-button
             v-if="show === scope.$index && show === length"
             type="text"
             @click="update(scope.$index, scope.row)"
-            >增加</el-button
           >
-          <el-button
-            v-if="show === scope.$index"
-            type="text"
-            @click="cancel(scope.$index, scope.row)"
-            >取消</el-button
-          >
+            增加
+          </el-button>
+          <el-button v-if="show === scope.$index" type="text" @click="cancel(scope.$index, scope.row)">取消</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -92,7 +69,7 @@ import {
   requestaddAddress,
   requestdeleteAddress,
   requestupdateAddress,
-  requestqueryAddressbyuid,
+  requestqueryAddressbyuid
 } from "network/requestaddress.js";
 
 export default {
@@ -106,7 +83,7 @@ export default {
       data: [],
       count: 0,
       length: null,
-      form: {},
+      form: {}
     };
   },
   methods: {
@@ -142,21 +119,21 @@ export default {
           message: "手机号不能为空",
           type: "error",
           center: true,
-          showClose: true,
+          showClose: true
         });
       } else if (this.form.username === "") {
         this.$message({
           message: "收件人不能为空",
           type: "error",
           center: true,
-          showClose: true,
+          showClose: true
         });
       } else if (this.form.address === "") {
         this.$message({
           message: "地址不能为空",
           type: "error",
           center: true,
-          showClose: true,
+          showClose: true
         });
       } else if (/^1\d{10}$/.test(this.form.phone)) {
         if (index === this.length) {
@@ -171,7 +148,7 @@ export default {
           message: "请输入11位手机号码，1xx xxxx xxxx",
           type: "error",
           center: true,
-          showClose: true,
+          showClose: true
         });
       }
     },
@@ -182,19 +159,19 @@ export default {
         this.count--;
       }
       requestdeleteAddress({
-        aid: row.aid,
+        aid: row.aid
       })
-        .then((res) => {
+        .then(res => {
           this.$message({
             message: res,
             type: "success",
             center: true,
-            showClose: true,
+            showClose: true
           });
           this.data.splice(index, 1);
           this.length--;
         })
-        .catch((err) => {
+        .catch(err => {
           console.log(err);
         });
     },
@@ -218,21 +195,21 @@ export default {
         uid: this.$store.state.uid,
         phone: this.form.phone,
         username: this.form.username,
-        address: this.form.address,
+        address: this.form.address
       })
-        .then((res) => {
+        .then(res => {
           this.$message({
             message: res.msg,
             type: "success",
             center: true,
-            showClose: true,
+            showClose: true
           });
           row.aid = res.aid;
           this.show = null;
           this.length++;
           this.count--;
         })
-        .catch((err) => {
+        .catch(err => {
           console.log(err);
         });
     },
@@ -242,34 +219,34 @@ export default {
         aid: this.form.aid,
         phone: this.form.phone,
         username: this.form.username,
-        address: this.form.address,
+        address: this.form.address
       })
-        .then((res) => {
+        .then(res => {
           this.$message({
             message: res,
             type: "success",
             center: true,
-            showClose: true,
+            showClose: true
           });
           this.show = null;
         })
-        .catch((err) => {
+        .catch(err => {
           console.log(err);
         });
-    },
+    }
   },
   created() {
     requestqueryAddressbyuid({
-      uid: this.$store.state.uid,
+      uid: this.$store.state.uid
     })
-      .then((res) => {
+      .then(res => {
         this.data = res;
         this.length = res.length;
       })
-      .catch((err) => {
+      .catch(err => {
         console.log(err);
       });
-  },
+  }
 };
 </script>
 <style scoped>
