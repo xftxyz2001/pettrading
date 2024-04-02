@@ -4,16 +4,14 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-//import javax.persistence.*;
 import java.util.Date;
 
-//@Entity
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class Notice {
-//    @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     private Long nid;
     private Integer type;//类型  0-普通消息，1-提交订单，2-修改订单，3-取消订单，4-完成订单，5-确认修改订单，6-确认删除订单,7-帮助求购
     private Long fromuid;//发送者

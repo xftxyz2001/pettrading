@@ -4,17 +4,15 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-//import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
 
-//@Entity
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class Pet {
-//    @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     private Long pid;//宠物id
     private String petname;//宠物标题
     private String sex;//宠物性别
@@ -27,21 +25,13 @@ public class Pet {
     private Long skid;//对应品种的skid
     private Date date;
 
-//    @ManyToOne
-//    @JoinColumn(name = "uid")
     private User user;//发布宠物的买家或卖家
 
-//    @ManyToOne
-//    @JoinColumn(name = "bkid")
     private BKind bkind;//宠物所属的类型
 
-//    @ManyToOne
-//    @JoinColumn(name = "skid")
     private SKind skind;//宠物所属的品种
 
-//    @OneToMany(mappedBy = "pet")
     private List<Photo> photo;//宠物图片,最多5张
 
-//    @OneToMany(mappedBy = "pet")
     private List<Petorder> petorder;
 }
