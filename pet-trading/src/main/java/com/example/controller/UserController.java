@@ -153,7 +153,7 @@ public class UserController {
             if(file != null) {
                 if(!file.isEmpty()) {
                     //获取当前项目路径
-                    String path = System.getProperty("user.dir") + "\\src\\main\\resources\\resources\\avatar\\";
+                    String path = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\avatar\\";
                     //获取文件名字,前面拼接uiid是为了防止名字重复
                     String filename = createUUID.getUUID() + file.getOriginalFilename();
                     //创建文件对象，设置文件保存路径
@@ -172,7 +172,7 @@ public class UserController {
                     //判断旧头像是否为默认头像，不是则删除旧头像
                     if(index == -1) {
                         //得到旧头像的地址
-                        String oldpath = System.getProperty("user.dir") + "\\src\\main\\resources\\resources\\" + oldavatar.replace("/", "\\");
+                        String oldpath = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\" + oldavatar.replace("/", "\\");
                         File olddest = new File(oldpath);
                         //删除旧头像
                         olddest.delete();
