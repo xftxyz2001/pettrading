@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.UUID;
 
@@ -26,7 +28,11 @@ public class FileServiceImpl implements FileService {
         String uuidWithoutDash = UUID.randomUUID().toString();
         String filename = uuidWithoutDash + suffix;
 
-        file.transferTo(Paths.get(basePath, path, filename));
+        Path targetPath = Paths.get(basePath, path, filename);
+        if (!Files.exists(targetPath.getParent())) {
+            Files.createDirectories(targetPath.getParent());
+        }
+        file.transferTo(targetPath);
 
         return Paths.get(path, filename).toString().replace("\\", "/");
     }
