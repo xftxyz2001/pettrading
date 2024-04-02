@@ -15,7 +15,7 @@ public interface PetMapper {
 
     @Insert("insert into pet (petname,sex,bkid,skid,uid,age,price,pk,description,date) " +
             "value (#{petname},#{sex},#{bkid},#{skid},#{uid},#{age},#{price},#{pk},#{description},#{date})")
-    @Options(useGeneratedKeys = true,keyProperty = "pid")
+    @Options(useGeneratedKeys = true, keyProperty = "pid")
     int addPet(Pet pet);
 
     int deletePet(Map map);

@@ -1,7 +1,6 @@
 package com.example.dao;
 
 import com.example.domain.Address;
-import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.Select;
@@ -14,7 +13,7 @@ import java.util.Map;
 public interface AddressMapper {
 
     @Insert("insert into address (phone,address,uid,username) value (#{phone},#{address},#{uid},#{username})")
-    @Options(useGeneratedKeys = true,keyProperty = "aid")
+    @Options(useGeneratedKeys = true, keyProperty = "aid")
     int addAddress(Address address);
 
     int deleteAddress(Map map);

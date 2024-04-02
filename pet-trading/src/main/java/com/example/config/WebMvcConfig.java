@@ -10,10 +10,6 @@ import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
 
-/**
- * @author starsea
- * @date 2021-01-22
- */
 @Configuration
 public class WebMvcConfig implements WebMvcConfigurer {
 
@@ -33,7 +29,5 @@ public class WebMvcConfig implements WebMvcConfigurer {
             registry.addResourceHandler("/" + path + "/**")
                     .addResourceLocations("file:" + Paths.get(basePath, path).toAbsolutePath() + "/");
         }
-        // registry.addResourceHandler("/avatar/**", "/petimg/**", "/defaultavatar/**", "/defaultpetimg/**")
-        //         .addResourceLocations("file:" + basePath + "avatar/", "file:" + basePath + "petimg/", "file:" + basePath + "defaultavatar/", "file:" + basePath + "defaultpetimg/");
     }
 }

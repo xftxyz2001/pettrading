@@ -7,12 +7,10 @@ import com.example.service.FileService;
 import com.example.service.PetService;
 import com.example.service.PetorderService;
 import com.example.service.PhotoService;
-import com.example.utils.createUUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.Date;
 import java.util.HashMap;

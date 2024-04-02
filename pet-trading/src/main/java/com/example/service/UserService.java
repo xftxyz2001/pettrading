@@ -2,7 +2,6 @@ package com.example.service;
 
 import com.example.domain.ContactUser;
 import com.example.domain.User;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;

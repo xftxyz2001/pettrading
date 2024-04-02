@@ -7,9 +7,14 @@ import java.util.Map;
 
 public interface PetorderService {
     int addpetorder(Petorder petorder);
+
     int deletepetorder(Map map);
+
     int updatepetorder(Petorder petorder);
+
     List<Petorder> querypetorder(Map map);
+
     List<Petorder> querypetorderpage(Map map);
+
     int countpetorder(Map map);
 }

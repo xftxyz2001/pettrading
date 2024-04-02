@@ -12,7 +12,7 @@ import java.util.Map;
 public interface ContactMapper {
 
     @Insert("insert into contact (fromuid,touid,noread) value (#{fromuid},#{touid},#{noread})")
-    @Options(useGeneratedKeys = true,keyProperty = "cid")
+    @Options(useGeneratedKeys = true, keyProperty = "cid")
     int addContact(Contact contact);
 
     int deleteContact(Map map);

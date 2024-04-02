@@ -2,11 +2,7 @@ package com.example.dao;
 
 import com.example.domain.ContactUser;
 import com.example.domain.User;
-import org.apache.ibatis.annotations.Delete;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
