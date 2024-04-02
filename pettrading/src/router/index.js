@@ -33,6 +33,7 @@ const usermanage = () => import('views/backstage/usermanage/usermanage.vue')
 const addressmanage = () => import('views/backstage/usermanage/addressmanage.vue')
 const petordermanage = () => import('views/backstage/petordermanage/petordermanage.vue')
 const mymanage = () => import('views/backstage/mymanage/mymanage.vue')
+const about = () => import('views/about/about.vue')
 
 const routes = [
   {
@@ -44,7 +45,14 @@ const routes = [
     meta: {
       title: '宠物交易'
     }
-  },{
+  }, {
+    path: '/about',
+    component: about,
+    meta: {
+      title: '关于我们'
+    }
+  },
+  {
     path: '/buying',
     component: Buying,
     meta: {

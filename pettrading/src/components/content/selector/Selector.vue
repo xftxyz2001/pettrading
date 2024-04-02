@@ -44,7 +44,7 @@
       <el-slider :max="maxprice" v-model="form.maxprice"></el-slider>
       <div class="but">
         <el-tooltip class="item" effect="dark" content="根据上述条件查询" placement="bottom">
-          <el-button type="primary" @click="query">查询</el-button>
+          <el-button type="primary" @click="query" style="margin-left: -24px;">查询</el-button>
         </el-tooltip>
         <slot></slot>
       </div>

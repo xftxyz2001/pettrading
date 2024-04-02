@@ -115,5 +115,6 @@
   justify-content: flex-end;
   padding-right: 1em;
   color: rgb(183, 183, 183);
+  margin-top: -6px;
 }
 </style>
