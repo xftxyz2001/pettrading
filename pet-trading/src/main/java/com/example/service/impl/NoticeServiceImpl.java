@@ -1,7 +1,8 @@
-package com.example.service;
+package com.example.service.impl;
 
 import com.example.dao.NoticeMapper;
 import com.example.domain.Notice;
+import com.example.service.NoticeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -9,7 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-public class NoticeServiceImpl implements NoticeService{
+public class NoticeServiceImpl implements NoticeService {
 
     @Autowired
     private NoticeMapper noticeMapper;

@@ -3,6 +3,7 @@ package com.example.controller;
 import com.example.domain.Pet;
 import com.example.domain.Petorder;
 import com.example.domain.Photo;
+import com.example.service.FileService;
 import com.example.service.PetService;
 import com.example.service.PetorderService;
 import com.example.service.PhotoService;
@@ -31,6 +32,9 @@ public class PetController {
     @Autowired
     private PetorderService petorderService;
 
+    @Autowired
+    private FileService fileService;
+
     //发布宠物出售或购买请求
     @PostMapping("/addPet")
     public String addPet(@RequestParam(name = "files", required = false) MultipartFile[] files, Pet pet) throws IOException {
@@ -42,15 +46,17 @@ public class PetController {
         if (files != null) {
             if (files.length > 0) {
                 for (int i = 0; i < files.length; i++) {
-                    //获取当前项目路径
-                    String path = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\petimg\\";
-                    //前面拼接uiid是为了防止名字重复，获取文件的后缀名，不使用原文件名是防止文件名格式导致无法显示
-                    String filename = createUUID.getUUID() + files[i].getOriginalFilename().substring(files[i].getOriginalFilename().lastIndexOf("."));
-                    //创建文件对象，设置文件保存路径
-                    File dest = new File(path + filename);
-                    //将文件对象转化为文件
-                    files[i].transferTo(dest);
-                    photo.setUrl("petimg/" + filename);
+                    // //获取当前项目路径
+                    // String path = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\petimg\\";
+                    // //前面拼接uiid是为了防止名字重复，获取文件的后缀名，不使用原文件名是防止文件名格式导致无法显示
+                    // String filename = createUUID.getUUID() + files[i].getOriginalFilename().substring(files[i].getOriginalFilename().lastIndexOf("."));
+                    // //创建文件对象，设置文件保存路径
+                    // File dest = new File(path + filename);
+                    // //将文件对象转化为文件
+                    // files[i].transferTo(dest);
+                    // photo.setUrl("petimg/" + filename);
+                    String url = fileService.saveFile(files[i], "petimg");
+                    photo.setUrl(url);
                     photoService.addPhoto(photo);
                 }
             } else {
@@ -104,15 +110,17 @@ public class PetController {
         if (files != null) {
             if (files.length > 0) {
                 for (int i = 0; i < files.length; i++) {
-                    //获取当前项目路径
-                    String path = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\petimg\\";
-                    //获取文件名字,前面拼接uiid是为了防止名字重复
-                    String filename = createUUID.getUUID() + files[i].getOriginalFilename();
-                    //创建文件对象，设置文件保存路径
-                    File dest = new File(path + filename);
-                    //将文件对象转化为文件
-                    files[i].transferTo(dest);
-                    photo.setUrl("petimg/" + filename);
+                    // //获取当前项目路径
+                    // String path = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\petimg\\";
+                    // //获取文件名字,前面拼接uiid是为了防止名字重复
+                    // String filename = createUUID.getUUID() + files[i].getOriginalFilename();
+                    // //创建文件对象，设置文件保存路径
+                    // File dest = new File(path + filename);
+                    // //将文件对象转化为文件
+                    // files[i].transferTo(dest);
+                    // photo.setUrl("petimg/" + filename);
+                    String url = fileService.saveFile(files[i], "petimg");
+                    photo.setUrl(url);
                     photoService.addPhoto(photo);
                 }
             } else {

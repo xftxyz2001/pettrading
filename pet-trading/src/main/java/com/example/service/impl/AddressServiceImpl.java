@@ -1,7 +1,8 @@
-package com.example.service;
+package com.example.service.impl;
 
 import com.example.dao.AddressMapper;
 import com.example.domain.Address;
+import com.example.service.AddressService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

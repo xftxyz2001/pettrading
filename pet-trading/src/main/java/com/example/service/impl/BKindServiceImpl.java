@@ -1,7 +1,8 @@
-package com.example.service;
+package com.example.service.impl;
 
 import com.example.dao.BKindMapper;
 import com.example.domain.BKind;
+import com.example.service.BKindService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

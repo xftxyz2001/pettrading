@@ -2,10 +2,7 @@ package com.example.controller;
 
 import com.example.domain.ContactUser;
 import com.example.domain.User;
-import com.example.service.AddressService;
-import com.example.service.ContactService;
-import com.example.service.PetService;
-import com.example.service.UserService;
+import com.example.service.*;
 import com.example.utils.createUUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -33,6 +30,9 @@ public class UserController {
 
     @Autowired
     private ContactService contactService;
+
+    @Autowired
+    private FileService fileService;
 
     //注册前检验用户是否存在
     @GetMapping("/checkuser")
@@ -152,16 +152,17 @@ public class UserController {
         if(uuser == null || uuser.getUid() == user.getUid()){
             if(file != null) {
                 if(!file.isEmpty()) {
-                    //获取当前项目路径
-                    String path = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\avatar\\";
-                    //获取文件名字,前面拼接uiid是为了防止名字重复
-                    String filename = createUUID.getUUID() + file.getOriginalFilename();
-                    //创建文件对象，设置文件保存路径
-                    File dest = new File(path + filename);
-                    //将文件对象转化为文件
-                    file.transferTo(dest);
+                    // //获取当前项目路径
+                    // String path = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\avatar\\";
+                    // //获取文件名字,前面拼接uiid是为了防止名字重复
+                    // String filename = createUUID.getUUID() + file.getOriginalFilename();
+                    // //创建文件对象，设置文件保存路径
+                    // File dest = new File(path + filename);
+                    // //将文件对象转化为文件
+                    // file.transferTo(dest);
+                    String filename = fileService.saveFile(file, "avatar");
                     //存入头像地址
-                    user.setAvatar("avatar/" + filename);
+                    user.setAvatar(filename);
 
                     //查找旧的用户信息
                     map.put("uid",user.getUid());
@@ -172,10 +173,11 @@ public class UserController {
                     //判断旧头像是否为默认头像，不是则删除旧头像
                     if(index == -1) {
                         //得到旧头像的地址
-                        String oldpath = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\" + oldavatar.replace("/", "\\");
-                        File olddest = new File(oldpath);
-                        //删除旧头像
-                        olddest.delete();
+                        // String oldpath = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\" + oldavatar.replace("/", "\\");
+                        // File olddest = new File(oldpath);
+                        // //删除旧头像
+                        // olddest.delete();
+                        fileService.deleteFile(oldavatar);
                     }
                 }
             }

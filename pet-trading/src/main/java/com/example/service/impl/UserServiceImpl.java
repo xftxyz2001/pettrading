@@ -1,8 +1,9 @@
-package com.example.service;
+package com.example.service.impl;
 
 import com.example.dao.UserMapper;
 import com.example.domain.ContactUser;
 import com.example.domain.User;
+import com.example.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,7 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserMapper userMapper;

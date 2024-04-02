@@ -40,3 +40,6 @@ spring:
 mybatis:
   type-aliases-package: com.example.domain
 #  mapper-locations: classpath:mybatis/mapper/*.xml
+
+myconfig:
+  upload-directory: uploads

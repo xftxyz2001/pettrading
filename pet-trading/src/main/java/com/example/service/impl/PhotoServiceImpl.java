@@ -1,7 +1,8 @@
-package com.example.service;
+package com.example.service.impl;
 
 import com.example.dao.PhotoMapper;
 import com.example.domain.Photo;
+import com.example.service.PhotoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -9,7 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-public class PhotoServiceImpl implements PhotoService{
+public class PhotoServiceImpl implements PhotoService {
 
     @Autowired
     private PhotoMapper photoMapper;
