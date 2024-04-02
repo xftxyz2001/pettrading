@@ -2,6 +2,7 @@ package com.example.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 /**
@@ -17,9 +18,10 @@ public class WebMvcConfig implements WebMvcConfigurer {
 
     }
 
-    // @Override
-    // public void addResourceHandlers(ResourceHandlerRegistry registry) {
-    //     registry.addResourceHandler("/avatar/**")
-    //             .addResourceLocations("classpath:/resources/avatar/");
-    // }
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        String basePath = System.getProperty("user.dir") + "/src/main/resources/static/";
+        registry.addResourceHandler("/avatar/**", "/petimg/**", "/defaultavatar/**", "/defaultpetimg/**")
+                .addResourceLocations("file:" + basePath + "avatar/", "file:" + basePath + "petimg/", "file:" + basePath + "defaultavatar/", "file:" + basePath + "defaultpetimg/");
+    }
 }
