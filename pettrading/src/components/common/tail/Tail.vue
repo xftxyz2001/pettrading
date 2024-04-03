@@ -3,7 +3,7 @@
   <div class="tail">
     <div class="mainbar container">
       <div>联系电话：1xxxxxxxxxx</div>
-      <div>联系邮箱： xxxxxxxxxx.qq.com</div>
+      <div>联系邮箱：xxxxxxxxxx.qq.com</div>
     </div>
   </div>
 </template>
@@ -30,5 +30,6 @@ export default {
 .mainbar {
   display: flex;
   justify-content: space-around;
+  padding: 1em;
 }
 </style>
