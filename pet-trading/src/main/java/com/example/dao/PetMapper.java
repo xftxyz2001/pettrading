@@ -44,5 +44,5 @@ public interface PetMapper {
 
     //查询宠物所有年龄
     @Select("select distinct age from pet order by age")
-    List<Map> queryage();
+    List<Map<String, Object>> queryage();
 }

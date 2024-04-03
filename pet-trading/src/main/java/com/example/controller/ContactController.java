@@ -26,11 +26,11 @@ public class ContactController {
 
     @PostMapping("/addContact")
     public Long addContact(Contact contact) {
-        Map map = new HashMap();
+        Map<String, Object> map = new HashMap<>();
         map.put("fromuid", contact.getFromuid());
         map.put("touid", contact.getTouid());
         List<Contact> contacts = contactService.queryContact(map);
-        if (contacts.size() == 0) {
+        if (contacts.isEmpty()) {
             contactService.addContact(contact);
             return contact.getCid();
         } else {

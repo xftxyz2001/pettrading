@@ -66,7 +66,7 @@ public class PetServiceImpl implements PetService {
     }
 
     @Override
-    public List<Map> queryage() {
+    public List<Map<String, Object>> queryage() {
         return petMapper.queryage();
     }
 }

@@ -8,7 +8,7 @@ import java.util.Map;
 public interface PetService {
     int addPet(Pet pet);
 
-    int deletePet(Map map);
+    int deletePet(Map<String, Object> map);
 
     int updatePet(Pet pet);
 
@@ -16,15 +16,15 @@ public interface PetService {
 
     List<Pet> queryPetByName(String petname);
 
-    List<Pet> queryAllPet(Map map);
+    List<Pet> queryAllPet(Map<String, Object> map);
 
     int setPetbkidNULL(Long bkid);
 
-    List<Pet> queryPetpage(Map map);
+    List<Pet> queryPetpage(Map<String, Object> map);
 
-    Integer querypetcount(Map map);
+    Integer querypetcount(Map<String, Object> map);
 
     String queryMaxPrice();
 
-    List<Map> queryage();
+    List<Map<String, Object>> queryage();
 }

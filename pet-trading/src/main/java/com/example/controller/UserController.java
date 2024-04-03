@@ -1,9 +1,11 @@
 package com.example.controller;
 
+import com.example.config.Constants;
 import com.example.domain.ContactUser;
 import com.example.domain.User;
 import com.example.service.*;
 import lombok.RequiredArgsConstructor;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -11,6 +13,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 @RequiredArgsConstructor
 @RestController
@@ -25,9 +28,9 @@ public class UserController {
 
     //注册前检验用户是否存在
     @GetMapping("/checkuser")
-    public Map checkuser(@RequestParam(value = "telphone", required = false) String telphone, @RequestParam(value = "idcard", required = false) String idcard) {
-        Map map = new HashMap();
-        User user = new User();
+    public Map<String, Object> checkuser(@RequestParam(value = "telphone", required = false) String telphone, @RequestParam(value = "idcard", required = false) String idcard) {
+        Map<String, Object> map = new HashMap<>();
+        User user;
         if (telphone != null) {
             map.put("telphone", telphone);
             user = userService.queryUser(map);
@@ -35,11 +38,9 @@ public class UserController {
             if (user != null) {
                 map.put("flag", 0);
                 map.put("msg", "手机号已经被注册");
-                return map;
             } else {
                 map.put("flag", 1);
                 map.put("msg", "可进行下一步");
-                return map;
             }
         } else {
             map.put("idcard", idcard);
@@ -48,21 +49,19 @@ public class UserController {
             if (user != null) {
                 map.put("flag", 0);
                 map.put("msg", "该身份证号已被注册");
-                return map;
             } else {
                 map.put("flag", 1);
                 map.put("msg", "验证完成，可进行注册");
-                return map;
             }
         }
+        return map;
     }
 
     //注册账号
     @PostMapping("/register")
-    public Map register(User user) {
-        Map map = new HashMap();
-        String path = "defaultavatar/avatar1.jpeg";
-        user.setAvatar(path);
+    public Map<String, Object> register(User user) {
+        Map<String, Object> map = new HashMap<>();
+        user.setAvatar(Constants.DEFAULT_AVATAR);
         user.setSex("保密");
         user.setType(1);
         userService.addUser(user);
@@ -73,9 +72,9 @@ public class UserController {
 
     //登录
     @GetMapping("/login")
-    public Map login(String username, String password) {
+    public Map<String, Object> login(String username, String password) {
         //查找该用户名(即该账户)是否存在
-        Map map = new HashMap();
+        Map<String, Object> map = new HashMap<>();
         map.put("username", username);
         map.put("telphone", username);
         map.put("email", username);
@@ -104,7 +103,7 @@ public class UserController {
     //查找单个用户的信息
     @GetMapping("/queryuser")
     public User queryuser(Long uid) {
-        Map map = new HashMap();
+        Map<String, Object> map = new HashMap<>();
         map.put("uid", uid);
         User user = userService.queryUser(map);
         if (user.getType() == 1) {
@@ -120,14 +119,14 @@ public class UserController {
 
     //修改用户信息
     @PostMapping("/updateuser")
-    public Map updateuser(@RequestParam(name = "file", required = false) MultipartFile file, User user) throws IOException {
-        Map map = new HashMap();
+    public Map<String, Object> updateuser(@RequestParam(name = "file", required = false) MultipartFile file, User user) throws IOException {
+        Map<String, Object> map = new HashMap<>();
         User uuser = null;
         if (user.getTelphone() != null) {
             map.put("telphone", user.getTelphone());
             uuser = userService.queryUser(map);
             map.remove("telphone");
-            if (uuser != null && uuser.getUid() != user.getUid()) {
+            if (uuser != null && !Objects.equals(uuser.getUid(), user.getUid())) {
                 map.put("flag", 0);
                 map.put("msg", "该手机号已被注册");
                 return map;
@@ -138,21 +137,12 @@ public class UserController {
             uuser = userService.queryUser(map);
             map.remove("username");
         }
-        if (uuser == null || uuser.getUid() == user.getUid()) {
+        if (uuser == null || Objects.equals(uuser.getUid(), user.getUid())) {
             if (file != null) {
                 if (!file.isEmpty()) {
-                    // //获取当前项目路径
-                    // String path = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\avatar\\";
-                    // //获取文件名字,前面拼接uiid是为了防止名字重复
-                    // String filename = createUUID.getUUID() + file.getOriginalFilename();
-                    // //创建文件对象，设置文件保存路径
-                    // File dest = new File(path + filename);
-                    // //将文件对象转化为文件
-                    // file.transferTo(dest);
                     String filename = fileService.saveFile(file, "avatar");
                     //存入头像地址
                     user.setAvatar(filename);
-
                     //查找旧的用户信息
                     map.put("uid", user.getUid());
                     uuser = userService.queryUser(map);
@@ -161,11 +151,6 @@ public class UserController {
                     int index = oldavatar.indexOf("defaultavatar/");
                     //判断旧头像是否为默认头像，不是则删除旧头像
                     if (index == -1) {
-                        //得到旧头像的地址
-                        // String oldpath = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\" + oldavatar.replace("/", "\\");
-                        // File olddest = new File(oldpath);
-                        // //删除旧头像
-                        // olddest.delete();
                         fileService.deleteFile(oldavatar);
                     }
                 }
@@ -183,8 +168,8 @@ public class UserController {
 
     //修改密码
     @PostMapping("/changepassword")
-    public Map changepsaaword(User user, @RequestParam(value = "oldpassword") String oldpassword) {
-        Map map = new HashMap();
+    public Map<String, Object> changepsaaword(User user, @RequestParam(value = "oldpassword") String oldpassword) {
+        Map<String, Object> map = new HashMap<>();
         map.put("uid", user.getUid());
         User user1 = userService.queryUser(map);
         map.remove("uid");
@@ -192,18 +177,17 @@ public class UserController {
             userService.updateUser(user);
             map.put("flag", 1);
             map.put("msg", "修改成功");
-            return map;
         } else {
             map.put("flag", 0);
             map.put("msg", "旧密码错误");
-            return map;
         }
+        return map;
     }
 
     //删除用户
     @GetMapping("/deleteUser")
     public String deleteUser(Long uid) {
-        Map map = new HashMap();
+        Map<String, Object> map = new HashMap<>();
         map.put("uid", uid);
         userService.deleteUser(map);
         petService.deletePet(map);
@@ -217,18 +201,17 @@ public class UserController {
     //查找所有用户
     @GetMapping("/queryalluser")
     public List<User> querAllUser(@RequestParam(name = "page", required = false) Integer page, @RequestParam(name = "count", required = false) Integer count) {
-        Map map = new HashMap();
+        Map<String, Object> map = new HashMap<>();
         if (page != null && count != null) {
             map.put("min", (page - 1) * count);
             map.put("max", count);
         }
-        List<User> user = userService.queryAllUser(map);
-        return user;
+        return userService.queryAllUser(map);
     }
 
     @GetMapping("/countuser")
     public int countuser() {
-        Map map = new HashMap();
+        Map<String, Object> map = new HashMap<>();
         return userService.countuser(map);
     }
 
@@ -238,26 +221,26 @@ public class UserController {
     }
 
     @GetMapping("/queryuserby")
-    public Map queryuserby(User user) {
-        Map map = new HashMap();
+    public Map<String, Object> queryuserby(User user) {
+        Map<String, Object> map = new HashMap<>();
         if (user.getUid() != null) {
             map.put("uid", user.getUid());
         }
-        if (user.getUsername() != null && user.getUsername() != "") {
+        if (StringUtils.hasLength(user.getUsername())) {
             map.put("username", user.getUsername());
         }
-        if (user.getRealname() != null && user.getRealname() != "") {
+        if (StringUtils.hasLength(user.getRealname())) {
             map.put("realname", user.getRealname());
         }
-        if (user.getIdcard() != null && user.getIdcard() != "") {
+        if (StringUtils.hasLength(user.getIdcard())) {
             map.put("idcard", user.getIdcard());
         }
-        if (user.getTelphone() != null && user.getTelphone() != "") {
+        if (StringUtils.hasLength(user.getTelphone())) {
             map.put("telphone", user.getTelphone());
         }
-        Map map1 = new HashMap();
-        map1.put("total", userService.countuser(map));
-        map1.put("user", userService.queryuserby(map));
-        return map1;
+        Map<String, Object> res = new HashMap<>();
+        res.put("total", userService.countuser(map));
+        res.put("user", userService.queryuserby(map));
+        return res;
     }
 }

@@ -3,6 +3,7 @@ package com.example.controller;
 import com.example.domain.Address;
 import com.example.service.AddressService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -17,9 +18,9 @@ public class AddressController {
     private final AddressService addressService;
 
     @PostMapping("/addAddress")
-    public Map addAddress(Address address) {
+    public Map<String, Object> addAddress(Address address) {
         addressService.addAddress(address);
-        Map map = new HashMap();
+        Map<String, Object> map = new HashMap<>();
         map.put("aid", address.getAid());
         map.put("msg", "添加成功");
         return map;
@@ -27,7 +28,7 @@ public class AddressController {
 
     @GetMapping("/deleteAddress")
     public String deleteAddress(@RequestParam(name = "aid", required = false) Long aid, @RequestParam(name = "uid", required = false) String uid) {
-        Map map = new HashMap();
+        Map<String, Object> map = new HashMap<>();
         if (aid != null) {
             map.put("aid", aid);
         }
@@ -46,36 +47,36 @@ public class AddressController {
 
     @GetMapping("/queryAddressbyuid")
     public List<Address> queryAddressbyuid(Long uid) {
-        Map map = new HashMap();
+        Map<String, Object> map = new HashMap<>();
         map.put("uid", uid);
         return addressService.queryAddressbyuid(map);
     }
 
     @GetMapping("/queryaddress")
-    public Map queryaddress(@RequestParam(name = "page", required = false) Integer page, @RequestParam(name = "count", required = false) Integer count, Address address) {
-        Map map = new HashMap();
+    public Map<String, Object> queryaddress(@RequestParam(name = "page", required = false) Integer page, @RequestParam(name = "count", required = false) Integer count, Address address) {
+        Map<String, Object> map = new HashMap<>();
         if (address.getAid() != null) {
             map.put("aid", address.getAid());
         }
         if (address.getUid() != null) {
             map.put("uid", address.getUid());
         }
-        if (address.getAddress() != null && address.getAddress() != "") {
+        if (StringUtils.hasLength(address.getAddress())) {
             map.put("address", address.getAddress());
         }
-        if (address.getPhone() != null && address.getPhone() != "") {
+        if (StringUtils.hasLength(address.getPhone())) {
             map.put("phone", address.getPhone());
         }
-        if (address.getUsername() != null && address.getUsername() != "") {
+        if (StringUtils.hasLength(address.getUsername())) {
             map.put("username", address.getUsername());
         }
         if (page != null && count != null) {
             map.put("min", (page - 1) * count);
             map.put("max", count);
         }
-        Map map1 = new HashMap();
-        map1.put("total", addressService.countaddress(map));
-        map1.put("address", addressService.queryAddress(map));
-        return map1;
+        Map<String, Object> res = new HashMap<>();
+        res.put("total", addressService.countaddress(map));
+        res.put("address", addressService.queryAddress(map));
+        return res;
     }
 }

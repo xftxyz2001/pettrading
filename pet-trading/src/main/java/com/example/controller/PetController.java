@@ -1,5 +1,6 @@
 package com.example.controller;
 
+import com.example.config.Constants;
 import com.example.domain.Pet;
 import com.example.domain.Petorder;
 import com.example.domain.Photo;
@@ -8,6 +9,8 @@ import com.example.service.PetService;
 import com.example.service.PetorderService;
 import com.example.service.PhotoService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.util.ObjectUtils;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -35,26 +38,15 @@ public class PetController {
         petService.addPet(pet);
         Photo photo = new Photo();
         photo.setPid(pet.getPid());
-        if (files != null) {
-            if (files.length > 0) {
-                for (int i = 0; i < files.length; i++) {
-                    // //获取当前项目路径
-                    // String path = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\petimg\\";
-                    // //前面拼接uiid是为了防止名字重复，获取文件的后缀名，不使用原文件名是防止文件名格式导致无法显示
-                    // String filename = createUUID.getUUID() + files[i].getOriginalFilename().substring(files[i].getOriginalFilename().lastIndexOf("."));
-                    // //创建文件对象，设置文件保存路径
-                    // File dest = new File(path + filename);
-                    // //将文件对象转化为文件
-                    // files[i].transferTo(dest);
-                    // photo.setUrl("petimg/" + filename);
-                    String url = fileService.saveFile(files[i], "petimg");
-                    photo.setUrl(url);
-                    photoService.addPhoto(photo);
-                }
-            } else {
-                photo.setUrl("defaultpetimg/nodata.jpg");
+        if (!ObjectUtils.isEmpty(files)) {
+            for (MultipartFile file : files) {
+                String url = fileService.saveFile(file, "petimg");
+                photo.setUrl(url);
                 photoService.addPhoto(photo);
             }
+        } else {
+            photo.setUrl(Constants.DEFAULT_PET_IMAGE);
+            photoService.addPhoto(photo);
         }
         return "发布成功";
     }
@@ -62,7 +54,7 @@ public class PetController {
     //删除宠物
     @GetMapping("/deletePet")
     public String deletePet(@RequestParam(name = "uid", required = false) Long uid, @RequestParam(name = "pid", required = false) Long pid) {
-        Map map = new HashMap();
+        Map<String, Object> map = new HashMap<>();
         if (uid != null) {
             map.put("uid", uid);
         } else {
@@ -71,7 +63,7 @@ public class PetController {
         }
         List<Petorder> petorder = petorderService.querypetorder(map);
         map.remove("postatu");
-        if (petorder.size() == 0) {
+        if (petorder.isEmpty()) {
             petService.deletePet(map);
             photoService.deletePhoto(map);
             return "删除成功";
@@ -88,42 +80,27 @@ public class PetController {
         Photo photo = new Photo();
         photo.setPid(pet.getPid());
         //删除图片
-        if (ppid != null) {
-            if (ppid.length > 0) {
-                Map photomap = new HashMap();
-                for (int i = 0; i < ppid.length; i++) {
-                    photomap.put("ppid", ppid[i]);
-                    photoService.deletePhoto(photomap);
-                    photomap.remove("ppid");
-                }
+        if (!ObjectUtils.isEmpty(files)) {
+            Map<String, Object> photomap = new HashMap<>();
+            for (Long aLong : ppid) {
+                photomap.put("ppid", aLong);
+                photoService.deletePhoto(photomap);
+                photomap.remove("ppid");
             }
         }
         //增加图片
-        if (files != null) {
-            if (files.length > 0) {
-                for (int i = 0; i < files.length; i++) {
-                    // //获取当前项目路径
-                    // String path = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\petimg\\";
-                    // //获取文件名字,前面拼接uiid是为了防止名字重复
-                    // String filename = createUUID.getUUID() + files[i].getOriginalFilename();
-                    // //创建文件对象，设置文件保存路径
-                    // File dest = new File(path + filename);
-                    // //将文件对象转化为文件
-                    // files[i].transferTo(dest);
-                    // photo.setUrl("petimg/" + filename);
-                    String url = fileService.saveFile(files[i], "petimg");
-                    photo.setUrl(url);
-                    photoService.addPhoto(photo);
-                }
-            } else {
-                System.out.println("没有新加图片");
+        if (!ObjectUtils.isEmpty(files)) {
+            for (MultipartFile file : files) {
+                String url = fileService.saveFile(file, "petimg");
+                photo.setUrl(url);
+                photoService.addPhoto(photo);
             }
         }
         //宠物为求购时，若没有图片，增加无数据图片
         if (pet.getPk() == 3) {
             List<Photo> photos = photoService.queryPhotobypid(pet.getPid());
-            if (photos.size() == 0) {
-                photo.setUrl("defaultpetimg/nodata.jpg");
+            if (photos.isEmpty()) {
+                photo.setUrl(Constants.DEFAULT_PET_IMAGE);
                 photoService.addPhoto(photo);
             }
         }
@@ -134,29 +111,26 @@ public class PetController {
     //根据id查询宠物
     @GetMapping("/querypetbyid")
     public Pet queryPetById(Long pid) {
-        Pet pet = petService.queryPetById(pid);
-        return pet;
+        return petService.queryPetById(pid);
     }
 
     //根据名字模糊查询
     @GetMapping("/queryPetByName")
     public List<Pet> queryPetByName(String petname) {
-        List<Pet> pets = petService.queryPetByName(petname);
-        return pets;
+        return petService.queryPetByName(petname);
     }
 
     //查询所有宠物
     @GetMapping("/queryAllPet")
     public List<Pet> queryAllPet(@RequestParam(name = "uid", required = false) Long uid, @RequestParam(name = "pk", required = false) Integer pk) {
-        Map map = new HashMap();
+        Map<String, Object> map = new HashMap<>();
         if (uid != null) {
             map.put("uid", uid);
         }
         if (pk != null) {
             map.put("pk", pk);
         }
-        List<Pet> pet = petService.queryAllPet(map);
-        return pet;
+        return petService.queryAllPet(map);
     }
 
     //分页查询宠物
@@ -173,43 +147,16 @@ public class PetController {
                                   @RequestParam(name = "petname", required = false) String petname,
                                   @RequestParam(name = "date", required = false) String date,
                                   @RequestParam(name = "sort", required = false) String sort) {
-        Map map = new HashMap();
+        Map<String, Object> map = warpQueryMap(pid, uid, pk, bkid, skid, age, price, date, petname);
         map.put("min", (page - 1) * count);
         map.put("max", count);
-        if (pid != null) {
-            map.put("pid", pid);
-        }
-        if (uid != null) {
-            map.put("uid", uid);
-        }
-        if (pk != null) {
-            map.put("pk", pk);
-        }
-        if (skid != null && skid != "") {
-            map.put("skid", skid);
-        } else if (bkid != null && bkid != "") {
-            map.put("bkid", bkid);
-        }
-        if (age != null && age != "") {
-            map.put("age", age);
-        }
         if (maxprice != null) {
             map.put("maxprice", maxprice);
         }
-        if (price != null) {
-            map.put("price", price);
-        }
-        if (petname != null && petname != "") {
-            map.put("petname", petname);
-        }
-        if (date != null && date != "") {
-            map.put("date", date);
-        }
-        if (sort != null && sort != "") {
+        if (StringUtils.hasLength(sort)) {
             map.put("sort", sort);
         }
-        List<Pet> pet = petService.queryPetpage(map);
-        return pet;
+        return petService.queryPetpage(map);
     }
 
     //查询宠物条数
@@ -223,7 +170,13 @@ public class PetController {
                              @RequestParam(name = "price", required = false) Double price,
                              @RequestParam(name = "date", required = false) String date,
                              @RequestParam(name = "petname", required = false) String petname) {
-        Map map = new HashMap();
+        Map<String, Object> map = warpQueryMap(pid, uid, pk, bkid, skid, age, price, date, petname);
+        return petService.querypetcount(map);
+    }
+
+
+    private Map<String, Object> warpQueryMap(Integer pid, Integer uid, Integer pk, String bkid, String skid, String age, Double price, String date, String petname) {
+        Map<String, Object> map = new HashMap<>();
         if (pid != null) {
             map.put("pid", pid);
         }
@@ -233,24 +186,24 @@ public class PetController {
         if (pk != null) {
             map.put("pk", pk);
         }
-        if (skid != null && skid != "") {
+        if (StringUtils.hasLength(skid)) {
             map.put("skid", skid);
-        } else if (bkid != null && bkid != "") {
+        } else if (StringUtils.hasLength(bkid)) {
             map.put("bkid", bkid);
         }
-        if (age != null && age != "") {
+        if (StringUtils.hasLength(age)) {
             map.put("age", age);
         }
-        if (petname != null && petname != "") {
+        if (StringUtils.hasLength(petname)) {
             map.put("petname", petname);
         }
         if (price != null) {
             map.put("price", price);
         }
-        if (date != null && date != "") {
+        if (StringUtils.hasLength(date)) {
             map.put("date", date);
         }
-        return petService.querypetcount(map);
+        return map;
     }
 
     //查询所有宠物的最高价
@@ -261,7 +214,7 @@ public class PetController {
 
     //查询所有宠物年龄
     @GetMapping("/queryage")
-    public List<Map> queryage() {
+    public List<Map<String, Object>> queryage() {
         return petService.queryage();
     }
 }

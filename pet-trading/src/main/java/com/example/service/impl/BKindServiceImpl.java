@@ -36,7 +36,7 @@ public class BKindServiceImpl implements BKindService {
     }
 
     @Override
-    public List<Map> queryBKindname() {
+    public List<Map<String, Object>> queryBKindname() {
         return BKindMapper.queryBKindname();
     }
 

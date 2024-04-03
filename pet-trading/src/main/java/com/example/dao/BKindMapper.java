@@ -24,9 +24,9 @@ public interface BKindMapper {
     @Select("select * from bkind")
     List<BKind> queryBKind();
 
-    List<Map> queryBKindname();
+    List<Map<String, Object>> queryBKindname();
 
-    List<BKind> queryBKindandSKind(Map map);
+    List<BKind> queryBKindandSKind(Map<String, Object> map);
 
 
 }

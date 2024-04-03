@@ -20,7 +20,7 @@ public class NoticeController {
 
     @GetMapping("/querynotice")
     public List<Notice> querynotice(Long fromuid, Long touid) {
-        Map map = new HashMap();
+        Map<String, Object> map = new HashMap<>();
         map.put("fromuid", fromuid);
         map.put("touid", touid);
         return noticeService.querynotice(map);
@@ -28,7 +28,7 @@ public class NoticeController {
 
     @GetMapping("/queryusernotice")
     public List<Notice> queryusernotice(Long uid) {
-        Map map = new HashMap();
+        Map<String, Object> map = new HashMap<>();
         map.put("uid", uid);
         return noticeService.queryusernotice(map);
     }
