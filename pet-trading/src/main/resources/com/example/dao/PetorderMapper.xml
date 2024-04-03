@@ -45,10 +45,10 @@
         <result property="puid" column="puid"/>
         <result property="price" column="price"/>
         <association property="pet" javaType="pet">
-            <id property="pid" column="pid"></id>
-            <result property="petname" column="petname"></result>
+            <id property="pid" column="pid"/>
+            <result property="petname" column="rename"/>
             <result property="price" column="petprice"/>
-            <result property="pk" column="pk"></result>
+            <result property="pk" column="pk"/>
             <collection property="photo" ofType="photo">
                 <id property="ppid" column="ppid"/>
                 <result property="url" column="url"/>

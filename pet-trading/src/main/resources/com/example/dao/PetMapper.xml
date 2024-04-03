@@ -34,7 +34,7 @@
     <select id="queryPetByName" resultType="pet">
         select *
         from pet
-        where petname LIKE "%"#{petname}"%"
+        where petname LIKE CONCAT('%', #{petname}, '%')
     </select>
 
     <!--查询所有宠物，可加入uid等条件-->
@@ -78,17 +78,17 @@
 
     <!--分页查询-->
     <resultMap id="petMapper" type="pet">
-        <id property="pid" column="pid"></id>
-        <result property="petname" column="petname"></result>
-        <result property="sex" column="sex"></result>
-        <result property="age" column="age"></result>
-        <result property="price" column="price"></result>
-        <result property="pk" column="pk"></result>
-        <result property="description" column="description"></result>
-        <result property="date" column="date"></result>
-        <result property="uid" column="uid"></result>
-        <result property="bkid" column="bkid"></result>
-        <result property="skid" column="skid"></result>
+        <id property="pid" column="pid"/>
+        <result property="petname" column="petname"/>
+        <result property="sex" column="sex"/>
+        <result property="age" column="age"/>
+        <result property="price" column="price"/>
+        <result property="pk" column="pk"/>
+        <result property="description" column="description"/>
+        <result property="date" column="date"/>
+        <result property="uid" column="uid"/>
+        <result property="bkid" column="bkid"/>
+        <result property="skid" column="skid"/>
         <association property="bkind" javaType="bkind">
             <id property="bkid" column="bkid"/>
             <result property="bkindname" column="bkindname"/>
@@ -120,7 +120,7 @@
             <choose>
                 <when test="skid != null">and s.skid=#{skid}</when>
                 <when test="bkid != null">and b.bkid=#{bkid}</when>
-                <otherwise></otherwise>
+                <otherwise/>
             </choose>
             <if test="age != null">and p.age = #{age}</if>
             <if test="maxprice != null">and p.price &lt;= #{maxprice}</if>
@@ -153,7 +153,7 @@
             <choose>
                 <when test="skid != null">and skid=#{skid}</when>
                 <when test="bkid != null">and bkid=#{bkid}</when>
-                <otherwise></otherwise>
+                <otherwise/>
             </choose>
             <if test="petname != null">and petname LIKE "%"#{petname}"%"</if>
             <if test="price != null">and p.price = #{price}</if>
