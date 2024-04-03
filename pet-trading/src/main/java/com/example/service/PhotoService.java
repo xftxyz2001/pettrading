@@ -8,7 +8,7 @@ import java.util.Map;
 public interface PhotoService {
     int addPhoto(Photo photo);
 
-    int deletePhoto(Map map);
+    int deletePhoto(Map<String, Object> map);
 
     int updatePhoto(Photo photo);
 

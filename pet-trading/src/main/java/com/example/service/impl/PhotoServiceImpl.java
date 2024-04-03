@@ -3,17 +3,17 @@ package com.example.service.impl;
 import com.example.dao.PhotoMapper;
 import com.example.domain.Photo;
 import com.example.service.PhotoService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
 
+@RequiredArgsConstructor
 @Service
 public class PhotoServiceImpl implements PhotoService {
 
-    @Autowired
-    private PhotoMapper photoMapper;
+    private final PhotoMapper photoMapper;
 
     @Override
     public int addPhoto(Photo photo) {
@@ -21,7 +21,7 @@ public class PhotoServiceImpl implements PhotoService {
     }
 
     @Override
-    public int deletePhoto(Map map) {
+    public int deletePhoto(Map<String, Object> map) {
         return photoMapper.deletePhoto(map);
     }
 

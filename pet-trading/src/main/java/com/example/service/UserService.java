@@ -10,17 +10,17 @@ public interface UserService {
 
     int addUser(User user);
 
-    User queryUser(Map map);
+    User queryUser(Map<String, Object> map);
 
     int updateUser(User user);
 
-    int deleteUser(Map map);
+    int deleteUser(Map<String, Object> map);
 
-    List<User> queryAllUser(Map map);
+    List<User> queryAllUser(Map<String, Object> map);
 
-    int countuser(Map map);
+    int countuser(Map<String, Object> map);
 
     List<ContactUser> querycontactuser(Long uid);
 
-    List<User> queryuserby(Map map);
+    List<User> queryuserby(Map<String, Object> map);
 }

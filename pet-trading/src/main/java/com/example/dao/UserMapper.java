@@ -14,23 +14,23 @@ public interface UserMapper {
     int addUser(User user);
 
     //查找单个用户
-    User queryUser(Map map);
+    User queryUser(Map<String, Object> map);
 
     //修改用户信息
     int updateUser(User user);
 
     //删除用户
-    int deleteUser(Map map);
+    int deleteUser(Map<String, Object> map);
 
     //查找所有普通用户
-    List<User> queryAllUser(Map map);
+    List<User> queryAllUser(Map<String, Object> map);
 
     //添加用户数量
-    int countuser(Map map);
+    int countuser(Map<String, Object> map);
 
     //查找用户最近联系人
     List<ContactUser> querycontactuser(Long uid);
 
     //更加条件查询用户
-    List<User> queryuserby(Map map);
+    List<User> queryuserby(Map<String, Object> map);
 }

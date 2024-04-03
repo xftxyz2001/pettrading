@@ -3,17 +3,17 @@ package com.example.service.impl;
 import com.example.dao.SKindMapper;
 import com.example.domain.SKind;
 import com.example.service.SKindService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
 
+@RequiredArgsConstructor
 @Service
 public class SKindServiceImpl implements SKindService {
 
-    @Autowired
-    private SKindMapper sKindMapper;
+    private final SKindMapper sKindMapper;
 
     @Override
     public int addSKind(SKind skind) {
@@ -21,7 +21,7 @@ public class SKindServiceImpl implements SKindService {
     }
 
     @Override
-    public int deleteSKind(Map map) {
+    public int deleteSKind(Map<String, Object> map) {
         return sKindMapper.deleteSKind(map);
     }
 
@@ -31,7 +31,7 @@ public class SKindServiceImpl implements SKindService {
     }
 
     @Override
-    public List<SKind> queryAllSKind(Map map) {
+    public List<SKind> queryAllSKind(Map<String, Object> map) {
         return sKindMapper.queryAllSKind(map);
     }
 }

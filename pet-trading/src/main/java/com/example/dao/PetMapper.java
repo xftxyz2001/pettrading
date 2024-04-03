@@ -18,7 +18,7 @@ public interface PetMapper {
     @Options(useGeneratedKeys = true, keyProperty = "pid")
     int addPet(Pet pet);
 
-    int deletePet(Map map);
+    int deletePet(Map<String, Object> map);
 
     int updatePet(Pet pet);
 
@@ -27,16 +27,16 @@ public interface PetMapper {
     //根据名字模糊查询
     List<Pet> queryPetByName(String petname);
 
-    List<Pet> queryAllPet(Map map);
+    List<Pet> queryAllPet(Map<String, Object> map);
 
     @Update("update pet set bkid=1 where bkid=#{bkid}")
     int setPetbkidNULL(Long bkid);
 
     //分页查询
-    List<Pet> queryPetpage(Map map);
+    List<Pet> queryPetpage(Map<String, Object> map);
 
     //查询宠物总数
-    Integer querypetcount(Map map);
+    Integer querypetcount(Map<String, Object> map);
 
     //查询宠物最高价格
     @Select("select max(price) from pet")

@@ -2,7 +2,7 @@ package com.example.service.impl;
 
 import com.example.config.MyConfig;
 import com.example.service.FileService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -12,11 +12,11 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.UUID;
 
+@RequiredArgsConstructor
 @Service
 public class FileServiceImpl implements FileService {
 
-    @Autowired
-    private MyConfig myConfig;
+    private final MyConfig myConfig;
 
     @Override
     public String saveFile(MultipartFile file, String path) throws IOException {

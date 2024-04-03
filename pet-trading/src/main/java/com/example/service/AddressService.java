@@ -8,13 +8,13 @@ import java.util.Map;
 public interface AddressService {
     int addAddress(Address address);
 
-    int deleteAddress(Map map);
+    int deleteAddress(Map<String, Object> map);
 
     int updateAddress(Address address);
 
-    List<Address> queryAddressbyuid(Map map);
+    List<Address> queryAddressbyuid(Map<String, Object> map);
 
-    List<Address> queryAddress(Map map);
+    List<Address> queryAddress(Map<String, Object> map);
 
-    int countaddress(Map map);
+    int countaddress(Map<String, Object> map);
 }

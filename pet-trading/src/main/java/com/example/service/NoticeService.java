@@ -8,11 +8,11 @@ import java.util.Map;
 public interface NoticeService {
     int addNotice(Notice notice);
 
-    int deleteNotice(Map map);
+    int deleteNotice(Map<String, Object> map);
 
-    List<Notice> querynotice(Map map);
+    List<Notice> querynotice(Map<String, Object> map);
 
-    int queryisread(Map map);
+    int queryisread(Map<String, Object> map);
 
-    List<Notice> queryusernotice(Map map);
+    List<Notice> queryusernotice(Map<String, Object> map);
 }

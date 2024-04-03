@@ -3,17 +3,17 @@ package com.example.service.impl;
 import com.example.dao.PetorderMapper;
 import com.example.domain.Petorder;
 import com.example.service.PetorderService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
 
+@RequiredArgsConstructor
 @Service
 public class PetorderServiceImpl implements PetorderService {
 
-    @Autowired
-    private PetorderMapper petorderMapper;
+    private final PetorderMapper petorderMapper;
 
     @Override
     public int addpetorder(Petorder petorder) {
@@ -21,7 +21,7 @@ public class PetorderServiceImpl implements PetorderService {
     }
 
     @Override
-    public int deletepetorder(Map map) {
+    public int deletepetorder(Map<String, Object> map) {
         return petorderMapper.deletepetorder(map);
     }
 
@@ -31,17 +31,17 @@ public class PetorderServiceImpl implements PetorderService {
     }
 
     @Override
-    public List<Petorder> querypetorder(Map map) {
+    public List<Petorder> querypetorder(Map<String, Object> map) {
         return petorderMapper.querypetorder(map);
     }
 
     @Override
-    public List<Petorder> querypetorderpage(Map map) {
+    public List<Petorder> querypetorderpage(Map<String, Object> map) {
         return petorderMapper.querypetorderpage(map);
     }
 
     @Override
-    public int countpetorder(Map map) {
+    public int countpetorder(Map<String, Object> map) {
         return petorderMapper.countpetorder(map);
     }
 }

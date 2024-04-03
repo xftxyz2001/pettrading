@@ -3,17 +3,17 @@ package com.example.service.impl;
 import com.example.dao.BKindMapper;
 import com.example.domain.BKind;
 import com.example.service.BKindService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
 
+@RequiredArgsConstructor
 @Service
 public class BKindServiceImpl implements BKindService {
 
-    @Autowired
-    private BKindMapper BKindMapper;
+    private final BKindMapper BKindMapper;
 
     @Override
     public int addBKind(BKind bkind) {
@@ -41,7 +41,7 @@ public class BKindServiceImpl implements BKindService {
     }
 
     @Override
-    public List<BKind> queryBKindandSKind(Map map) {
+    public List<BKind> queryBKindandSKind(Map<String, Object> map) {
         return BKindMapper.queryBKindandSKind(map);
     }
 }

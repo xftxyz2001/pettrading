@@ -3,17 +3,17 @@ package com.example.service.impl;
 import com.example.dao.PetMapper;
 import com.example.domain.Pet;
 import com.example.service.PetService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
 
+@RequiredArgsConstructor
 @Service
 public class PetServiceImpl implements PetService {
 
-    @Autowired
-    private PetMapper petMapper;
+    private final PetMapper petMapper;
 
     @Override
     public int addPet(Pet pet) {
@@ -21,7 +21,7 @@ public class PetServiceImpl implements PetService {
     }
 
     @Override
-    public int deletePet(Map map) {
+    public int deletePet(Map<String, Object> map) {
         return petMapper.deletePet(map);
     }
 
@@ -41,7 +41,7 @@ public class PetServiceImpl implements PetService {
     }
 
     @Override
-    public List<Pet> queryAllPet(Map map) {
+    public List<Pet> queryAllPet(Map<String, Object> map) {
         return petMapper.queryAllPet(map);
     }
 
@@ -51,12 +51,12 @@ public class PetServiceImpl implements PetService {
     }
 
     @Override
-    public List<Pet> queryPetpage(Map map) {
+    public List<Pet> queryPetpage(Map<String, Object> map) {
         return petMapper.queryPetpage(map);
     }
 
     @Override
-    public Integer querypetcount(Map map) {
+    public Integer querypetcount(Map<String, Object> map) {
         return petMapper.querypetcount(map);
     }
 

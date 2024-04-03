@@ -8,9 +8,9 @@ import java.util.Map;
 public interface SKindService {
     int addSKind(SKind skind);
 
-    int deleteSKind(Map map);
+    int deleteSKind(Map<String, Object> map);
 
     int updateSKind(SKind skind);
 
-    List<SKind> queryAllSKind(Map map);
+    List<SKind> queryAllSKind(Map<String, Object> map);
 }

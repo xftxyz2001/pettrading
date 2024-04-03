@@ -4,17 +4,17 @@ import com.example.dao.UserMapper;
 import com.example.domain.ContactUser;
 import com.example.domain.User;
 import com.example.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
 
+@RequiredArgsConstructor
 @Service
 public class UserServiceImpl implements UserService {
 
-    @Autowired
-    private UserMapper userMapper;
+    private final UserMapper userMapper;
 
     @Override
     public int addUser(User user) {
@@ -22,7 +22,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User queryUser(Map map) {
+    public User queryUser(Map<String, Object> map) {
         return userMapper.queryUser(map);
     }
 
@@ -32,17 +32,17 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public int deleteUser(Map map) {
+    public int deleteUser(Map<String, Object> map) {
         return userMapper.deleteUser(map);
     }
 
     @Override
-    public List<User> queryAllUser(Map map) {
+    public List<User> queryAllUser(Map<String, Object> map) {
         return userMapper.queryAllUser(map);
     }
 
     @Override
-    public int countuser(Map map) {
+    public int countuser(Map<String, Object> map) {
         return userMapper.countuser(map);
     }
 
@@ -52,7 +52,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> queryuserby(Map map) {
+    public List<User> queryuserby(Map<String, Object> map) {
         return userMapper.queryuserby(map);
     }
 }

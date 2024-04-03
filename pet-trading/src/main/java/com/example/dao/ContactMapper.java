@@ -15,13 +15,13 @@ public interface ContactMapper {
     @Options(useGeneratedKeys = true, keyProperty = "cid")
     int addContact(Contact contact);
 
-    int deleteContact(Map map);
+    int deleteContact(Map<String, Object> map);
 
     int updateContact(Contact contact);
 
-    List<Contact> queryContact(Map map);
+    List<Contact> queryContact(Map<String, Object> map);
 
-    int querynoread(Map map);
+    int querynoread(Map<String, Object> map);
 
-    List<Contact> querytouid(Map map);
+    // List<Contact> querytouid(Map<String, Object> map);
 }
