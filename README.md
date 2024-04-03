@@ -33,13 +33,7 @@
 
 ![contents](./picture/picture13.png)
 
-![contents](./picture/picture14.png)
-
 ![contents](./picture/picture3.png)
-
-![contents](./picture/picture17.png)
-
-![contents](./picture/picture16.png)
 
 ![contents](./picture/picture4.png)
 

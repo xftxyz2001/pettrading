@@ -45,14 +45,7 @@ export default {
       turnback: false,
       placeholder: "请输入要购买的宠物名称",
       pk: 0,
-      sliders: [
-        {
-          img: require("assets/img/swipper/1.webp")
-        },
-        {
-          img: require("assets/img/swipper/2.webp")
-        }
-      ],
+      sliders: [],
       show: 0,
       timer: null
     };
@@ -118,6 +111,11 @@ export default {
     }
   },
   mounted() {
+    this.sliders = require.context("assets/img/swipper", false, /\.(png|jpe?g|svg|webp)$/).keys().map(item => {
+      return {
+        img: require("assets/img/swipper" + item.slice(1))
+      };
+    });
     this.runslider();
   }
 };
