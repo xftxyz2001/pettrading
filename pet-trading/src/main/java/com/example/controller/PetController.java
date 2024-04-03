@@ -7,7 +7,7 @@ import com.example.service.FileService;
 import com.example.service.PetService;
 import com.example.service.PetorderService;
 import com.example.service.PhotoService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -17,21 +17,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/pet")
 public class PetController {
 
-    @Autowired
-    private PetService petService;
-
-    @Autowired
-    private PhotoService photoService;
-
-    @Autowired
-    private PetorderService petorderService;
-
-    @Autowired
-    private FileService fileService;
+    private final PetService petService;
+    private final PhotoService photoService;
+    private final PetorderService petorderService;
+    private final FileService fileService;
 
     //发布宠物出售或购买请求
     @PostMapping("/addPet")

@@ -2,7 +2,7 @@ package com.example.controller;
 
 import com.example.domain.Contact;
 import com.example.service.ContactService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -11,11 +11,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/contact")
 public class ContactController {
-    @Autowired
-    private ContactService contactService;
+
+    private final ContactService contactService;
 
     @PostMapping("/updatecontact")
     public String updatecontact(Contact contact) {

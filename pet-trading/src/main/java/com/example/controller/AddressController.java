@@ -2,18 +2,19 @@ package com.example.controller;
 
 import com.example.domain.Address;
 import com.example.service.AddressService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/address")
 public class AddressController {
-    @Autowired
-    private AddressService addressService;
+
+    private final AddressService addressService;
 
     @PostMapping("/addAddress")
     public Map addAddress(Address address) {

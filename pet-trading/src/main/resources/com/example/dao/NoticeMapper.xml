@@ -13,7 +13,7 @@
         </where>
     </delete>
 
-<!--  查找聊天记录  -->
+    <!--  查找聊天记录  -->
     <select id="querynotice" parameterType="map" resultType="notice">
         select * from notice
         <where>
@@ -32,13 +32,20 @@
         order by date
     </select>
 
-<!--    查找一个用户的所有聊天记录-->
+    <!--    查找一个用户的所有聊天记录-->
     <select id="queryusernotice" parameterType="map" resultType="notice">
-        select * from notice where fromuid=#{uid} or touid=#{uid} order by date
+        select *
+        from notice
+        where fromuid = #{uid}
+           or touid = #{uid}
+        order by date
     </select>
 
-<!--    查找信息数量-->
+    <!--    查找信息数量-->
     <select id="queryisread" parameterType="map" resultType="int">
-        select count(*) from notice where touid=#{touid} and isread=#{isread}
+        select count(*)
+        from notice
+        where touid = #{touid}
+          and isread = #{isread}
     </select>
 </mapper>

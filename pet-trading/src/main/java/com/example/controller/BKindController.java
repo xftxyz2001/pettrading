@@ -4,7 +4,7 @@ import com.example.domain.BKind;
 import com.example.service.BKindService;
 import com.example.service.PetService;
 import com.example.service.SKindService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,16 +14,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/bkind")
 public class BKindController {
 
-    @Autowired
-    private BKindService BKindService;
-    @Autowired
-    private PetService petService;
-    @Autowired
-    private SKindService sKindService;
+    private final BKindService BKindService;
+    private final PetService petService;
+    private final SKindService sKindService;
 
     @PostMapping("/addBKind")
     public Map addBKind(BKind bkind) {

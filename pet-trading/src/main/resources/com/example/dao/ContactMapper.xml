@@ -37,7 +37,9 @@
     </select>
 
     <select id="querynoread" parameterType="map" resultType="int">
-        select IFNULL(sum(noread),0) from contact where fromuid=#{fromuid}
+        select IFNULL(sum(noread), 0)
+        from contact
+        where fromuid = #{fromuid}
     </select>
 
 </mapper>

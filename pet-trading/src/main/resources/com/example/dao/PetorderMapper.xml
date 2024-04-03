@@ -84,7 +84,9 @@
     <select id="querypetorderpage" parameterType="map" resultMap="petorderMap">
         select *
         from
-        (select po.poid,po.date,po.address,po.phone,recipientname,newaddress,newphone,newrecipientname,postatu,po.uid,po.pid,po.puid,po.price,p.petname,p.price as petprice,p.pk,u.username,u.avatar
+        (select
+        po.poid,po.date,po.address,po.phone,recipientname,newaddress,newphone,newrecipientname,postatu,po.uid,po.pid,po.puid,po.price,p.petname,p.price
+        as petprice,p.pk,u.username,u.avatar
         from petorder po,pet p,user u
         <where>
             po.pid = p.pid and u.uid = po.uid

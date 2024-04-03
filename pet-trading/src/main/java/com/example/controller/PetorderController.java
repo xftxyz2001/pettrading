@@ -4,7 +4,7 @@ import com.example.domain.Pet;
 import com.example.domain.Petorder;
 import com.example.service.PetService;
 import com.example.service.PetorderService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
@@ -12,15 +12,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/petorder")
 public class PetorderController {
 
-    @Autowired
-    private PetorderService petorderService;
-
-    @Autowired
-    private PetService petService;
+    private final PetorderService petorderService;
+    private final PetService petService;
 
     @PostMapping("/addpetorder")
     public Map addpetorder(Petorder petorder) {

@@ -2,7 +2,7 @@ package com.example.controller;
 
 import com.example.domain.SKind;
 import com.example.service.SKindService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,12 +12,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/skind")
 public class SKindController {
 
-    @Autowired
-    private SKindService sKindService;
+    private final SKindService sKindService;
 
     @PostMapping("/addskind")
     public Map addSKind(SKind skind) {

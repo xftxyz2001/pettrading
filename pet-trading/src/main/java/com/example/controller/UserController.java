@@ -3,7 +3,7 @@ package com.example.controller;
 import com.example.domain.ContactUser;
 import com.example.domain.User;
 import com.example.service.*;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -12,25 +12,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/user")
 public class UserController {
 
-    @Autowired
-//    @Qualifier("userServiceImpl")
-    private UserService userService;
-
-    @Autowired
-    private PetService petService;
-
-    @Autowired
-    private AddressService addressService;
-
-    @Autowired
-    private ContactService contactService;
-
-    @Autowired
-    private FileService fileService;
+    private final UserService userService;
+    private final PetService petService;
+    private final AddressService addressService;
+    private final ContactService contactService;
+    private final FileService fileService;
 
     //注册前检验用户是否存在
     @GetMapping("/checkuser")

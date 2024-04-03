@@ -17,7 +17,8 @@
     </resultMap>
 
     <select id="queryBKindname" resultMap="bkindnameMap">
-        select bkindname from bkind
+        select bkindname
+        from bkind
     </select>
 
     <select id="queryBKindandSKind" parameterType="map" resultMap="bkindMap">
@@ -28,7 +29,7 @@
         </where>
         order by b.bkid
     </select>
-    
+
     <resultMap id="bkindMap" type="bkind">
         <id property="bkid" column="bkid"/>
         <result property="bkindname" column="bkindname"/>

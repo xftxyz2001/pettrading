@@ -2,19 +2,19 @@ server:
   port: 8081
 
 spring:
-  #  配置数据库信息
+  # 配置数据库信息
   datasource:
     username: root
     password: 123456
     url: jdbc:mysql://localhost:3306/pet?serverTimezone=Asia/Shanghai&characterEncoding=utf-8&useSSL=false&allowMultiQueries=true&allowPublicKeyRetrieval=true
     driver-class-name: com.mysql.cj.jdbc.Driver
-  #  配置上传的图片大小信息
+  # 配置上传的图片大小信息
   servlet:
     multipart:
       enabled: true
-      #     上传文件总的最大值（限制上传的多个文件的总大小）
+      # 上传文件总的最大值（限制上传的多个文件的总大小）
       max-request-size: 50MB
-      #      单个文件的最大值（限制单个文件的最大值）
+      # 单个文件的最大值（限制单个文件的最大值）
       max-file-size: 10MB
   # 统一配置时间格式
   jackson:
@@ -39,7 +39,7 @@ spring:
 
 mybatis:
   type-aliases-package: com.example.domain
-#  mapper-locations: classpath:mybatis/mapper/*.xml
+  # mapper-locations: classpath:mybatis/mapper/*.xml
 
 myconfig:
   upload-directory: uploads
