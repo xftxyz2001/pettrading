@@ -104,7 +104,7 @@ export default {
             .then(res => {
               if (res.flag === 1) {
                 if (res.avatar != null) {
-                  this.$store.commit("setavatar", "http://localhost:8081/" + res.avatar);
+                  this.$store.commit("setavatar", "/api/" + res.avatar);
                 }
                 this.$notify({
                   title: "修改成功",

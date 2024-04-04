@@ -1,6 +1,6 @@
 module.exports = {
   // publicPath: process.env.NODE_ENV === 'production' ? './' : './',
-  outputDir: '../pet-trading/src/main/resources/static',
+  outputDir: "../pet-trading/src/main/resources/static",
   // assetsDir: 'static',
   configureWebpack: {
     resolve: {
@@ -20,7 +20,7 @@ module.exports = {
       "/api": {
         target: "http://localhost:8081", // target host
         ws: true, // proxy websockets(是否代理websockets)
-        changeOrigin: true, // needed for virtual hosted sites(设置同源  默认false，是否需要改变原始主机头为目标URL)
+        changeOrigin: true // needed for virtual hosted sites(设置同源  默认false，是否需要改变原始主机头为目标URL)
         // pathRewrite: {
         //   "^/api": "" // rewrite path
         // }
