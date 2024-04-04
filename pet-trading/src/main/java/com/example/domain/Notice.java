@@ -22,6 +22,10 @@ public class Notice {
     public static final int TYPE_CONFIRM_DELETE_ORDER = 6;
     public static final int TYPE_HELP_BUY = 7;
 
+    // 是否已读 0-未读，1-已读
+    public static final int ISREAD_UNREAD = 0;
+    public static final int ISREAD_READ = 1;
+
     private Long nid;
     private Integer type;//类型  0-普通消息，1-提交订单，2-修改订单，3-取消订单，4-完成订单，5-确认修改订单，6-确认删除订单,7-帮助求购
     private Long fromuid;//发送者

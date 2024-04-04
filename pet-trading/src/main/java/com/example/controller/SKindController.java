@@ -1,9 +1,9 @@
 package com.example.controller;
 
 import com.example.domain.SKind;
+import com.example.helper.MapHelper;
 import com.example.service.SKindService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -46,15 +46,9 @@ public class SKindController {
     @GetMapping("/queryallskind")
     public List<SKind> queryAllSKind(SKind sKind) {
         Map<String, Object> map = new HashMap<>();
-        if (sKind.getBkid() != null) {
-            map.put("bkid", sKind.getBkid());
-        }
-        if (sKind.getSkid() != null) {
-            map.put("skid", sKind.getSkid());
-        }
-        if (StringUtils.hasLength(sKind.getSkindname())) {
-            map.put("skindname", sKind.getSkindname());
-        }
+        MapHelper.putIfNotNull(map, "bkid", sKind.getBkid());
+        MapHelper.putIfNotNull(map, "skid", sKind.getSkid());
+        MapHelper.putIfHasLength(map, "skindname", sKind.getSkindname());
         return sKindService.queryAllSKind(map);
     }
 }

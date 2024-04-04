@@ -4,6 +4,7 @@ import com.example.config.Constants;
 import com.example.domain.Pet;
 import com.example.domain.Petorder;
 import com.example.domain.Photo;
+import com.example.helper.MapHelper;
 import com.example.service.FileService;
 import com.example.service.PetService;
 import com.example.service.PetorderService;
@@ -33,8 +34,7 @@ public class PetController {
     //发布宠物出售或购买请求
     @PostMapping("/addPet")
     public String addPet(@RequestParam(name = "files", required = false) MultipartFile[] files, Pet pet) throws IOException {
-        Date date = new Date();
-        pet.setDate(date);
+        pet.setDate(new Date());
         petService.addPet(pet);
         Photo photo = new Photo();
         photo.setPid(pet.getPid());
@@ -53,7 +53,8 @@ public class PetController {
 
     //删除宠物
     @GetMapping("/deletePet")
-    public String deletePet(@RequestParam(name = "uid", required = false) Long uid, @RequestParam(name = "pid", required = false) Long pid) {
+    public String deletePet(@RequestParam(name = "uid", required = false) Long uid,
+                            @RequestParam(name = "pid", required = false) Long pid) {
         Map<String, Object> map = new HashMap<>();
         if (uid != null) {
             map.put("uid", uid);
@@ -74,9 +75,9 @@ public class PetController {
 
     //更新宠物信息
     @PostMapping("/updatePet")
-    public String updatePet(@RequestParam(name = "files", required = false) MultipartFile[] files, @RequestParam(name = "ppid", required = false) Long[] ppid, Pet pet) throws IOException {
-        Date date = new Date();
-        pet.setDate(date);
+    public String updatePet(@RequestParam(name = "files", required = false) MultipartFile[] files,
+                            @RequestParam(name = "ppid", required = false) Long[] ppid, Pet pet) throws IOException {
+        pet.setDate(new Date());
         Photo photo = new Photo();
         photo.setPid(pet.getPid());
         //删除图片
@@ -122,14 +123,11 @@ public class PetController {
 
     //查询所有宠物
     @GetMapping("/queryAllPet")
-    public List<Pet> queryAllPet(@RequestParam(name = "uid", required = false) Long uid, @RequestParam(name = "pk", required = false) Integer pk) {
+    public List<Pet> queryAllPet(@RequestParam(name = "uid", required = false) Long uid,
+                                 @RequestParam(name = "pk", required = false) Integer pk) {
         Map<String, Object> map = new HashMap<>();
-        if (uid != null) {
-            map.put("uid", uid);
-        }
-        if (pk != null) {
-            map.put("pk", pk);
-        }
+        MapHelper.putIfNotNull(map, "uid", uid);
+        MapHelper.putIfNotNull(map, "pk", pk);
         return petService.queryAllPet(map);
     }
 
@@ -148,14 +146,9 @@ public class PetController {
                                   @RequestParam(name = "date", required = false) String date,
                                   @RequestParam(name = "sort", required = false) String sort) {
         Map<String, Object> map = warpQueryMap(pid, uid, pk, bkid, skid, age, price, date, petname);
-        map.put("min", (page - 1) * count);
-        map.put("max", count);
-        if (maxprice != null) {
-            map.put("maxprice", maxprice);
-        }
-        if (StringUtils.hasLength(sort)) {
-            map.put("sort", sort);
-        }
+        MapHelper.putPagination(map, page, count);
+        MapHelper.putIfNotNull(map, "maxprice", maxprice);
+        MapHelper.putIfHasLength(map, "sort", sort);
         return petService.queryPetpage(map);
     }
 
@@ -175,34 +168,21 @@ public class PetController {
     }
 
 
-    private Map<String, Object> warpQueryMap(Integer pid, Integer uid, Integer pk, String bkid, String skid, String age, Double price, String date, String petname) {
+    private Map<String, Object> warpQueryMap(Integer pid, Integer uid, Integer pk, String bkid, String skid,
+                                             String age, Double price, String date, String petname) {
         Map<String, Object> map = new HashMap<>();
-        if (pid != null) {
-            map.put("pid", pid);
-        }
-        if (uid != null) {
-            map.put("uid", uid);
-        }
-        if (pk != null) {
-            map.put("pk", pk);
-        }
+        MapHelper.putIfNotNull(map, "pid", pid);
+        MapHelper.putIfNotNull(map, "uid", uid);
+        MapHelper.putIfNotNull(map, "pk", pk);
         if (StringUtils.hasLength(skid)) {
             map.put("skid", skid);
         } else if (StringUtils.hasLength(bkid)) {
             map.put("bkid", bkid);
         }
-        if (StringUtils.hasLength(age)) {
-            map.put("age", age);
-        }
-        if (StringUtils.hasLength(petname)) {
-            map.put("petname", petname);
-        }
-        if (price != null) {
-            map.put("price", price);
-        }
-        if (StringUtils.hasLength(date)) {
-            map.put("date", date);
-        }
+        MapHelper.putIfHasLength(map, "age", age);
+        MapHelper.putIfHasLength(map, "petname", petname);
+        MapHelper.putIfNotNull(map, "price", price);
+        MapHelper.putIfHasLength(map, "date", date);
         return map;
     }
 

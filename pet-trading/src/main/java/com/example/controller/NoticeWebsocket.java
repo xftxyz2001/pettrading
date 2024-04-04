@@ -23,14 +23,9 @@ import java.util.concurrent.CopyOnWriteArraySet;
 @ServerEndpoint("/api/message/{fromuid}")
 public class NoticeWebsocket {
 
-    // private static PetService petService;
+    public static final Gson GSON = new Gson();
     private static NoticeService noticeService;
     private static ContactService contactService;
-
-    // @Autowired
-    // public void setPetService(PetService petService) {
-    //     NoticeWebsocket.petService = petService;
-    // }
 
     @Autowired
     public void setNoticeService(NoticeService noticeService) {
@@ -42,7 +37,6 @@ public class NoticeWebsocket {
         NoticeWebsocket.contactService = contactService;
     }
 
-    //用来存放每个客户端对应的MyWebSocket对象。
     private static final CopyOnWriteArraySet<Session> SESSIONS = new CopyOnWriteArraySet<>();
 
     //与某个客户端的连接会话，需要通过它来给客户端发送数据
@@ -63,7 +57,7 @@ public class NoticeWebsocket {
         qumap.remove("fromuid");
         qumap.put("type", -1);
         qumap.put("noread", noread);
-        session.getAsyncRemote().sendText(new Gson().toJson(qumap));
+        session.getAsyncRemote().sendText(GSON.toJson(qumap));
     }
 
     /**
@@ -88,11 +82,10 @@ public class NoticeWebsocket {
             Session fromSession = SESSION_MAP.get(fromuid);
             fromSession.getAsyncRemote().sendText("heartCheck");
         } else {
-            Notice notice = new Gson().fromJson(message, Notice.class);
+            Notice notice = GSON.fromJson(message, Notice.class);
             notice.setFromuid(fromuid);
-            Date date = new Date();
-            notice.setDate(date);
-            notice.setIsread(0);
+            notice.setDate(new Date());
+            notice.setIsread(Notice.ISREAD_UNREAD);
             noticeService.addNotice(notice);
             Contact contact = new Contact();
             contact.setFromuid(notice.getTouid());
@@ -109,9 +102,9 @@ public class NoticeWebsocket {
             contactService.updateContact(contact);
             Session fromSession = SESSION_MAP.get(notice.getFromuid());
             Session toSession = SESSION_MAP.get(notice.getTouid());
-            fromSession.getAsyncRemote().sendText(new Gson().toJson(notice));
+            fromSession.getAsyncRemote().sendText(GSON.toJson(notice));
             if (toSession != null) {
-                toSession.getAsyncRemote().sendText(new Gson().toJson(notice));
+                toSession.getAsyncRemote().sendText(GSON.toJson(notice));
             }
         }
     }

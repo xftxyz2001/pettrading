@@ -1,11 +1,11 @@
 package com.example.controller;
 
 import com.example.domain.BKind;
+import com.example.helper.MapHelper;
 import com.example.service.BKindService;
 import com.example.service.PetService;
 import com.example.service.SKindService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -62,12 +62,8 @@ public class BKindController {
     @GetMapping("/queryBKindandSKind")
     public List<BKind> queryBKindandSKind(BKind bkind) {
         Map<String, Object> map = new HashMap<>();
-        if (bkind.getBkid() != null) {
-            map.put("bkid", bkind.getBkid());
-        }
-        if (StringUtils.hasLength(bkind.getBkindname())) {
-            map.put("bkindname", bkind.getBkindname());
-        }
+        MapHelper.putIfNotNull(map, "bkid", bkind.getBkid());
+        MapHelper.putIfHasLength(map, "bkindname", bkind.getBkindname());
         return bKindService.queryBKindandSKind(map);
     }
 }
