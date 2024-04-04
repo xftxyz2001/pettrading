@@ -1,6 +1,9 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 
+import { requestqueryuser } from "network/requestuser.js";
+import store from "../store/index.js";
+
 Vue.use(VueRouter);
 
 // 路由连续点击报错解决方案
@@ -242,6 +245,19 @@ const router = new VueRouter({
 });
 
 router.beforeEach((to, from, next) => {
+  if (to.path.startsWith("/backstage")) {
+    if (!store.state.uid) {
+      // 未登录
+      next("/login");
+    }
+    requestqueryuser({ uid: store.state.uid }).then(res => {
+      if (res.type == 1) {
+        // 非管理员
+        next("/login");
+      }
+      next();
+    });
+  }
   document.title = to.matched[0].meta.title;
   next();
 });
