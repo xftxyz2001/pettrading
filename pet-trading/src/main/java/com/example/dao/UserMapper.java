@@ -2,6 +2,7 @@ package com.example.dao;
 
 import com.example.domain.ContactUser;
 import com.example.domain.User;
+import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -33,4 +34,7 @@ public interface UserMapper {
 
     //更加条件查询用户
     List<User> queryuserby(Map<String, Object> map);
+
+    @Select("select * from user where uid = #{uid}")
+    User queryUserById(Long uid);
 }

@@ -93,11 +93,9 @@ public class UserController {
     //查找单个用户的信息
     @GetMapping("/queryuser")
     public User queryuser(Long uid) {
-        Map<String, Object> map = new HashMap<>();
-        map.put("uid", uid);
-        User user = userService.queryUser(map);
+        User user = userService.queryUserById(uid);
         // 如果是普通用户，隐藏身份证号
-        if (user.getType() == User.TYPE_USER) {
+        if (user != null && user.getType() == User.TYPE_USER) {
             user.setIdcard(PrivacyHelper.idcard(user.getIdcard()));
         }
         return user;

@@ -55,4 +55,9 @@ public class UserServiceImpl implements UserService {
     public List<User> queryuserby(Map<String, Object> map) {
         return userMapper.queryuserby(map);
     }
+
+    @Override
+    public User queryUserById(Long uid) {
+        return userMapper.queryUserById(uid);
+    }
 }

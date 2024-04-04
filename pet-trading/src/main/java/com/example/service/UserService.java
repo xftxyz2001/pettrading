@@ -23,4 +23,6 @@ public interface UserService {
     List<ContactUser> querycontactuser(Long uid);
 
     List<User> queryuserby(Map<String, Object> map);
+
+    User queryUserById(Long uid);
 }
