@@ -15,7 +15,7 @@ import java.util.Map;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/skind")
+@RequestMapping("/api/skind")
 public class SKindController {
 
     private final SKindService sKindService;

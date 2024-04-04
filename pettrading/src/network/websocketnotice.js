@@ -4,7 +4,7 @@ export function createwebsocketnotice(uid) {
   if ("WebSocket" in window) {
     // console.log('建立连接')
     // websocket = new WebSocket("ws://localhost:8081/message/" + uid);
-    websocket = new WebSocket("ws://localhost:8080/api/message/" + uid);
+    websocket = new WebSocket(`ws://${window.location.host}/api/message/` + uid);
   } else {
     alert("不支持建立socket连接");
   }

@@ -17,7 +17,7 @@ import java.util.Map;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/bkind")
+@RequestMapping("/api/bkind")
 public class BKindController {
 
     private final BKindService bKindService;

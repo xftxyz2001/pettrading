@@ -15,7 +15,7 @@ import java.util.Map;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/petorder")
+@RequestMapping("/api/petorder")
 public class PetorderController {
 
     private final PetorderService petorderService;

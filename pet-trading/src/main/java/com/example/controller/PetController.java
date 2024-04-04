@@ -22,7 +22,7 @@ import java.util.Map;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/pet")
+@RequestMapping("/api/pet")
 public class PetController {
 
     private final PetService petService;

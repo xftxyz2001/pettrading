@@ -20,7 +20,7 @@ import java.util.concurrent.CopyOnWriteArraySet;
 
 @Slf4j
 @Component
-@ServerEndpoint("/message/{fromuid}")
+@ServerEndpoint("/api/message/{fromuid}")
 public class NoticeWebsocket {
 
     // private static PetService petService;

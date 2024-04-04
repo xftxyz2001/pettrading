@@ -20,7 +20,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
         String basePath = Paths.get(myConfig.getUploadDirectory()).toAbsolutePath().toString();
         List<String> paths = Arrays.asList("avatar", "petimg", "defaultavatar", "defaultpetimg");
         for (String path : paths) {
-            registry.addResourceHandler("/" + path + "/**")
+            registry.addResourceHandler("/api/" + path + "/**")
                     .addResourceLocations("file:" + Paths.get(basePath, path).toAbsolutePath() + "/");
         }
     }
