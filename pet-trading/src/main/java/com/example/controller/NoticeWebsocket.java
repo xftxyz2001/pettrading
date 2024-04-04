@@ -54,10 +54,11 @@ public class NoticeWebsocket {
         Map<String, Object> qumap = new HashMap<>();
         qumap.put("fromuid", fromuid);
         int noread = contactService.querynoread(qumap);
-        qumap.remove("fromuid");
-        qumap.put("type", -1);
-        qumap.put("noread", noread);
-        session.getAsyncRemote().sendText(GSON.toJson(qumap));
+
+        Map<String, Object> res = new HashMap<>();
+        res.put("type", -1);
+        res.put("noread", noread);
+        session.getAsyncRemote().sendText(GSON.toJson(res));
     }
 
     /**

@@ -86,7 +86,6 @@ public class PetController {
             for (Long aLong : ppid) {
                 photomap.put("ppid", aLong);
                 photoService.deletePhoto(photomap);
-                photomap.remove("ppid");
             }
         }
         //增加图片

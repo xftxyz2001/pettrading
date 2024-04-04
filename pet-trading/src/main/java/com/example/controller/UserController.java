@@ -31,28 +31,27 @@ public class UserController {
     @GetMapping("/checkuser")
     public Map<String, Object> checkuser(@RequestParam(value = "telphone", required = false) String telphone,
                                          @RequestParam(value = "idcard", required = false) String idcard) {
-        Map<String, Object> map = new HashMap<>();
+        Map<String, Object> queryUserParam = new HashMap<>();
+        Map<String, Object> res = new HashMap<>();
         User user;
         if (telphone != null) {
-            map.put("telphone", telphone);
-            user = userService.queryUser(map);
-            map.remove("telphone");
+            queryUserParam.put("telphone", telphone);
+            user = userService.queryUser(queryUserParam);
             if (user != null) {
-                MapHelper.failAndMessage(map, "手机号已经被注册");
+                MapHelper.failAndMessage(res, "手机号已经被注册");
             } else {
-                MapHelper.successAndMessage(map, "可进行下一步");
+                MapHelper.successAndMessage(res, "可进行下一步");
             }
         } else {
-            map.put("idcard", idcard);
-            user = userService.queryUser(map);
-            map.remove("idcard");
+            queryUserParam.put("idcard", idcard);
+            user = userService.queryUser(queryUserParam);
             if (user != null) {
-                MapHelper.failAndMessage(map, "该身份证号已被注册");
+                MapHelper.failAndMessage(res, "该身份证号已被注册");
             } else {
-                MapHelper.successAndMessage(map, "验证完成，可进行注册");
+                MapHelper.successAndMessage(res, "验证完成，可进行注册");
             }
         }
-        return map;
+        return res;
     }
 
     //注册账号
@@ -71,25 +70,24 @@ public class UserController {
     @GetMapping("/login")
     public Map<String, Object> login(String username, String password) {
         //查找该用户名(即该账户)是否存在
-        Map<String, Object> map = new HashMap<>();
-        map.put("username", username);
-        map.put("telphone", username);
-        map.put("email", username);
-        User user = userService.queryUser(map);
-        map.remove("username");
-        map.remove("telphone");
-        map.remove("email");
+        Map<String, Object> queryUserParam = new HashMap<>();
+        queryUserParam.put("username", username);
+        queryUserParam.put("telphone", username);
+        queryUserParam.put("email", username);
+        User user = userService.queryUser(queryUserParam);
+
+        Map<String, Object> res = new HashMap<>();
         if (user == null) {
-            MapHelper.failAndMessage(map, "用户不存在");
+            MapHelper.failAndMessage(res, "用户不存在");
         } else if (password.equals(user.getPassword())) {
-            map.put("uid", user.getUid());
-            map.put("avatar", user.getAvatar());
-            map.put("type", user.getType());
-            MapHelper.successAndMessage(map, "欢迎，" + user.getUsername());
+            res.put("uid", user.getUid());
+            res.put("avatar", user.getAvatar());
+            res.put("type", user.getType());
+            MapHelper.successAndMessage(res, "欢迎，" + user.getUsername());
         } else {
-            MapHelper.failAndMessage(map, "密码错误");
+            MapHelper.failAndMessage(res, "密码错误");
         }
-        return map;
+        return res;
     }
 
     //查找单个用户的信息
@@ -109,75 +107,78 @@ public class UserController {
     @PostMapping("/updateuser")
     public Map<String, Object> updateuser(@RequestParam(name = "file", required = false) MultipartFile file,
                                           User user) throws IOException {
-        Map<String, Object> map = new HashMap<>();
+        Map<String, Object> res = new HashMap<>();
         User uuser = null;
+        // 根据手机号查询，检查手机号是否已经被注册
         if (user.getTelphone() != null) {
-            map.put("telphone", user.getTelphone());
-            uuser = userService.queryUser(map);
-            map.remove("telphone");
-            if (uuser != null && !Objects.equals(uuser.getUid(), user.getUid())) {
-                MapHelper.failAndMessage(map, "该手机号已被注册");
-                return map;
-            }
+            Map<String, Object> mapTel = new HashMap<>();
+            mapTel.put("telphone", user.getTelphone());
+            uuser = userService.queryUser(mapTel);
         }
+        if (uuser != null && !Objects.equals(uuser.getUid(), user.getUid())) {
+            MapHelper.failAndMessage(res, "该手机号已被注册");
+            return res;
+        }
+        // 根据用户名查询，检查用户名是否已存在
         if (user.getUsername() != null) {
-            map.put("username", user.getUsername());
-            uuser = userService.queryUser(map);
-            map.remove("username");
+            Map<String, Object> mapUname = new HashMap<>();
+            mapUname.put("username", user.getUsername());
+            uuser = userService.queryUser(mapUname);
         }
-        if (uuser == null || Objects.equals(uuser.getUid(), user.getUid())) {
-            if (file != null) {
-                if (!file.isEmpty()) {
-                    String filename = fileService.saveFile(file, "avatar");
-                    //存入头像地址
-                    user.setAvatar(filename);
-                    //查找旧的用户信息
-                    map.put("uid", user.getUid());
-                    uuser = userService.queryUser(map);
-                    map.remove("uid");
-                    String oldavatar = uuser.getAvatar();
-                    //判断旧头像是否为默认头像，不是则删除旧头像
-                    if (!oldavatar.startsWith("defaultavatar/")) {
-                        fileService.deleteFile(oldavatar);
-                    }
+        if (uuser != null && !Objects.equals(uuser.getUid(), user.getUid())) {
+            MapHelper.failAndMessage(res, "用户名已存在");
+            return res;
+        }
+        // 根据UID查询
+        Map<String, Object> mapUID = new HashMap<>();
+        mapUID.put("uid", user.getUid());
+        uuser = userService.queryUser(mapUID);
+        if (file != null) {
+            if (!file.isEmpty()) {
+                String filename = fileService.saveFile(file, "avatar");
+                user.setAvatar(filename);
+                String oldavatar = uuser.getAvatar();
+                //判断旧头像是否为默认头像，不是则删除旧头像
+                if (!oldavatar.startsWith("defaultavatar/")) {
+                    fileService.deleteFile(oldavatar);
                 }
             }
-            userService.updateUser(user);
-            map.put("avatar", user.getAvatar());
-            MapHelper.successAndMessage(map, "修改成功");
-        } else {
-            MapHelper.failAndMessage(map, "用户名已存在");
         }
-        return map;
+        userService.updateUser(user);
+        res.put("avatar", user.getAvatar());
+        MapHelper.successAndMessage(res, "修改成功");
+        return res;
     }
 
     //修改密码
     @PostMapping("/changepassword")
     public Map<String, Object> changepsaaword(User user, @RequestParam(value = "oldpassword") String oldpassword) {
-        Map<String, Object> map = new HashMap<>();
-        map.put("uid", user.getUid());
-        User queryUser = userService.queryUser(map);
-        map.remove("uid");
+        Map<String, Object> queryUserParam = new HashMap<>();
+        queryUserParam.put("uid", user.getUid());
+        User queryUser = userService.queryUser(queryUserParam);
+
+        Map<String, Object> res = new HashMap<>();
         if (queryUser.getPassword().equals(oldpassword)) {
             userService.updateUser(user);
-            MapHelper.successAndMessage(map, "修改成功");
+            MapHelper.successAndMessage(res, "修改成功");
         } else {
-            MapHelper.failAndMessage(map, "旧密码错误");
+            MapHelper.failAndMessage(res, "旧密码错误");
         }
-        return map;
+        return res;
     }
 
     //删除用户
     @GetMapping("/deleteUser")
     public String deleteUser(Long uid) {
-        Map<String, Object> map = new HashMap<>();
-        map.put("uid", uid);
-        userService.deleteUser(map);
-        petService.deletePet(map);
-        addressService.deleteAddress(map);
-        map.remove("uid");
-        map.put("fromuid", uid);
-        contactService.deleteContact(map);
+        Map<String, Object> mapUID = new HashMap<>();
+        mapUID.put("uid", uid);
+        userService.deleteUser(mapUID);
+        petService.deletePet(mapUID);
+        addressService.deleteAddress(mapUID);
+
+        Map<String, Object> mapFROMUID = new HashMap<>();
+        mapFROMUID.put("fromuid", uid);
+        contactService.deleteContact(mapFROMUID);
         return "该用户已被删除";
     }
 
