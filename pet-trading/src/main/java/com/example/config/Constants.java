@@ -7,4 +7,7 @@ public interface Constants {
 
     // 默认宠物头像
     String DEFAULT_PET_IMAGE = "defaultpetimg/nodata.jpg";
+
+    int FLAG_SUCCESS = 1;
+    int FLAG_FAIL = 0;
 }

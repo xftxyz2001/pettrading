@@ -29,12 +29,12 @@ public class PetorderController {
             map.put("flag", 0);
             map.put("msg", "卖方已删除该宠物");
         } else {
-            if (spet.getPk() == 0) {
+            if (spet.getPk() == Pet.PK_SELLING) {
                 Date date = new Date();
                 petorder.setDate(date);
                 Pet pet = new Pet();
                 pet.setPid(petorder.getPid());
-                pet.setPk(1);
+                pet.setPk(Pet.PK_SOLD);
                 petService.updatePet(pet);
                 petorderService.addpetorder(petorder);
                 map.put("flag", 1);
@@ -71,13 +71,13 @@ public class PetorderController {
             pet.setPk(pk);
             petService.updatePet(pet);
         }
-        if (petorder.getPostatu() == 3) {
+        if (petorder.getPostatu() == Petorder.POSTATU_MODIFYING) {
             return "订单修改中，等待卖家确认";
-        } else if (petorder.getPostatu() == 0) {
+        } else if (petorder.getPostatu() == Petorder.POSTATU_ONGOING) {
             return "订单已修改成功";
-        } else if (petorder.getPostatu() == 2) {
+        } else if (petorder.getPostatu() == Petorder.POSTATU_CANCELED) {
             return "订单已取消";
-        } else if (petorder.getPostatu() == 4) {
+        } else if (petorder.getPostatu() == Petorder.POSTATU_CANCELING) {
             return "订单正在取消，等待卖方确认";
         } else {
             return "订单已完成";

@@ -12,6 +12,16 @@ import java.util.Date;
 @NoArgsConstructor
 public class Notice {
 
+    //类型  0-普通消息，1-提交订单，2-修改订单，3-取消订单，4-完成订单，5-确认修改订单，6-确认删除订单,7-帮助求购
+    public static final int TYPE_NORMAL = 0;
+    public static final int TYPE_SUBMIT_ORDER = 1;
+    public static final int TYPE_MODIFY_ORDER = 2;
+    public static final int TYPE_CANCEL_ORDER = 3;
+    public static final int TYPE_FINISH_ORDER = 4;
+    public static final int TYPE_CONFIRM_MODIFY_ORDER = 5;
+    public static final int TYPE_CONFIRM_DELETE_ORDER = 6;
+    public static final int TYPE_HELP_BUY = 7;
+
     private Long nid;
     private Integer type;//类型  0-普通消息，1-提交订单，2-修改订单，3-取消订单，4-完成订单，5-确认修改订单，6-确认删除订单,7-帮助求购
     private Long fromuid;//发送者

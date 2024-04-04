@@ -59,7 +59,7 @@ public class PetController {
             map.put("uid", uid);
         } else {
             map.put("pid", pid);
-            map.put("postatu", 0);
+            map.put("postatu", Petorder.POSTATU_ONGOING);
         }
         List<Petorder> petorder = petorderService.querypetorder(map);
         map.remove("postatu");
@@ -97,7 +97,7 @@ public class PetController {
             }
         }
         //宠物为求购时，若没有图片，增加无数据图片
-        if (pet.getPk() == 3) {
+        if (pet.getPk() == Pet.PK_BUY) {
             List<Photo> photos = photoService.queryPhotobypid(pet.getPid());
             if (photos.isEmpty()) {
                 photo.setUrl(Constants.DEFAULT_PET_IMAGE);

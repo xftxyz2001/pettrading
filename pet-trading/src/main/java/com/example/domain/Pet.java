@@ -13,6 +13,12 @@ import java.util.List;
 @AllArgsConstructor
 public class Pet {
 
+    // 宠物发售类型（0-出售中，1-已出售，2-已完成出售，3-发布求购中）
+    public static final int PK_SELLING = 0;
+    public static final int PK_SOLD = 1;
+    public static final int PK_FINISH = 2;
+    public static final int PK_BUY = 3;
+
     private Long pid;//宠物id
     private String petname;//宠物标题
     private String sex;//宠物性别

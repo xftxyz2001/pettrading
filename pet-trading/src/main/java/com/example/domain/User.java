@@ -12,6 +12,10 @@ import java.util.List;
 @AllArgsConstructor
 public class User {
 
+    // 0-管理员，1-普通用户
+    public static final int TYPE_ADMIN = 0;
+    public static final int TYPE_USER = 1;
+
     private Long uid;//用户id
     private String avatar;//头像
     private Integer type;//0-管理员，1-普通用户

@@ -106,7 +106,8 @@ public class UserController {
         Map<String, Object> map = new HashMap<>();
         map.put("uid", uid);
         User user = userService.queryUser(map);
-        if (user.getType() == 1) {
+        // 如果是普通用户，隐藏身份证号
+        if (user.getType() == User.TYPE_USER) {
             String idcard = user.getIdcard();
             String start = idcard.substring(0, 1);
             String end = idcard.substring(idcard.length() - 1);
