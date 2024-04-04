@@ -92,7 +92,6 @@ export default {
           } else {
             this.show++;
           }
-          // console.log(this.show);
         }, 5000);
       }
     },
@@ -111,11 +110,14 @@ export default {
     }
   },
   mounted() {
-    this.sliders = require.context("assets/img/swipper", false, /\.(png|jpe?g|svg|webp)$/).keys().map(item => {
-      return {
-        img: require("assets/img/swipper" + item.slice(1))
-      };
-    });
+    this.sliders = require
+      .context("assets/img/swipper", false, /\.(png|jpe?g|svg|webp)$/)
+      .keys()
+      .map(item => {
+        return {
+          img: require("assets/img/swipper" + item.slice(1))
+        };
+      });
     this.runslider();
   }
 };

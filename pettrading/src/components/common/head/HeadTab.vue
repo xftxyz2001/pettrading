@@ -193,7 +193,6 @@ export default {
       this.websocket.onmessage = function (event) {
         if (event.data != "heartCheck") {
           let object = JSON.parse(event.data);
-          // console.log(object);
           if (object.type == -1) {
             that.noread = object.noread;
           } else {
@@ -235,10 +234,6 @@ export default {
                     if (that.active != null) {
                       that.activeuser = that.chatuser[that.active];
                     }
-                    // console.log(that.activeuser)
-                    // console.log(res)
-
-                    // console.log(that.chatuser)
                     that.noread++;
                   })
                   .catch(err => {
@@ -246,15 +241,12 @@ export default {
                   });
               }
             }
-            // console.log(that.messagelist)
           }
         }
         that.reset();
       };
       this.websocket.onclose = function (e) {
-        // console.log('websocket 断开: ' + e.code + ' ' + e.reason + ' ' + e.wasClean)
-        // console.log(e)
-        // that.reconnect();
+        console.log("websocket 断开: " + e.code + " " + e.reason + " " + e.wasClean);
       };
       this.websocket.onerror = function () {
         console.log("出现错误");
