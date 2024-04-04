@@ -58,7 +58,7 @@ public class UserController {
     @PostMapping("/register")
     public Map<String, Object> register(User user) {
         Map<String, Object> map = new HashMap<>();
-        user.setAvatar(Constants.DEFAULT_AVATAR);
+        user.setAvatar(Constants.DEFAULT_AVATAR1);
         user.setSex("保密");
         user.setType(User.TYPE_USER);
         userService.addUser(user);
@@ -139,7 +139,7 @@ public class UserController {
                 user.setAvatar(filename);
                 String oldavatar = uuser.getAvatar();
                 //判断旧头像是否为默认头像，不是则删除旧头像
-                if (!oldavatar.startsWith("defaultavatar/")) {
+                if (!oldavatar.startsWith(Constants.DEFAULT_AVATAR_PREFIX)) {
                     fileService.deleteFile(oldavatar);
                 }
             }
