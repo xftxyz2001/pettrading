@@ -35,6 +35,4 @@ public class User {
 
     private List<Petorder> petorder;
 
-//    @Temporal(TemporalType.TIMESTAMP) // 是用来定义日期类型
-//    private Date birthday;//生日
 }
