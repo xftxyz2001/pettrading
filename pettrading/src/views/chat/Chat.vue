@@ -78,6 +78,55 @@ export default {
     if (this.show == false && this.active != null) {
       this.show = true;
     }
+    // 实现拖动定位
+    let chatbar = document.querySelector(".chatbar");
+    let chattop = document.querySelector(".chattop");
+    let isDown = false;
+    let disX = 0;
+    let disY = 0;
+    chattop.onmousedown = function (e) {
+      isDown = true;
+      disX = e.clientX - chatbar.offsetLeft;
+      disY = e.clientY - chatbar.offsetTop;
+      document.onmousemove = function (e) {
+        if (isDown == false) {
+          return;
+        }
+        let left = e.clientX - disX;
+        let top = e.clientY - disY;
+        chatbar.style.left = left + "px";
+        chatbar.style.top = top + "px";
+      };
+      document.onmouseup = function () {
+        isDown = false;
+      };
+    };
+    // 实现resize
+    let resize = document.createElement("div");
+    resize.style.position = "absolute";
+    resize.style.right = "0";
+    resize.style.bottom = "0";
+    resize.style.width = "10px";
+    resize.style.height = "10px";
+    resize.style.cursor = "se-resize";
+    chatbar.appendChild(resize);
+    resize.onmousedown = function (e) {
+      isDown = true;
+      disX = e.clientX - chatbar.offsetWidth;
+      disY = e.clientY - chatbar.offsetHeight;
+      document.onmousemove = function (e) {
+        if (isDown == false) {
+          return;
+        }
+        let width = e.clientX - disX;
+        let height = e.clientY - disY;
+        chatbar.style.width = width + "px";
+        chatbar.style.height = height + "px";
+      };
+      document.onmouseup = function () {
+        isDown = false;
+      };
+    };
   },
   updated() {
     // 聊天定位到底部
